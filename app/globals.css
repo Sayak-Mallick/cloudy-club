@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lilac: #C0AFD3;
+  --sand: #E5D4BE;
+  --cream: #F4F1EA;
+  --sage: #8B9880;
+  --charcoal: #31312F;
+  --lilac-light: #EDE8F5;
+  --lilac-dark: #9B88C0;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Grain texture ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--lilac); border-radius: 4px; }
+::selection { background: var(--lilac); color: var(--cream); }
+
+/* ─── Typography helpers ─── */
+.font-playfair { font-family: 'Playfair Display', Georgia, serif; }
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+/* ─── Nav link underline ─── */
+.nav-link {
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(49,49,47,0.75);
+  transition: color 0.3s ease;
+  padding-bottom: 3px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--lilac);
+  transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-link:hover { color: var(--charcoal); }
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+.nav-link.active { color: var(--charcoal); }
+
+/* ─── Divider ─── */
+.divider {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: var(--lilac);
+}
+.divider-center { margin-left: auto; margin-right: auto; }
+
+/* ─── Buttons ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 28px;
+  background: var(--lilac);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.28s ease, transform 0.18s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-primary:hover { background: var(--lilac-dark); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 28px;
+  background: transparent;
+  color: var(--charcoal);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(49,49,47,0.5);
+  cursor: pointer;
+  transition: background 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-outline:hover {
+  background: var(--charcoal);
+  color: var(--cream);
+  border-color: var(--charcoal);
+}
+
+/* ─── Eyebrow label ─── */
+.eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ─── Card hover ─── */
+.card-hover {
+  transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.38s ease;
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 64px rgba(192, 175, 211, 0.22);
+}
+
+/* ─── Float animation (cloud) ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
+}
+.float-anim { animation: float 6s ease-in-out infinite; }
+
+/* ─── Star twinkle ─── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.75); }
+  50%       { opacity: 1;    transform: scale(1.15); }
+}
+.star-twinkle { animation: twinkle 3.2s ease-in-out infinite; }
+
+/* ─── Accordion ─── */
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.accordion-body.open { max-height: 400px; }
+
+/* ─── Pulse ring (map) ─── */
+@keyframes pulse-ring {
+  0%   { r: 18; opacity: 0.7; }
+  100% { r: 44; opacity: 0; }
+}
