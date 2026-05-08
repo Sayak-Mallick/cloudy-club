@@ -196,12 +196,9 @@ export default function Navbar() {
           </ul>
 
           {/* Right side: lang switch + CTA */}
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+          <div className="hidden lg:flex items-center gap-4" style={{ flexShrink: 0 }}>
             <LangSwitch />
-            <button
-              onClick={() => scrollTo("#membership")}
-              className="btn-primary hidden lg:inline-flex"
-            >
+            <button onClick={() => scrollTo("#membership")} className="btn-primary">
               {ctaLabel[lang]}
             </button>
           </div>
