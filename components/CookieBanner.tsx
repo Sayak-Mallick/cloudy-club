@@ -10,63 +10,58 @@ export default function CookieBanner() {
     if (!consent) setTimeout(() => setVisible(true), 2000);
   }, []);
 
-  const accept  = () => { localStorage.setItem("cloudy-cookie-consent", "accepted");  setVisible(false); };
+  const accept = () => { localStorage.setItem("cloudy-cookie-consent", "accepted"); setVisible(false); };
   const decline = () => { localStorage.setItem("cloudy-cookie-consent", "declined"); setVisible(false); };
 
   if (!visible) return null;
 
   return (
     <div
-      style={{
-        position: "fixed",
-        bottom: "24px",
-        right: "24px",
-        zIndex: 200,
-        width: "100%",
-        maxWidth: "360px",
-        background: "var(--charcoal)",
-        border: "1px solid rgba(192,175,211,0.2)",
-        padding: "28px",
-        boxShadow: "0 24px 64px rgba(49,49,47,0.35)",
-        animation: "cookieSlideUp 0.5s cubic-bezier(0.25,0.46,0.45,0.94) forwards",
-      }}
+      className="
+        fixed z-[200]
+        bottom-3 right-3 left-3
+        sm:bottom-6 sm:right-6 sm:left-auto
+        sm:w-[360px]
+        bg-[var(--charcoal)]
+        border border-[rgba(192,175,211,0.2)]
+        p-5 sm:p-7
+        shadow-[0_24px_64px_rgba(49,49,47,0.35)]
+        animate-[cookieSlideUp_0.5s_cubic-bezier(0.25,0.46,0.45,0.94)_forwards]
+      "
     >
-      <p className="eyebrow" style={{ color: "var(--lilac)", marginBottom: "8px" }}>Cookies</p>
-      <p className="font-playfair" style={{ fontSize: "1rem", color: "var(--cream)", marginBottom: "10px", fontWeight: 500 }}>
+      <p className="eyebrow text-[var(--lilac)] mb-2">Cookies</p>
+
+      <p className="font-playfair text-base font-medium text-[var(--cream)] mb-2.5">
         Wir nutzen Cookies
       </p>
-      <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, lineHeight: 1.7, color: "rgba(244,241,234,0.5)", marginBottom: "20px" }}>
+
+      <p className="font-montserrat text-[0.8125rem] font-light leading-[1.7] text-[rgba(244,241,234,0.5)] mb-5">
         Diese Website verwendet Cookies für eine bessere Nutzererfahrung.
       </p>
-      <div style={{ display: "flex", gap: "12px" }}>
+
+      <div className="flex gap-3">
         <button
           onClick={accept}
-          className="btn-primary"
-          style={{ flex: 1, height: "42px", padding: "0", fontSize: "0.6875rem" }}
+          className="btn-primary flex-1 h-[42px] !p-0 text-[0.6875rem]"
         >
           Akzeptieren
         </button>
+
         <button
           onClick={decline}
-          className="font-montserrat"
-          style={{
-            flex: 1,
-            height: "42px",
-            fontSize: "0.6875rem",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "rgba(244,241,234,0.45)",
-            background: "none",
-            border: "1px solid rgba(255,255,255,0.15)",
-            cursor: "pointer",
-            transition: "color 0.3s ease, border-color 0.3s ease",
-          }}
-          onMouseEnter={e => { (e.currentTarget.style.color = "var(--cream)"); (e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"); }}
-          onMouseLeave={e => { (e.currentTarget.style.color = "rgba(244,241,234,0.45)"); (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"); }}
+          className="
+            font-montserrat flex-1 h-[42px]
+            text-[0.6875rem] tracking-[0.14em] uppercase
+            text-[rgba(244,241,234,0.45)] hover:text-[var(--cream)]
+            bg-transparent
+            border border-[rgba(255,255,255,0.15)] hover:border-[rgba(255,255,255,0.4)]
+            cursor-pointer transition-[color,border-color] duration-300
+          "
         >
           Ablehnen
         </button>
       </div>
+
       <style>{`
         @keyframes cookieSlideUp {
           from { opacity: 0; transform: translateY(20px); }
