@@ -233,6 +233,7 @@ export default function Navbar() {
           alignItems: "center",
           justifyContent: "center",
           gap: "32px",
+          paddingTop: "72px",
           transition: "opacity 0.4s ease",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "auto" : "none",
