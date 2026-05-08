@@ -180,7 +180,9 @@ export default function Navbar() {
           </button>
 
           {/* Desktop nav links */}
-          <ul style={{ display: "flex", alignItems: "center", gap: "28px", listStyle: "none", margin: 0, padding: 0 }} className="hidden lg:flex">
+          <ul
+            className="hidden lg:flex items-center gap-7 list-none m-0 p-0"
+          >
             {navItems.map(item => (
               <li key={item.href}>
                 <button
@@ -207,15 +209,12 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden"
+            className="flex items-center p-2 lg:hidden"
             style={{
-              padding: "8px",
               color: "var(--charcoal)",
               background: "none",
               border: "none",
               cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
             }}
             aria-label="Menü"
           >
