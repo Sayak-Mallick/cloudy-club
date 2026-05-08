@@ -4,35 +4,57 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Menu, X } from "lucide-react";
 
-const navItems = [
-  { label: "Über uns",     href: "#about" },
-  { label: "Anbau",        href: "#growing" },
-  { label: "Prävention",   href: "#prevention" },
-  { label: "Mitgliedschaft", href: "#membership" },
-  { label: "FAQ",          href: "#faq" },
-  { label: "Standort",     href: "#location" },
-  { label: "News",         href: "#news" },
-];
+type Lang = "DE" | "EN";
+
+const navItemsMap: Record<Lang, { label: string; href: string }[]> = {
+  DE: [
+    { label: "Über uns", href: "#about" },
+    { label: "Anbau", href: "#growing" },
+    { label: "Prävention", href: "#prevention" },
+    { label: "Mitgliedschaft", href: "#membership" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Standort", href: "#location" },
+    { label: "News", href: "#news" },
+  ],
+  EN: [
+    { label: "About us", href: "#about" },
+    { label: "Growing", href: "#growing" },
+    { label: "Prevention", href: "#prevention" },
+    { label: "Membership", href: "#membership" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Location", href: "#location" },
+    { label: "News", href: "#news" },
+  ],
+};
+
+const ctaLabel: Record<Lang, string> = {
+  DE: "Mitglied werden",
+  EN: "Become a member",
+};
 
 export default function Navbar() {
-  const navRef   = useRef<HTMLElement>(null);
-  const [scrolled,     setScrolled]     = useState(false);
-  const [menuOpen,     setMenuOpen]     = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [lang, setLang] = useState<Lang>("DE");
+
+  const navItems = navItemsMap[lang];
 
   useEffect(() => {
     gsap.fromTo(navRef.current,
       { y: -80, opacity: 0 },
-      { y: 0,   opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 }
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 }
     );
 
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
-      const ids = [...navItems].map(n => n.href.replace("#", "")).reverse();
+      const ids = [...navItemsMap.DE].map(n => n.href.replace("#", "")).reverse();
       for (const id of ids) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 140) {
-          setActiveSection(id); break;
+          setActiveSection(id);
+          break;
         }
       }
     };
@@ -45,6 +67,65 @@ export default function Navbar() {
     const el = document.getElementById(href.replace("#", ""));
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
+  const toggleLang = () => setLang(prev => (prev === "DE" ? "EN" : "DE"));
+
+  // ── Shared pill switch ──
+  const LangSwitch = () => (
+    <button
+      onClick={toggleLang}
+      aria-label="Toggle language"
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        width: "64px",
+        height: "28px",
+        borderRadius: "999px",
+        border: "1.5px solid var(--lilac)",
+        background: "transparent",
+        cursor: "pointer",
+        padding: 0,
+        flexShrink: 0,
+        overflow: "hidden",
+      }}
+    >
+      {/* sliding highlight */}
+      <span
+        style={{
+          position: "absolute",
+          top: "2px",
+          left: lang === "DE" ? "2px" : "calc(100% - 32px - 2px)",
+          width: "32px",
+          height: "20px",
+          borderRadius: "999px",
+          background: "var(--lilac)",
+          transition: "left 0.3s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      />
+      {/* labels */}
+      {(["DE", "EN"] as Lang[]).map(l => (
+        <span
+          key={l}
+          className="font-montserrat"
+          style={{
+            position: "relative",
+            width: "32px",
+            textAlign: "center",
+            fontSize: "0.625rem",
+            letterSpacing: "0.12em",
+            fontWeight: 700,
+            color: lang === l ? "var(--cream, #f4f1ea)" : "var(--lilac)",
+            transition: "color 0.3s ease",
+            userSelect: "none",
+            zIndex: 1,
+          }}
+        >
+          {l}
+        </span>
+      ))}
+    </button>
+  );
 
   return (
     <>
@@ -87,11 +168,10 @@ export default function Navbar() {
               <ellipse cx="37" cy="53" rx="19" ry="15" fill="#C0AFD3" opacity="0.75" />
               <ellipse cx="63" cy="55" rx="17" ry="13" fill="#C0AFD3" opacity="0.65" />
               <ellipse cx="50" cy="46" rx="15" ry="13" fill="#C0AFD3" opacity="0.45" />
-              <ellipse cx="42" cy="40" rx="9"  ry="8"  fill="#C0AFD3" opacity="0.35" />
-              {/* star dots */}
+              <ellipse cx="42" cy="40" rx="9" ry="8" fill="#C0AFD3" opacity="0.35" />
               <circle cx="33" cy="33" r="1.5" fill="#C0AFD3" opacity="0.7" />
               <circle cx="67" cy="28" r="1.2" fill="#C0AFD3" opacity="0.6" />
-              <circle cx="72" cy="42" r="1"   fill="#C0AFD3" opacity="0.5" />
+              <circle cx="72" cy="42" r="1" fill="#C0AFD3" opacity="0.5" />
             </svg>
             <div style={{ lineHeight: 1 }}>
               <div className="font-playfair" style={{ fontSize: "1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--charcoal)", lineHeight: 1.1 }}>Cloudy</div>
@@ -105,7 +185,7 @@ export default function Navbar() {
               <li key={item.href}>
                 <button
                   onClick={() => scrollTo(item.href)}
-                  className={`nav-link ${activeSection === item.href.replace("#","") ? "active" : ""}`}
+                  className={`nav-link ${activeSection === item.href.replace("#", "") ? "active" : ""}`}
                 >
                   {item.label}
                 </button>
@@ -113,19 +193,30 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA button */}
-          <button
-            onClick={() => scrollTo("#membership")}
-            className="btn-primary hidden lg:inline-flex"
-          >
-            Mitglied werden
-          </button>
+          {/* Right side: lang switch + CTA */}
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+            <LangSwitch />
+            <button
+              onClick={() => scrollTo("#membership")}
+              className="btn-primary hidden lg:inline-flex"
+            >
+              {ctaLabel[lang]}
+            </button>
+          </div>
 
           {/* Mobile toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden"
-            style={{ padding: "8px", color: "var(--charcoal)", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center" }}
+            className="md:hidden"
+            style={{
+              padding: "8px",
+              color: "var(--charcoal)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
             aria-label="Menü"
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -171,8 +262,12 @@ export default function Navbar() {
             {item.label}
           </button>
         ))}
-        <button onClick={() => scrollTo("#membership")} className="btn-primary" style={{ marginTop: "16px" }}>
-          Mitglied werden
+
+        {/* Lang switch inside mobile overlay too */}
+        <LangSwitch />
+
+        <button onClick={() => scrollTo("#membership")} className="btn-primary" style={{ marginTop: "8px" }}>
+          {ctaLabel[lang]}
         </button>
       </div>
     </>
