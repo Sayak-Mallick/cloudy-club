@@ -20,13 +20,13 @@ const faqs = [
 
 export default function FAQ() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(".faq-item",
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.72, stagger: 0.09, ease: "power3.out",
+        { opacity: 0, y: 32 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
           scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
       );
     }, sectionRef);
@@ -37,24 +37,25 @@ export default function FAQ() {
     <section
       id="faq"
       ref={sectionRef}
-      style={{ padding: "112px 40px", background: "var(--sand)" }}
+      className="section"
+      style={{ background: "var(--bg)" }}
     >
-      <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+      <div className="section-inner" style={{ maxWidth: "800px" }}>
         <SectionHeader
           eyebrow="FAQ"
           title="Häufige Fragen"
           subtitle="Alles, was du über den Cloudy Club wissen möchtest – klar und ehrlich beantwortet."
         />
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="faq-item"
+              className="faq-item card"
               style={{
-                background: "var(--cream)",
-                border: "1px solid rgba(192,175,211,0.3)",
+                background: "var(--bg-surface)",
                 overflow: "hidden",
+                border: "1px solid var(--border)",
               }}
             >
               <button
@@ -64,8 +65,8 @@ export default function FAQ() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  gap: "20px",
-                  padding: "24px 28px",
+                  gap: "24px",
+                  padding: "32px",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -75,17 +76,17 @@ export default function FAQ() {
                 <span
                   className="font-playfair"
                   style={{
-                    fontSize: "1.0625rem",
-                    color: open === i ? "var(--lilac)" : "var(--charcoal)",
+                    fontSize: "1.125rem",
+                    color: open === i ? "var(--lilac)" : "var(--cream)",
                     lineHeight: 1.4,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     transition: "color 0.3s ease",
                   }}
                 >
                   {faq.q}
                 </span>
-                <span style={{ flexShrink: 0, color: "var(--lilac)" }}>
-                  {open === i ? <Minus size={16} /> : <Plus size={16} />}
+                <span style={{ flexShrink: 0, color: open === i ? "var(--lilac)" : "var(--text-secondary)" }}>
+                  {open === i ? <Minus size={18} /> : <Plus size={18} />}
                 </span>
               </button>
 
@@ -95,11 +96,11 @@ export default function FAQ() {
                 <p
                   className="font-montserrat"
                   style={{
-                    padding: "0 28px 24px",
+                    padding: "0 32px 32px",
                     fontSize: "0.9375rem",
                     fontWeight: 300,
                     lineHeight: 1.8,
-                    color: "rgba(49,49,47,0.65)",
+                    color: "var(--text-secondary)",
                   }}
                 >
                   {faq.a}
@@ -109,7 +110,7 @@ export default function FAQ() {
           ))}
         </div>
 
-        <p className="font-montserrat" style={{ textAlign: "center", marginTop: "40px", fontSize: "0.9375rem", fontWeight: 300, color: "rgba(49,49,47,0.5)" }}>
+        <p className="font-montserrat" style={{ textAlign: "center", marginTop: "48px", fontSize: "0.9375rem", fontWeight: 300, color: "var(--text-muted)" }}>
           Noch Fragen?{" "}
           <a
             href="mailto:hello@cloudyclub-osnabrueck.de"

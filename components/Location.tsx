@@ -21,8 +21,8 @@ export default function Location() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(".loc-item",
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power3.out",
+        { opacity: 0, y: 32 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.16, ease: "power3.out",
           scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
       );
     }, sectionRef);
@@ -33,79 +33,93 @@ export default function Location() {
     <section
       id="location"
       ref={sectionRef}
-      style={{ padding: "112px 40px", background: "var(--cream)" }}
+      className="section"
+      style={{ background: "var(--bg-surface)" }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div className="section-inner">
         <SectionHeader
           eyebrow="Standort"
           title="Finde uns in Osnabrück"
           subtitle="Unser Club befindet sich im Herzen von Osnabrück. Nach der Aufnahme erhältst du alle Details zu unserem genauen Standort."
+          center={true}
         />
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", alignItems: "start" }} className="loc-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" }} className="loc-grid">
           {/* Map visual */}
           <div
-            className="loc-item"
+            className="loc-item card"
             style={{
-              height: "420px",
-              background: "linear-gradient(140deg, var(--lilac-light) 0%, #DDD0EE 100%)",
+              height: "480px",
+              background: "linear-gradient(140deg, rgba(192,175,211,0.08) 0%, rgba(192,175,211,0.02) 100%)",
               position: "relative",
               overflow: "hidden",
             }}
           >
             <svg
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-              viewBox="0 0 480 420"
+              viewBox="0 0 480 480"
               preserveAspectRatio="xMidYMid slice"
             >
               {/* grid */}
               {[80, 160, 240, 320, 400].map(x => (
-                <line key={`vl${x}`} x1={x} y1="0" x2={x} y2="420" stroke="#C0AFD3" strokeWidth="0.6" opacity="0.35" />
+                <line key={`vl${x}`} x1={x} y1="0" x2={x} y2="480" stroke="#C0AFD3" strokeWidth="0.6" opacity="0.15" />
               ))}
-              {[70, 140, 210, 280, 350].map(y => (
-                <line key={`hl${y}`} x1="0" y1={y} x2="480" y2={y} stroke="#C0AFD3" strokeWidth="0.6" opacity="0.35" />
+              {[80, 160, 240, 320, 400].map(y => (
+                <line key={`hl${y}`} x1="0" y1={y} x2="480" y2={y} stroke="#C0AFD3" strokeWidth="0.6" opacity="0.15" />
               ))}
               {/* streets */}
-              <path d="M0 210 Q240 210 480 210" stroke="rgba(255,255,255,0.7)" strokeWidth="10" fill="none" />
-              <path d="M240 0 L240 420"          stroke="rgba(255,255,255,0.7)" strokeWidth="10" fill="none" />
-              <path d="M0 140 Q200 150 380 138"  stroke="rgba(255,255,255,0.5)" strokeWidth="6"  fill="none" />
-              <path d="M90 0 Q105 210 85 420"    stroke="rgba(255,255,255,0.45)" strokeWidth="5" fill="none" />
-              <path d="M0 310 Q240 295 480 312"  stroke="rgba(255,255,255,0.4)" strokeWidth="4"  fill="none" />
+              <path d="M0 240 Q240 240 480 240" stroke="rgba(192,175,211,0.2)" strokeWidth="8" fill="none" />
+              <path d="M240 0 L240 480"          stroke="rgba(192,175,211,0.2)" strokeWidth="8" fill="none" />
+              <path d="M0 160 Q200 170 380 158"  stroke="rgba(192,175,211,0.15)" strokeWidth="6"  fill="none" />
+              <path d="M90 0 Q105 240 85 480"    stroke="rgba(192,175,211,0.1)" strokeWidth="4" fill="none" />
+              <path d="M0 340 Q240 325 480 342"  stroke="rgba(192,175,211,0.1)" strokeWidth="4"  fill="none" />
+              
+              {/* map glow */}
+              <circle cx="240" cy="240" r="100" fill="url(#mapGlow)" opacity="0.5" />
+              <defs>
+                <radialGradient id="mapGlow">
+                  <stop offset="0%" stopColor="#C0AFD3" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#C0AFD3" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+
               {/* pin */}
-              <circle cx="240" cy="210" r="20" fill="var(--lilac)" opacity="0.95" />
-              <circle cx="240" cy="210" r="9"  fill="white" />
-              <circle cx="240" cy="210" r="4"  fill="var(--lilac)" />
+              <circle cx="240" cy="240" r="16" fill="var(--lilac)" opacity="0.95" />
+              <circle cx="240" cy="240" r="6"  fill="var(--bg)" />
               {/* pulse rings */}
-              <circle cx="240" cy="210" r="20" fill="none" stroke="var(--lilac)" strokeWidth="1.5">
-                <animate attributeName="r"       values="20;52;20" dur="2.8s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.8s" repeatCount="indefinite" />
+              <circle cx="240" cy="240" r="16" fill="none" stroke="var(--lilac)" strokeWidth="1.5">
+                <animate attributeName="r"       values="16;48;16" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite" />
               </circle>
             </svg>
             {/* Label overlay */}
             <div style={{
-              position: "absolute", bottom: "20px", left: "20px",
-              background: "rgba(49,49,47,0.88)",
-              padding: "10px 18px",
-              backdropFilter: "blur(8px)",
+              position: "absolute", bottom: "24px", left: "24px",
+              background: "rgba(19,19,17,0.85)",
+              padding: "12px 20px",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(192,175,211,0.2)"
             }}>
-              <p className="font-montserrat" style={{ fontSize: "0.75rem", letterSpacing: "0.14em", color: "rgba(244,241,234,0.85)", textTransform: "uppercase" }}>
+              <p className="font-montserrat" style={{ fontSize: "0.75rem", letterSpacing: "0.15em", color: "var(--cream)", textTransform: "uppercase", fontWeight: 500 }}>
                 Osnabrück, Niedersachsen
               </p>
             </div>
           </div>
 
           {/* Info blocks */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* Address */}
             <div
-              className="loc-item"
-              style={{ padding: "28px 32px", background: "var(--lilac-light)", border: "1px solid rgba(192,175,211,0.4)" }}
+              className="loc-item card"
+              style={{ padding: "32px 40px", background: "transparent" }}
             >
-              <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                <MapPin size={17} style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "2px" }} />
+              <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(192,175,211,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <MapPin size={18} style={{ color: "var(--lilac)" }} />
+                </div>
                 <div>
-                  <p className="font-playfair" style={{ fontSize: "1.0625rem", color: "var(--charcoal)", marginBottom: "8px", fontWeight: 500 }}>Adresse</p>
-                  <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.7, color: "rgba(49,49,47,0.62)" }}>
+                  <p className="font-playfair" style={{ fontSize: "1.125rem", color: "var(--cream)", marginBottom: "8px", fontWeight: 600 }}>Adresse</p>
+                  <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)" }}>
                     Adresse wird nach Aufnahme bekannt gegeben<br />Osnabrück, Niedersachsen
                   </p>
                 </div>
@@ -114,18 +128,20 @@ export default function Location() {
 
             {/* Hours */}
             <div
-              className="loc-item"
-              style={{ padding: "28px 32px", background: "var(--lilac-light)", border: "1px solid rgba(192,175,211,0.4)" }}
+              className="loc-item card"
+              style={{ padding: "32px 40px", background: "transparent" }}
             >
-              <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                <Clock size={17} style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "2px" }} />
+              <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(192,175,211,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Clock size={18} style={{ color: "var(--lilac)" }} />
+                </div>
                 <div style={{ width: "100%" }}>
-                  <p className="font-playfair" style={{ fontSize: "1.0625rem", color: "var(--charcoal)", marginBottom: "16px", fontWeight: 500 }}>Öffnungszeiten</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <p className="font-playfair" style={{ fontSize: "1.125rem", color: "var(--cream)", marginBottom: "16px", fontWeight: 600 }}>Öffnungszeiten</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                     {hours.map((h, i) => (
-                      <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: "16px" }}>
-                        <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, color: "rgba(49,49,47,0.6)" }}>{h.day}</span>
-                        <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--charcoal)", flexShrink: 0 }}>{h.time}</span>
+                      <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: "16px", borderBottom: i !== hours.length - 1 ? "1px dashed rgba(192,175,211,0.1)" : "none", paddingBottom: i !== hours.length - 1 ? "12px" : "0" }}>
+                        <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, color: "var(--text-secondary)" }}>{h.day}</span>
+                        <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--cream)", flexShrink: 0 }}>{h.time}</span>
                       </div>
                     ))}
                   </div>
@@ -135,28 +151,32 @@ export default function Location() {
 
             {/* Contact */}
             <div
-              className="loc-item"
-              style={{ padding: "28px 32px", background: "var(--lilac-light)", border: "1px solid rgba(192,175,211,0.4)" }}
+              className="loc-item card"
+              style={{ padding: "32px 40px", background: "transparent" }}
             >
-              <p className="font-playfair" style={{ fontSize: "1.0625rem", color: "var(--charcoal)", marginBottom: "16px", fontWeight: 500 }}>Kontakt</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <p className="font-playfair" style={{ fontSize: "1.125rem", color: "var(--cream)", marginBottom: "20px", fontWeight: 600 }}>Kontakt</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <a
                   href="mailto:hello@cloudyclub-osnabrueck.de"
-                  style={{ display: "flex", gap: "12px", alignItems: "center", color: "rgba(49,49,47,0.62)", textDecoration: "none", transition: "color 0.3s ease" }}
+                  style={{ display: "flex", gap: "16px", alignItems: "center", color: "var(--text-secondary)", textDecoration: "none", transition: "color 0.3s ease" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--lilac)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(49,49,47,0.62)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--text-secondary)")}
                 >
-                  <Mail size={15} style={{ color: "var(--lilac)", flexShrink: 0 }} />
-                  <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300 }}>hello@cloudyclub-osnabrueck.de</span>
+                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(192,175,211,0.05)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Mail size={14} style={{ color: "var(--lilac)" }} />
+                  </div>
+                  <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300 }}>hello@cloudyclub-osnabrueck.de</span>
                 </a>
                 <a
                   href="tel:+49541000000"
-                  style={{ display: "flex", gap: "12px", alignItems: "center", color: "rgba(49,49,47,0.62)", textDecoration: "none", transition: "color 0.3s ease" }}
+                  style={{ display: "flex", gap: "16px", alignItems: "center", color: "var(--text-secondary)", textDecoration: "none", transition: "color 0.3s ease" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--lilac)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(49,49,47,0.62)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--text-secondary)")}
                 >
-                  <Phone size={15} style={{ color: "var(--lilac)", flexShrink: 0 }} />
-                  <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300 }}>+49 (0)541 · 000 0000</span>
+                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(192,175,211,0.05)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Phone size={14} style={{ color: "var(--lilac)" }} />
+                  </div>
+                  <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300 }}>+49 (0)541 · 000 0000</span>
                 </a>
               </div>
             </div>
@@ -165,7 +185,7 @@ export default function Location() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .loc-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>

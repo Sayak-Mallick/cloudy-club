@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { Menu, X } from "lucide-react";
 
@@ -8,22 +10,24 @@ type Lang = "DE" | "EN";
 
 const navItemsMap: Record<Lang, { label: string; href: string }[]> = {
   DE: [
-    { label: "Über uns", href: "#about" },
-    { label: "Anbau", href: "#growing" },
-    { label: "Prävention", href: "#prevention" },
-    { label: "Mitgliedschaft", href: "#membership" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Standort", href: "#location" },
-    { label: "News", href: "#news" },
+    { label: "Home",           href: "/" },
+    { label: "Über uns",       href: "/about" },
+    { label: "Anbau",          href: "/growing" },
+    { label: "Prävention",     href: "/prevention" },
+    { label: "Mitgliedschaft", href: "/membership" },
+    { label: "FAQ",            href: "/faq" },
+    { label: "Standort",       href: "/location" },
+    { label: "News",           href: "/news" },
   ],
   EN: [
-    { label: "About us", href: "#about" },
-    { label: "Growing", href: "#growing" },
-    { label: "Prevention", href: "#prevention" },
-    { label: "Membership", href: "#membership" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Location", href: "#location" },
-    { label: "News", href: "#news" },
+    { label: "Home",           href: "/" },
+    { label: "About",          href: "/about" },
+    { label: "Growing",        href: "/growing" },
+    { label: "Prevention",     href: "/prevention" },
+    { label: "Membership",     href: "/membership" },
+    { label: "FAQ",            href: "/faq" },
+    { label: "Location",       href: "/location" },
+    { label: "News",           href: "/news" },
   ],
 };
 
@@ -36,41 +40,27 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
   const [lang, setLang] = useState<Lang>("DE");
+  const pathname = usePathname();
 
   const navItems = navItemsMap[lang];
 
   useEffect(() => {
     gsap.fromTo(navRef.current,
       { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 }
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 }
     );
 
-    const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-      const ids = [...navItemsMap.DE].map(n => n.href.replace("#", "")).reverse();
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 140) {
-          setActiveSection(id);
-          break;
-        }
-      }
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollTo = (href: string) => {
-    setMenuOpen(false);
-    const el = document.getElementById(href.replace("#", ""));
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+  // Close mobile menu on route change
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   const toggleLang = () => setLang(prev => (prev === "DE" ? "EN" : "DE"));
 
-  // ── Shared pill switch ──
   const LangSwitch = () => (
     <button
       onClick={toggleLang}
@@ -82,7 +72,7 @@ export default function Navbar() {
         width: "64px",
         height: "28px",
         borderRadius: "999px",
-        border: "1.5px solid var(--lilac)",
+        border: "1.5px solid rgba(192,175,211,0.35)",
         background: "transparent",
         cursor: "pointer",
         padding: 0,
@@ -90,7 +80,6 @@ export default function Navbar() {
         overflow: "hidden",
       }}
     >
-      {/* sliding highlight */}
       <span
         style={{
           position: "absolute",
@@ -103,7 +92,6 @@ export default function Navbar() {
           transition: "left 0.3s cubic-bezier(0.4,0,0.2,1)",
         }}
       />
-      {/* labels */}
       {(["DE", "EN"] as Lang[]).map(l => (
         <span
           key={l}
@@ -115,7 +103,7 @@ export default function Navbar() {
             fontSize: "0.625rem",
             letterSpacing: "0.12em",
             fontWeight: 700,
-            color: lang === l ? "var(--cream, #f4f1ea)" : "var(--lilac)",
+            color: lang === l ? "var(--bg)" : "var(--lilac)",
             transition: "color 0.3s ease",
             userSelect: "none",
             zIndex: 1,
@@ -139,16 +127,20 @@ export default function Navbar() {
           height: "72px",
           display: "flex",
           alignItems: "center",
-          transition: "background 0.4s ease, box-shadow 0.4s ease",
-          background: scrolled ? "rgba(244,241,234,0.96)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          boxShadow: scrolled ? "0 1px 0 rgba(192,175,211,0.25)" : "none",
+          transition: "background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
+          background: scrolled
+            ? "rgba(19,19,17,0.92)"
+            : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled
+            ? "1px solid rgba(192,175,211,0.1)"
+            : "1px solid transparent",
         }}
       >
         <div
           style={{
             width: "100%",
-            maxWidth: "1200px",
+            maxWidth: "1280px",
             margin: "0 auto",
             padding: "0 40px",
             display: "flex",
@@ -158,61 +150,51 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}
-          >
-            <svg width="40" height="40" viewBox="0 0 100 100">
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0, textDecoration: "none" }}>
+            <svg width="36" height="36" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="47" fill="none" stroke="#C0AFD3" strokeWidth="2.5" />
               <ellipse cx="50" cy="58" rx="27" ry="17" fill="#C0AFD3" opacity="0.55" />
               <ellipse cx="37" cy="53" rx="19" ry="15" fill="#C0AFD3" opacity="0.75" />
               <ellipse cx="63" cy="55" rx="17" ry="13" fill="#C0AFD3" opacity="0.65" />
               <ellipse cx="50" cy="46" rx="15" ry="13" fill="#C0AFD3" opacity="0.45" />
               <ellipse cx="42" cy="40" rx="9" ry="8" fill="#C0AFD3" opacity="0.35" />
-              <circle cx="33" cy="33" r="1.5" fill="#C0AFD3" opacity="0.7" />
-              <circle cx="67" cy="28" r="1.2" fill="#C0AFD3" opacity="0.6" />
-              <circle cx="72" cy="42" r="1" fill="#C0AFD3" opacity="0.5" />
             </svg>
             <div style={{ lineHeight: 1 }}>
-              <div className="font-playfair" style={{ fontSize: "1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--charcoal)", lineHeight: 1.1 }}>Cloudy</div>
-              <div className="font-montserrat" style={{ fontSize: "0.625rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--lilac)", marginTop: "3px" }}>Club</div>
+              <div className="font-playfair" style={{ fontSize: "0.9375rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.1 }}>Cloudy</div>
+              <div className="font-montserrat" style={{ fontSize: "0.5625rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--lilac)", marginTop: "3px" }}>Club</div>
             </div>
-          </button>
+          </Link>
 
           {/* Desktop nav links */}
-          <ul
-            className="hidden lg:flex items-center gap-7 list-none m-0 p-0"
-          >
-            {navItems.map(item => (
-              <li key={item.href}>
-                <button
-                  onClick={() => scrollTo(item.href)}
-                  className={`nav-link ${activeSection === item.href.replace("#", "") ? "active" : ""}`}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
+          <ul className="hidden lg:flex items-center gap-7 list-none m-0 p-0">
+            {navItems.map(item => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`nav-link ${isActive ? "active" : ""}`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
-          {/* Right side: lang switch + CTA */}
-          <div className="hidden lg:flex items-center gap-4" style={{ flexShrink: 0 }}>
+          {/* Right: lang + CTA */}
+          <div className="hidden lg:flex items-center gap-5" style={{ flexShrink: 0 }}>
             <LangSwitch />
-            <button onClick={() => scrollTo("#membership")} className="btn-primary">
+            <Link href="/membership" className="btn-primary" style={{ height: "40px", fontSize: "0.625rem" }}>
               {ctaLabel[lang]}
-            </button>
+            </Link>
           </div>
 
           {/* Mobile toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex items-center p-2 lg:hidden"
-            style={{
-              color: "var(--charcoal)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
+            style={{ color: "var(--cream)", background: "none", border: "none", cursor: "pointer" }}
             aria-label="Menü"
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -226,46 +208,45 @@ export default function Navbar() {
           position: "fixed",
           inset: 0,
           zIndex: 90,
-          background: "rgba(244,241,234,0.98)",
-          backdropFilter: "blur(16px)",
+          background: "rgba(19,19,17,0.97)",
+          backdropFilter: "blur(20px)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: "32px",
+          gap: "8px",
           paddingTop: "72px",
-          transition: "opacity 0.4s ease",
+          transition: "opacity 0.4s ease, pointer-events 0s",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "auto" : "none",
         }}
       >
         {navItems.map((item, i) => (
-          <button
+          <Link
             key={item.href}
-            onClick={() => scrollTo(item.href)}
+            href={item.href}
             className="font-playfair"
             style={{
-              fontSize: "1.625rem",
-              color: "var(--charcoal)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
+              fontSize: "2rem",
+              color: pathname === item.href ? "var(--lilac)" : "var(--cream)",
+              textDecoration: "none",
               transition: "color 0.3s ease",
               transitionDelay: `${i * 40}ms`,
+              padding: "12px 24px",
             }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--lilac)")}
-            onMouseLeave={e => (e.currentTarget.style.color = "var(--charcoal)")}
+            onMouseLeave={e => (e.currentTarget.style.color = pathname === item.href ? "var(--lilac)" : "var(--cream)")}
           >
             {item.label}
-          </button>
+          </Link>
         ))}
 
-        {/* Lang switch inside mobile overlay too */}
-        <LangSwitch />
-
-        <button onClick={() => scrollTo("#membership")} className="btn-primary" style={{ marginTop: "8px" }}>
-          {ctaLabel[lang]}
-        </button>
+        <div style={{ marginTop: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+          <LangSwitch />
+          <Link href="/membership" className="btn-primary" style={{ marginTop: "8px" }}>
+            {ctaLabel[lang]}
+          </Link>
+        </div>
       </div>
     </>
   );

@@ -1,41 +1,34 @@
 "use client";
 
 import { Mail, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const footerLinks = {
   Club: [
-    { label: "Über uns",       href: "#about" },
-    { label: "Anbau",          href: "#growing" },
-    { label: "Prävention",     href: "#prevention" },
-    { label: "Mitgliedschaft", href: "#membership" },
+    { label: "Über uns",       href: "/about" },
+    { label: "Anbau",          href: "/growing" },
+    { label: "Prävention",     href: "/prevention" },
+    { label: "Mitgliedschaft", href: "/membership" },
   ],
   Info: [
-    { label: "FAQ",           href: "#faq" },
-    { label: "Standort",      href: "#location" },
-    { label: "News",          href: "#news" },
+    { label: "FAQ",           href: "/faq" },
+    { label: "Standort",      href: "/location" },
+    { label: "News",          href: "/news" },
     { label: "Impressum",     href: "/impressum" },
     { label: "Datenschutz",   href: "/datenschutz" },
   ],
 };
 
 export default function Footer() {
-  const scrollTo = (href: string) => {
-    if (href.startsWith("#")) {
-      document.getElementById(href.replace("#", ""))?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.location.href = href;
-    }
-  };
-
   return (
-    <footer style={{ background: "var(--charcoal)" }}>
+    <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
       {/* Main footer content */}
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "64px" }} className="footer-grid">
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "100px 40px 60px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "80px" }} className="footer-grid">
           {/* Brand */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "24px" }}>
-              <svg width="40" height="40" viewBox="0 0 100 100">
+            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "32px" }}>
+              <svg width="48" height="48" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="47" fill="none" stroke="#C0AFD3" strokeWidth="2.5" />
                 <ellipse cx="50" cy="58" rx="27" ry="17" fill="#C0AFD3" opacity="0.5"  />
                 <ellipse cx="37" cy="53" rx="19" ry="15" fill="#C0AFD3" opacity="0.7"  />
@@ -43,17 +36,17 @@ export default function Footer() {
                 <ellipse cx="50" cy="46" rx="15" ry="13" fill="#C0AFD3" opacity="0.42" />
               </svg>
               <div style={{ lineHeight: 1 }}>
-                <div className="font-playfair" style={{ fontSize: "1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.1 }}>Cloudy</div>
-                <div className="font-montserrat" style={{ fontSize: "0.625rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--lilac)", marginTop: "4px" }}>Club</div>
+                <div className="font-playfair" style={{ fontSize: "1.25rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.1, fontWeight: 600 }}>Cloudy</div>
+                <div className="font-montserrat" style={{ fontSize: "0.75rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--lilac)", marginTop: "4px", fontWeight: 500 }}>Club</div>
               </div>
             </div>
-            <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.8, color: "rgba(244,241,234,0.48)", maxWidth: "300px", marginBottom: "32px" }}>
+            <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)", maxWidth: "340px", marginBottom: "40px" }}>
               Cannabis Social Club Osnabrück e.V. – Gemeinsam, verantwortungsbewusst und transparent. Für ein entspanntes Miteinander in Osnabrück.
             </p>
-            <div style={{ display: "flex", gap: "12px" }}>
+            <div style={{ display: "flex", gap: "16px" }}>
               {[
-                { href: "https://instagram.com", icon: <ExternalLink size={16} />, label: "Instagram" },
-                { href: "mailto:hello@cloudyclub-osnabrueck.de", icon: <Mail size={16} />, label: "Mail" },
+                { href: "https://instagram.com", icon: <ExternalLink size={18} />, label: "Instagram" },
+                { href: "mailto:hello@cloudyclub-osnabrueck.de", icon: <Mail size={18} />, label: "Mail" },
               ].map((s, i) => (
                 <a
                   key={i}
@@ -62,18 +55,25 @@ export default function Footer() {
                   target={s.href.startsWith("http") ? "_blank" : undefined}
                   rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   style={{
-                    width: "40px",
-                    height: "40px",
+                    width: "48px",
+                    height: "48px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    color: "rgba(244,241,234,0.5)",
+                    border: "1px solid rgba(192,175,211,0.2)",
+                    color: "var(--lilac)",
                     textDecoration: "none",
-                    transition: "color 0.3s ease, border-color 0.3s ease",
+                    transition: "all 0.3s ease",
+                    background: "rgba(192,175,211,0.05)",
                   }}
-                  onMouseEnter={e => { (e.currentTarget.style.color = "var(--lilac)"); (e.currentTarget.style.borderColor = "var(--lilac)"); }}
-                  onMouseLeave={e => { (e.currentTarget.style.color = "rgba(244,241,234,0.5)"); (e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"); }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "var(--lilac)";
+                    e.currentTarget.style.color = "var(--bg)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "rgba(192,175,211,0.05)";
+                    e.currentTarget.style.color = "var(--lilac)";
+                  }}
                 >
                   {s.icon}
                 </a>
@@ -84,28 +84,25 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([group, links]) => (
             <div key={group}>
-              <p className="eyebrow" style={{ color: "var(--lilac)", marginBottom: "24px" }}>{group}</p>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+              <p className="eyebrow" style={{ marginBottom: "32px" }}>{group}</p>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px" }}>
                 {links.map(link => (
                   <li key={link.label}>
-                    <button
-                      onClick={() => scrollTo(link.href)}
+                    <Link
+                      href={link.href}
                       className="font-montserrat"
                       style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        fontSize: "0.875rem",
+                        textDecoration: "none",
+                        fontSize: "0.9375rem",
                         fontWeight: 300,
-                        color: "rgba(244,241,234,0.48)",
-                        padding: 0,
+                        color: "var(--text-secondary)",
                         transition: "color 0.3s ease",
                       }}
-                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "rgba(244,241,234,0.9)")}
-                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(244,241,234,0.48)")}
+                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--cream)")}
+                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-secondary)")}
                     >
                       {link.label}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -116,27 +113,31 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div style={{
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "20px 40px",
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "12px",
+        borderTop: "1px solid var(--border)",
+        background: "var(--bg-surface)",
       }}>
-        <p className="font-montserrat" style={{ fontSize: "0.75rem", fontWeight: 300, color: "rgba(244,241,234,0.28)" }}>
-          © {new Date().getFullYear()} Cloudy Club Osnabrück e.V. — Alle Rechte vorbehalten.
-        </p>
-        <p className="font-montserrat" style={{ fontSize: "0.75rem", fontWeight: 300, color: "rgba(244,241,234,0.28)" }}>
-          Nur für Mitglieder ab 18 Jahren. Nicht öffentlich zugänglich.
-        </p>
+        <div style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "24px 40px",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "16px",
+        }}>
+          <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-muted)" }}>
+            © {new Date().getFullYear()} Cloudy Club Osnabrück e.V. — Alle Rechte vorbehalten.
+          </p>
+          <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-muted)" }}>
+            Nur für Mitglieder ab 18 Jahren. Nicht öffentlich zugänglich.
+          </p>
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 60px !important; }
           .footer-grid > div:first-child { grid-column: 1 / -1; }
         }
         @media (max-width: 480px) {
