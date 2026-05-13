@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, Circle } from "lucide-react";
+import Link from "next/link";
+import { Check, ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,11 +31,14 @@ export default function Membership() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(".mem-card",
-        { opacity: 0, y: 48 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.18, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true } }
+      gsap.fromTo(".mem-col",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
       );
     }, sectionRef);
     return () => ctx.revert();
@@ -45,111 +49,173 @@ export default function Membership() {
       id="membership"
       ref={sectionRef}
       className="section"
-      style={{ background: "var(--bg-surface)" }}
+      style={{ background: "var(--bg)" }}
     >
       <div className="section-inner">
-        <div className="section-header center">
+        <div className="section-header" style={{ marginBottom: "56px" }}>
           <span className="eyebrow">Mitgliedschaft</span>
-          <h2 className="font-playfair section-title">Werde Teil des Clubs</h2>
+          <h2 className="font-playfair section-title">Werde Teil des Clubs.</h2>
           <p className="section-subtitle">
             Transparent, fair und unkompliziert. Hier siehst du alles, was du über eine Mitgliedschaft im Cloudy Club wissen musst.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
-          {/* Pricing */}
-          <div className="mem-card card" style={{ padding: "48px" }}>
-            <p className="eyebrow" style={{ marginBottom: "32px" }}>Kosten</p>
+        {/* Three-column grid */}
+        <div
+          className="mem-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr", gap: "24px", alignItems: "start" }}
+        >
+          {/* Costs card */}
+          <div
+            className="mem-col"
+            style={{
+              background: "var(--bg-elevated)",
+              border: "1px solid var(--border)",
+              borderRadius: "2px",
+              padding: "40px 32px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <span className="eyebrow" style={{ marginBottom: "32px", display: "block" }}>Beiträge</span>
 
-            <div style={{ marginBottom: "12px" }}>
-              <span className="font-playfair" style={{ fontSize: "3.5rem", color: "var(--cream)", lineHeight: 1, fontWeight: 700 }}>50</span>
-              <span className="font-playfair" style={{ fontSize: "1.5rem", color: "var(--cream)", fontWeight: 500 }}>€</span>
+            <div style={{ paddingBottom: "24px", marginBottom: "24px", borderBottom: "1px solid var(--border)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
+                <span className="font-playfair" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>
+                  50
+                </span>
+                <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--cream)", fontWeight: 500 }}>€</span>
+              </div>
+              <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-secondary)" }}>
+                Einmalige Aufnahmegebühr
+              </p>
             </div>
-            <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, color: "var(--text-secondary)", marginBottom: "32px" }}>
-              Einmalige Aufnahmegebühr
-            </p>
 
-            <div style={{ width: "100%", height: "1px", background: "var(--border)", marginBottom: "32px" }} />
-
-            <div style={{ marginBottom: "12px" }}>
-              <span className="font-playfair" style={{ fontSize: "3rem", color: "var(--lilac)", lineHeight: 1, fontWeight: 700 }}>25</span>
-              <span className="font-playfair" style={{ fontSize: "1.5rem", color: "var(--lilac)", fontWeight: 500 }}>€</span>
+            <div style={{ paddingBottom: "28px", marginBottom: "28px", borderBottom: "1px solid var(--border)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
+                <span className="font-playfair" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--lilac)", fontWeight: 700, lineHeight: 1 }}>
+                  25
+                </span>
+                <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--lilac)", fontWeight: 500 }}>€</span>
+              </div>
+              <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-secondary)" }}>
+                Pro Monat
+              </p>
             </div>
-            <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, color: "var(--text-secondary)", marginBottom: "32px" }}>
-              Pro Monat
-            </p>
 
-            <div style={{ width: "100%", height: "1px", background: "var(--border)", marginBottom: "32px" }} />
-
-            <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-muted)" }}>
+            <p className="font-montserrat" style={{ fontSize: "0.75rem", fontWeight: 300, lineHeight: 1.7, color: "var(--text-muted)", marginBottom: "32px", flex: 1 }}>
               Keine versteckten Kosten. Beiträge dienen ausschließlich dem Vereinsbetrieb und Anbau.
             </p>
+
+            <Link
+              href="#cannanas-embed"
+              className="btn-primary"
+              style={{ width: "100%", justifyContent: "center" }}
+            >
+              Mitglied werden <ArrowRight size={13} />
+            </Link>
           </div>
 
-          {/* Benefits */}
-          <div className="mem-card card" style={{ padding: "48px" }}>
-            <p className="eyebrow" style={{ marginBottom: "32px" }}>Deine Vorteile</p>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px" }}>
+          {/* Benefits list */}
+          <div className="mem-col">
+            <span className="eyebrow" style={{ display: "block", marginBottom: "12px" }}>Was du bekommst</span>
+            <h3 className="font-playfair" style={{ fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: "var(--cream)", marginBottom: "32px", lineHeight: 1.2 }}>
+              Deine Vorteile als Mitglied.
+            </h3>
+            <ul style={{ listStyle: "none" }}>
               {benefits.map((b, i) => (
-                <li key={i} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                  <Check size={18} style={{ color: "var(--sage)", flexShrink: 0, marginTop: "2px" }} />
-                  <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-primary)" }}>{b}</span>
+                <li
+                  key={i}
+                  style={{
+                    display: "flex",
+                    gap: "14px",
+                    alignItems: "flex-start",
+                    padding: "14px 0",
+                    borderBottom: "1px solid var(--border)",
+                  }}
+                >
+                  <Check size={15} style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "3px" }} />
+                  <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-secondary)" }}>
+                    {b}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Requirements + Form */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <div className="mem-card card" style={{ padding: "48px" }}>
-              <p className="eyebrow" style={{ marginBottom: "32px" }}>Voraussetzungen</p>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px" }}>
-                {requirements.map((r, i) => (
-                  <li key={i} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                    <Circle size={12} fill="var(--lilac)" style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "6px" }} />
-                    <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-primary)" }}>{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Cannanas form placeholder */}
-            <div className="mem-card" style={{ 
-              background: "var(--lilac)", 
-              padding: "48px",
-              position: "relative",
-              overflow: "hidden"
-            }}>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%)", pointerEvents: "none" }} />
-              
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <h3 className="font-playfair" style={{ fontSize: "1.75rem", color: "var(--bg)", fontWeight: 700, marginBottom: "16px" }}>
-                  Jetzt bewerben
-                </h3>
-                <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 500, lineHeight: 1.7, color: "rgba(19,19,17,0.7)", marginBottom: "32px" }}>
-                  Fülle das Aufnahmeformular aus – wir melden uns innerhalb von 48 Stunden.
-                </p>
-                <div
-                  id="cannanas-embed"
+          {/* Requirements */}
+          <div className="mem-col">
+            <span className="eyebrow" style={{ display: "block", marginBottom: "32px" }}>Voraussetzungen</span>
+            <ul style={{ listStyle: "none" }}>
+              {requirements.map((r, i) => (
+                <li
+                  key={i}
                   style={{
-                    minHeight: "120px",
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "rgba(255,255,255,0.2)",
-                    border: "1px dashed rgba(19,19,17,0.3)",
-                    padding: "24px",
+                    gap: "14px",
+                    alignItems: "flex-start",
+                    padding: "14px 0",
+                    borderBottom: "1px solid var(--border)",
                   }}
                 >
-                  <p className="font-montserrat" style={{ fontSize: "0.8125rem", color: "rgba(19,19,17,0.6)", textAlign: "center", fontWeight: 600 }}>
-                    [Cannanas-Formular wird hier eingebettet]
-                  </p>
-                </div>
-              </div>
-            </div>
+                  <span className="font-montserrat" style={{ color: "var(--lilac)", fontWeight: 700, flexShrink: 0, fontSize: "0.875rem", marginTop: "1px" }}>
+                    —
+                  </span>
+                  <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-secondary)" }}>
+                    {r}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Application form placeholder */}
+        <div
+          id="cannanas-embed"
+          style={{
+            marginTop: "48px",
+            background: "var(--bg-surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "2px",
+            padding: "56px 48px",
+            textAlign: "center",
+          }}
+        >
+          <span className="eyebrow" style={{ display: "block", marginBottom: "12px" }}>Beitrittsformular</span>
+          <h3 className="font-playfair" style={{ fontSize: "1.625rem", fontWeight: 700, color: "var(--cream)", marginBottom: "12px" }}>
+            Mitgliedschaft beantragen
+          </h3>
+          <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, color: "var(--text-secondary)", marginBottom: "32px" }}>
+            Das Antragsformular wird hier eingebettet.
+          </p>
+          <div style={{
+            minHeight: "120px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "var(--bg-card)",
+            border: "1px dashed var(--border)",
+            borderRadius: "2px",
+            padding: "24px",
+          }}>
+            <p className="font-montserrat" style={{ fontSize: "0.8125rem", color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.04em" }}>
+              [Cannanas-Formular wird hier eingebettet]
+            </p>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .mem-grid { grid-template-columns: 1fr 1fr !important; }
+          .mem-grid > .mem-col:first-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 640px) {
+          .mem-grid { grid-template-columns: 1fr !important; }
+          .mem-grid > .mem-col:first-child { grid-column: auto; }
+        }
+      `}</style>
     </section>
   );
 }

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SectionHeader from "./SectionHeader";
 import { ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,22 +12,19 @@ const posts = [
     date: "März 2025",
     tag: "Vereinsnews",
     title: "Der Cloudy Club öffnet seine Türen",
-    excerpt: "Wir freuen uns, euch unsere Vereinsgründung offiziell bekannt zu geben. Nach Monaten der Vorbereitung sind wir bereit für unsere erste Mitgliederaufnahme.",
-    glow: "rgba(192,175,211,0.2)",
+    excerpt: "Wir sind offiziell eingetragen und freuen uns, die Türen des Cloudy Club für neue Mitglieder zu öffnen. Ein historischer Moment für unsere Gemeinschaft.",
   },
   {
     date: "April 2025",
     tag: "Prävention",
     title: "Erster Präventionsabend – ein voller Erfolg",
-    excerpt: "Über 30 Interessierte kamen zu unserem ersten Informationsabend. Wir haben über Set & Setting, verantwortungsvollen Konsum und die Rechtslage gesprochen.",
-    glow: "rgba(229,212,190,0.15)",
+    excerpt: "Über 30 Mitglieder kamen zusammen, um über Set & Setting, sichere Dosierung und Risikoreduktion zu sprechen. Danke an alle Teilnehmenden!",
   },
   {
     date: "Mai 2025",
     tag: "Anbau",
     title: "Erste Ernte – Qualität die begeistert",
-    excerpt: "Unsere erste vereinseigene Ernte ist abgeschlossen. Die Laborergebnisse zeigen eine hervorragende Qualität. Alle Details folgen für Mitglieder im internen Bereich.",
-    glow: "rgba(139,152,128,0.15)",
+    excerpt: "Unsere erste vereinseigene Ernte ist abgeschlossen. Die Testergebnisse übertreffen unsere Erwartungen in Aroma, Terpengehalt und Wirkstoffprofil.",
   },
 ];
 
@@ -36,10 +32,13 @@ export default function News() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(".news-card",
-        { opacity: 0, y: 44 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.2, ease: "power3.out",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.14, ease: "power2.out",
           scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
       );
     }, sectionRef);
@@ -51,107 +50,122 @@ export default function News() {
       id="news"
       ref={sectionRef}
       className="section"
-      style={{ background: "var(--bg)" }}
+      style={{ background: "var(--bg-surface)" }}
     >
       <div className="section-inner">
-        <SectionHeader
-          eyebrow="News"
-          title="Aktuelles aus dem Club"
-          subtitle="Bleib informiert über Vereinsnews, Ernteergebnisse, Events und alles rund um den Cloudy Club."
-        />
+        {/* Header row */}
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", marginBottom: "48px", flexWrap: "wrap" }}>
+          <div>
+            <span className="eyebrow" style={{ display: "block", marginBottom: "10px" }}>Aktuelles</span>
+            <h2 className="font-playfair" style={{ fontSize: "clamp(2rem, 5vw, 3.25rem)", fontWeight: 700, color: "var(--cream)", lineHeight: 1.05 }}>
+              Neuigkeiten aus dem Club.
+            </h2>
+          </div>
+          <button
+            className="font-montserrat"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--lilac)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              letterSpacing: "0.04em",
+              transition: "opacity 0.2s ease",
+              flexShrink: 0,
+              padding: "0",
+              marginBottom: "6px",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+          >
+            Alle Artikel ansehen <ArrowRight size={13} />
+          </button>
+        </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
+        {/* Cards grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="news-grid">
           {posts.map((post, i) => (
             <article
               key={i}
               className="news-card card"
               style={{
+                padding: "32px 28px",
                 display: "flex",
                 flexDirection: "column",
                 cursor: "pointer",
-                position: "relative",
-                overflow: "hidden",
-                background: "var(--bg-surface)",
+                background: "var(--bg-card)",
               }}
             >
-              {/* Image area (abstract) */}
-              <div
-                style={{
-                  height: "220px",
-                  background: "var(--bg-elevated)",
-                  position: "relative",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderBottom: "1px solid var(--border)",
-                }}
-              >
-                {/* Glow */}
-                <div style={{
-                  position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
-                  width: "200px", height: "200px", borderRadius: "50%",
-                  background: `radial-gradient(circle, ${post.glow} 0%, transparent 70%)`,
-                  filter: "blur(20px)",
-                }} />
-
-                {/* Decorative Elements */}
-                <svg width="120" height="120" viewBox="0 0 120 120" style={{ opacity: 0.6, position: "relative", zIndex: 1 }}>
-                  <circle cx="60" cy="60" r="40" fill="none" stroke="rgba(192,175,211,0.2)" strokeWidth="1" />
-                  <circle cx="60" cy="60" r="24" fill="none" stroke="rgba(192,175,211,0.3)" strokeWidth="1" />
-                  <circle cx="60" cy="60" r="8" fill="var(--lilac)" opacity="0.8" />
-                  {i === 0 && <path d="M60 20 L60 0 M60 100 L60 120 M20 60 L0 60 M100 60 L120 60" stroke="rgba(192,175,211,0.3)" strokeWidth="1" />}
-                  {i === 1 && <path d="M32 32 L16 16 M88 88 L104 104 M32 88 L16 104 M88 32 L104 16" stroke="rgba(192,175,211,0.3)" strokeWidth="1" />}
-                  {i === 2 && <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(192,175,211,0.15)" strokeWidth="1" strokeDasharray="4 4" />}
-                </svg>
-
-                <div style={{
-                  position: "absolute", top: "20px", left: "20px",
-                  background: "rgba(19,19,17,0.7)",
-                  border: "1px solid rgba(192,175,211,0.2)",
-                  padding: "8px 16px",
-                  backdropFilter: "blur(8px)",
-                  borderRadius: "4px",
-                }}>
-                  <span className="eyebrow" style={{ color: "var(--cream)", fontSize: "0.625rem", letterSpacing: "0.2em" }}>{post.tag}</span>
-                </div>
+              {/* Top row: date + tag */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", marginBottom: "20px" }}>
+                <span className="font-montserrat" style={{ fontSize: "11px", color: "var(--text-muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  {post.date}
+                </span>
+                <span
+                  className="font-montserrat"
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "var(--lilac)",
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "2px",
+                    padding: "4px 10px",
+                    flexShrink: 0,
+                  }}
+                >
+                  {post.tag}
+                </span>
               </div>
 
-              {/* Text area */}
-              <div style={{ padding: "32px", display: "flex", flexDirection: "column", flex: 1 }}>
-                <p className="font-montserrat" style={{ fontSize: "0.8125rem", color: "var(--text-muted)", marginBottom: "16px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                  {post.date}
-                </p>
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: "1.25rem",
-                    color: "var(--cream)",
-                    lineHeight: 1.4,
-                    fontWeight: 600,
-                    marginBottom: "16px",
-                    transition: "color 0.3s ease",
-                  }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--lilac)")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--cream)")}
-                >
-                  {post.title}
-                </h3>
-                <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)", flex: 1, marginBottom: "32px" }}>
-                  {post.excerpt}
-                </p>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <span className="eyebrow" style={{ color: "var(--lilac)", fontSize: "0.6875rem" }}>Weiterlesen</span>
-                  <ArrowRight size={14} style={{ color: "var(--lilac)", transition: "transform 0.3s ease" }} />
-                </div>
+              {/* Title */}
+              <h3
+                className="font-playfair news-title"
+                style={{
+                  fontSize: "1.1875rem",
+                  color: "var(--cream)",
+                  lineHeight: 1.35,
+                  fontWeight: 600,
+                  marginBottom: "14px",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--lilac)")}
+                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--cream)")}
+              >
+                {post.title}
+              </h3>
+
+              {/* Excerpt */}
+              <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.75, color: "var(--text-secondary)", flex: 1, marginBottom: "28px" }}>
+                {post.excerpt}
+              </p>
+
+              {/* Read more */}
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span className="font-montserrat" style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--lilac)" }}>
+                  Weiterlesen
+                </span>
+                <ArrowRight size={12} style={{ color: "var(--lilac)" }} />
               </div>
             </article>
           ))}
         </div>
-
-        <div style={{ textAlign: "center", marginTop: "72px" }}>
-          <button className="btn-outline">Alle Artikel ansehen</button>
-        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .news-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (min-width: 520px) and (max-width: 900px) {
+          .news-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </section>
   );
 }

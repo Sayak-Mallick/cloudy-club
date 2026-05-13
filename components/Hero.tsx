@@ -6,68 +6,77 @@ import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
 
 const STARS = [
-  { top: "12%", left: "8%",   delay: 0,   size: 8  },
-  { top: "18%", left: "78%",  delay: 1.4, size: 6  },
-  { top: "62%", left: "6%",   delay: 0.7, size: 7  },
-  { top: "75%", left: "91%",  delay: 2.1, size: 10 },
-  { top: "35%", left: "72%",  delay: 0.4, size: 5  },
-  { top: "8%",  left: "52%",  delay: 2.4, size: 8  },
-  { top: "88%", left: "25%",  delay: 1.6, size: 6  },
-  { top: "45%", left: "88%",  delay: 0.9, size: 5  },
-  { top: "28%", left: "18%",  delay: 1.8, size: 7  },
+  { top: "12%", left: "10%",  delay: 0,   size: 7  },
+  { top: "20%", left: "82%",  delay: 1.4, size: 5  },
+  { top: "60%", left: "7%",   delay: 0.7, size: 6  },
+  { top: "72%", left: "88%",  delay: 2.1, size: 9  },
+  { top: "38%", left: "76%",  delay: 0.4, size: 5  },
+  { top: "8%",  left: "55%",  delay: 2.4, size: 7  },
+  { top: "85%", left: "22%",  delay: 1.6, size: 5  },
+  { top: "50%", left: "93%",  delay: 0.9, size: 4  },
 ];
 
 const STATS = [
-  { value: "50g",     label: "monatl. Abgabe" },
-  { value: "§CanG",  label: "100% legal" },
+  { value: "50g",    label: "monatl. Abgabe" },
+  { value: "§CanG",  label: "100% legal & konform" },
   { value: "18+",    label: "Mindestalter" },
 ];
 
 export default function Hero() {
   const sectionRef  = useRef<HTMLElement>(null);
   const cloudRef    = useRef<HTMLDivElement>(null);
+  const starsRef    = useRef<HTMLDivElement>(null);
+  const eyebrowRef  = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef      = useRef<HTMLParagraphElement>(null);
   const ctaRef      = useRef<HTMLDivElement>(null);
   const statsRef    = useRef<HTMLDivElement>(null);
-  const starsRef    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-      tl.fromTo(starsRef.current, { opacity: 0 }, { opacity: 1, duration: 2.5 });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+      tl.fromTo(starsRef.current, { opacity: 0 }, { opacity: 1, duration: 2 });
 
       tl.fromTo(cloudRef.current,
-        { y: 60, opacity: 0, scale: 0.85 },
-        { y: 0,  opacity: 1, scale: 1,   duration: 1.6 },
-        "-=2.2"
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.9 },
+        "-=1.6"
+      );
+
+      tl.fromTo(eyebrowRef.current,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        "-=0.8"
       );
 
       const words = headlineRef.current?.querySelectorAll("span.word");
       if (words?.length) {
         tl.fromTo(words,
-          { y: 48, opacity: 0 },
-          { y: 0,  opacity: 1, duration: 0.9, stagger: 0.12 },
-          "-=1"
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out" },
+          "-=0.3"
         );
       }
 
       tl.fromTo(subRef.current,
-        { y: 24, opacity: 0 },
-        { y: 0,  opacity: 1, duration: 0.8 },
-        "-=0.5"
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6 },
+        "-=0.3"
       );
 
       tl.fromTo(ctaRef.current,
-        { y: 18, opacity: 0 },
-        { y: 0,  opacity: 1, duration: 0.7 },
-        "-=0.4"
+        { y: 8, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5 },
+        "-=0.3"
       );
 
-      tl.fromTo(statsRef.current,
-        { y: 24, opacity: 0 },
-        { y: 0,  opacity: 1, duration: 0.7 },
+      tl.fromTo(".stats-stat",
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 },
         "-=0.3"
       );
     }, sectionRef);
@@ -83,194 +92,270 @@ export default function Hero() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
         background: "var(--bg)",
-        paddingTop: "72px",
+        paddingTop: "64px",
+        overflow: "hidden",
       }}
     >
-      {/* ── Background glows ── */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      {/* ── Ambient glows ── */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         <div className="glow-blob" style={{
-          top: "5%", left: "-10%",
-          width: "640px", height: "640px",
-          background: "radial-gradient(circle, rgba(192,175,211,0.07) 0%, transparent 70%)",
+          top: "10%", left: "-8%",
+          width: "500px", height: "500px",
+          background: "radial-gradient(circle, rgba(192,175,211,0.06) 0%, transparent 70%)",
         }} />
         <div className="glow-blob" style={{
-          bottom: "0%", right: "-10%",
-          width: "560px", height: "560px",
-          background: "radial-gradient(circle, rgba(139,152,128,0.06) 0%, transparent 70%)",
-        }} />
-        <div className="glow-blob" style={{
-          top: "40%", left: "50%",
-          width: "360px", height: "360px",
-          transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(192,175,211,0.04) 0%, transparent 70%)",
+          bottom: "5%", right: "-8%",
+          width: "420px", height: "420px",
+          background: "radial-gradient(circle, rgba(139,152,128,0.05) 0%, transparent 70%)",
         }} />
       </div>
 
-      {/* ── Stars ── */}
-      <div ref={starsRef} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        {STARS.map((s, i) => (
-          <svg
-            key={i}
-            className="star-twinkle"
-            style={{
-              position: "absolute",
-              top: s.top,
-              left: s.left,
-              width: s.size,
-              height: s.size,
-              animationDelay: `${s.delay}s`,
-            }}
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z" fill="#C0AFD3" />
-          </svg>
-        ))}
-      </div>
-
-      {/* ── Horizontal rule ── */}
-      <div style={{
+      {/* ── Top border ── */}
+      <div aria-hidden="true" style={{
         position: "absolute",
-        top: "72px",
+        top: "64px",
         left: 0, right: 0,
         height: "1px",
-        background: "linear-gradient(to right, transparent 0%, rgba(192,175,211,0.15) 30%, rgba(192,175,211,0.15) 70%, transparent 100%)",
+        background: "linear-gradient(to right, transparent 0%, var(--border) 20%, var(--border) 80%, transparent 100%)",
       }} />
 
-      {/* ── Cloud illustration ── */}
-      <div ref={cloudRef} className="float-anim" style={{ marginBottom: "48px", position: "relative", zIndex: 1 }}>
-        <svg
-          width="280"
-          height="180"
-          viewBox="0 0 280 180"
-          style={{ display: "block", filter: "drop-shadow(0 20px 60px rgba(192,175,211,0.25))" }}
-        >
-          <defs>
-            <radialGradient id="hcg1" cx="50%" cy="55%" r="52%">
-              <stop offset="0%" stopColor="#C0AFD3" stopOpacity="0.65" />
-              <stop offset="100%" stopColor="#9B88C0" stopOpacity="0.35" />
-            </radialGradient>
-            <radialGradient id="hcg2" cx="45%" cy="60%" r="55%">
-              <stop offset="0%" stopColor="#EDE8F5" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#C0AFD3" stopOpacity="0.1" />
-            </radialGradient>
-          </defs>
-          {/* crescent moon */}
-          <path
-            d="M142 24 C164 12, 198 28, 192 58 C185 38, 165 33, 148 47 C137 29, 140 24, 142 24Z"
-            fill="none" stroke="rgba(192,175,211,0.7)" strokeWidth="1.5" strokeLinecap="round"
-          />
-          {/* cloud layers */}
-          <ellipse cx="140" cy="126" rx="108" ry="50" fill="url(#hcg1)" />
-          <ellipse cx="102"  cy="112" rx="70"  ry="44" fill="#C0AFD3" opacity="0.35" />
-          <ellipse cx="180" cy="116" rx="60"  ry="40" fill="#B8AAD0" opacity="0.3"  />
-          <ellipse cx="140" cy="102" rx="54"  ry="40" fill="#D4C8E8" opacity="0.22" />
-          <ellipse cx="116" cy="92"  rx="40"  ry="30" fill="#E2D8F0" opacity="0.18" />
-          {/* outline */}
-          <ellipse cx="140" cy="126" rx="108" ry="50" fill="none" stroke="rgba(192,175,211,0.4)" strokeWidth="1" />
-          {/* sparkle stars */}
-          <path d="M36 54 L38.5 47 L41 54 L48 56.5 L41 59 L38.5 66 L36 59 L29 56.5Z" fill="#C0AFD3" opacity="0.7" />
-          <path d="M232 68 L234.5 62 L237 68 L243 70.5 L237 73 L234.5 79 L232 73 L226 70.5Z" fill="#C0AFD3" opacity="0.55" />
-          <path d="M60 150 L61.5 146 L63 150 L67 151.5 L63 153 L61.5 157 L60 153 L56 151.5Z" fill="#8B9880" opacity="0.6" />
-        </svg>
-      </div>
+      {/* ── Main split layout ── */}
+      <div style={{
+        flex: 1,
+        maxWidth: "1200px",
+        margin: "0 auto",
+        width: "100%",
+        padding: "0 40px",
+        display: "grid",
+        gridTemplateColumns: "55% 45%",
+        alignItems: "center",
+        minHeight: "calc(100vh - 64px - 120px)",
+      }} className="hero-grid">
 
-      {/* ── Text block ── */}
-      <div style={{ textAlign: "center", padding: "0 24px", maxWidth: "860px", position: "relative", zIndex: 1 }}>
-        <p className="eyebrow" style={{ color: "var(--lilac)", marginBottom: "24px", opacity: 0.9 }}>
-          Cannabis Social Club · Osnabrück
-        </p>
+        {/* Left: text content */}
+        <div style={{ paddingRight: "64px", paddingTop: "60px", paddingBottom: "60px" }}>
 
-        <h1
-          ref={headlineRef}
-          className="font-playfair"
-          style={{
-            fontSize: "clamp(3rem, 8.5vw, 6.5rem)",
-            lineHeight: 0.98,
-            fontWeight: 800,
-            color: "var(--cream)",
-            marginBottom: "32px",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {["Willkommen", "im"].map((w, i) => (
-            <span key={i} className="word" style={{ display: "inline-block", marginRight: "0.2em" }}>{w}</span>
-          ))}
-          {" "}
-          <span className="word" style={{ display: "inline-block", color: "var(--lilac)", fontStyle: "italic", marginRight: "0.15em" }}>Cloudy</span>
-          <span className="word" style={{ display: "inline-block" }}>Club.</span>
-        </h1>
+          {/* Eyebrow tag */}
+          <div
+            ref={eyebrowRef}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              border: "1px solid var(--border)",
+              background: "var(--bg-elevated)",
+              padding: "6px 14px",
+              borderRadius: "2px",
+              marginBottom: "28px",
+            }}
+          >
+            <span aria-hidden="true" style={{
+              width: "5px", height: "5px",
+              borderRadius: "50%",
+              background: "var(--lilac)",
+              display: "inline-block",
+              flexShrink: 0,
+            }} />
+            <span className="eyebrow" style={{ color: "var(--text-secondary)", letterSpacing: "0.28em" }}>
+              Cannabis Social Club · Osnabrück
+            </span>
+          </div>
 
-        <div className="divider divider-center" style={{ marginBottom: "32px" }} />
+          {/* Headline */}
+          <h1
+            ref={headlineRef}
+            className="font-playfair"
+            style={{
+              fontSize: "clamp(2.75rem, 6.5vw, 5.25rem)",
+              lineHeight: 1.0,
+              fontWeight: 700,
+              color: "var(--cream)",
+              marginBottom: "24px",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            <span className="word" style={{ display: "inline-block", marginRight: "0.22em" }}>Willkommen</span>
+            <span className="word" style={{ display: "inline-block", marginRight: "0.22em" }}>im</span>
+            <br />
+            <span className="word" style={{ display: "inline-block", color: "var(--lilac)", fontStyle: "italic", marginRight: "0.18em" }}>Cloudy</span>
+            <span className="word" style={{ display: "inline-block" }}>Club.</span>
+          </h1>
 
-        <p
-          ref={subRef}
-          className="font-montserrat"
-          style={{
-            fontSize: "1.0625rem",
-            fontWeight: 300,
-            lineHeight: 1.85,
-            color: "var(--text-secondary)",
-            maxWidth: "560px",
-            margin: "0 auto 48px",
-          }}
-        >
-          Dein Zuhause für gemeinsamen Anbau, verantwortungsvollen Konsum und echte
-          Community in Osnabrück. Sicher, transparent, zusammen.
-        </p>
+          {/* Subtext */}
+          <p
+            ref={subRef}
+            className="font-montserrat"
+            style={{
+              fontSize: "1rem",
+              fontWeight: 300,
+              lineHeight: 1.85,
+              color: "var(--text-secondary)",
+              maxWidth: "460px",
+              marginBottom: "40px",
+            }}
+          >
+            Dein Zuhause für gemeinsamen Anbau, verantwortungsvollen Konsum und echte
+            Community in Osnabrück. Sicher, transparent, zusammen.
+          </p>
 
-        <div
-          ref={ctaRef}
-          style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center", justifyContent: "center", marginBottom: "72px" }}
-        >
-          <Link href="/membership" className="btn-primary" style={{ gap: "10px" }}>
-            Mitglied werden <ArrowRight size={14} />
-          </Link>
-          <Link href="/about" className="btn-outline">
-            Mehr erfahren
-          </Link>
+          {/* CTAs */}
+          <div
+            ref={ctaRef}
+            style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}
+          >
+            <Link href="/membership" className="btn-primary">
+              Mitglied werden <ArrowRight size={13} />
+            </Link>
+            <Link
+              href="/about"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                color: "var(--text-secondary)",
+                textDecoration: "none",
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "13px",
+                fontWeight: 500,
+                letterSpacing: "0.04em",
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = "var(--cream)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "var(--text-secondary)")}
+            >
+              Mehr erfahren <ArrowRight size={13} />
+            </Link>
+          </div>
         </div>
 
-        {/* ── Stats bar ── */}
+        {/* Right: visual */}
+        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", height: "100%", minHeight: "380px" }} className="hero-visual-col">
+          {/* Stars */}
+          <div ref={starsRef} aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+            {STARS.map((s, i) => (
+              <svg
+                key={i}
+                className="star-twinkle"
+                style={{
+                  position: "absolute",
+                  top: s.top,
+                  left: s.left,
+                  width: s.size,
+                  height: s.size,
+                  animationDelay: `${s.delay}s`,
+                }}
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z" fill="#C0AFD3" />
+              </svg>
+            ))}
+          </div>
+
+          {/* Glow behind cloud */}
+          <div aria-hidden="true" style={{
+            position: "absolute",
+            width: "360px", height: "360px",
+            background: "radial-gradient(circle, rgba(192,175,211,0.07) 0%, transparent 70%)",
+            filter: "blur(40px)",
+            pointerEvents: "none",
+          }} />
+
+          {/* Cloud illustration */}
+          <div ref={cloudRef} className="float-anim" style={{ position: "relative", zIndex: 1 }}>
+            <svg
+              width="320"
+              height="260"
+              viewBox="0 0 320 260"
+              aria-hidden="true"
+              style={{ display: "block", filter: "drop-shadow(0 20px 60px rgba(192,175,211,0.18))" }}
+            >
+              <defs>
+                <radialGradient id="hcg1" cx="50%" cy="55%" r="52%">
+                  <stop offset="0%" stopColor="#C0AFD3" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#9B88C0" stopOpacity="0.28" />
+                </radialGradient>
+              </defs>
+              {/* Crescent moon */}
+              <path
+                d="M178 38 C204 22, 244 42, 237 78 C228 52, 204 46, 183 62 C170 42, 175 38, 178 38Z"
+                fill="none" stroke="rgba(192,175,211,0.65)" strokeWidth="1.5" strokeLinecap="round"
+              />
+              {/* Cloud layers */}
+              <ellipse cx="158" cy="186" rx="130" ry="60" fill="url(#hcg1)" />
+              <ellipse cx="112" cy="168" rx="86"  ry="54" fill="#C0AFD3" opacity="0.3" />
+              <ellipse cx="210" cy="174" rx="74"  ry="48" fill="#B8AAD0" opacity="0.25" />
+              <ellipse cx="158" cy="150" rx="66"  ry="50" fill="#D4C8E8" opacity="0.18" />
+              <ellipse cx="130" cy="138" rx="46"  ry="34" fill="#E2D8F0" opacity="0.14" />
+              {/* Outline */}
+              <ellipse cx="158" cy="186" rx="130" ry="60" fill="none" stroke="rgba(192,175,211,0.35)" strokeWidth="1" />
+              {/* Sparkle stars */}
+              <path d="M42 72 L44.5 65 L47 72 L54 74.5 L47 77 L44.5 84 L42 77 L35 74.5Z" fill="#C0AFD3" opacity="0.65" />
+              <path d="M272 92 L274.5 86 L277 92 L283 94.5 L277 97 L274.5 103 L272 97 L266 94.5Z" fill="#C0AFD3" opacity="0.5" />
+              <path d="M76 218 L77.5 214 L79 218 L83 219.5 L79 221 L77.5 225 L76 221 L72 219.5Z" fill="#8B9880" opacity="0.55" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Stats bar ── */}
+      <div style={{ borderTop: "1px solid var(--border)" }}>
         <div
           ref={statsRef}
           style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "28px 40px",
             display: "flex",
-            flexWrap: "wrap",
             alignItems: "center",
-            justifyContent: "center",
-            gap: "0",
-            borderTop: "1px solid rgba(192,175,211,0.1)",
-            paddingTop: "32px",
           }}
         >
           {STATS.map((s, i) => (
             <div
               key={i}
+              className="stats-stat"
               style={{
-                padding: "0 40px",
+                flex: 1,
                 textAlign: "center",
-                borderRight: i < STATS.length - 1 ? "1px solid rgba(192,175,211,0.12)" : "none",
+                borderRight: i < STATS.length - 1 ? "1px solid var(--border)" : "none",
+                padding: "4px 0",
               }}
             >
-              <p className="font-playfair" style={{ fontSize: "2rem", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>{s.value}</p>
-              <p className="font-montserrat" style={{ fontSize: "0.625rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: "6px" }}>{s.label}</p>
+              <p className="font-playfair" style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>
+                {s.value}
+              </p>
+              <p className="font-montserrat" style={{ fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: "6px" }}>
+                {s.label}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── Bottom fade ── */}
-      <div style={{
-        position: "absolute",
-        bottom: 0, left: 0, right: 0,
-        height: "200px",
-        background: "linear-gradient(to top, var(--bg) 0%, transparent 100%)",
-        pointerEvents: "none",
-      }} />
+      {/* ── Responsive ── */}
+      <style>{`
+        @media (max-width: 900px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            min-height: auto !important;
+          }
+          .hero-grid > div:first-child {
+            padding-right: 0 !important;
+            padding-top: 48px !important;
+            padding-bottom: 0 !important;
+          }
+          .hero-visual-col {
+            display: none !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-grid > div:first-child {
+            padding-top: 40px !important;
+            padding-bottom: 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -9,21 +9,29 @@ import { Leaf, Droplets, Sun, FlaskConical, ArrowRight } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
-  { icon: Sun,          number: "01", title: "Genetik & Sorten",     text: "Wir wählen sorgfältig geprüfte Sorten aus, die auf Qualität, Geschmack und Wirkung optimiert sind." },
-  { icon: Droplets,     number: "02", title: "Nachhaltiger Anbau",    text: "Unser Anbau erfolgt unter kontrollierten Bedingungen ohne chemische Pestizide – für dich und die Umwelt." },
-  { icon: Leaf,         number: "03", title: "Ernte & Pflege",        text: "Jede Ernte wird liebevoll getrimmt, schonend getrocknet und sorgfältig kuriert für maximale Qualität." },
-  { icon: FlaskConical, number: "04", title: "Qualitätsprüfung",      text: "Alle Chargen werden auf THC, CBD und Terpene getestet – vollständige Transparenz für unsere Mitglieder." },
+  { icon: Sun,          number: "01", title: "Genetik & Sorten",     text: "Sorgfältig ausgewählte, qualitätsoptimierte Sorten für beste Ergebnisse in Geschmack und Wirkung." },
+  { icon: Droplets,     number: "02", title: "Nachhaltiger Anbau",    text: "Kontrollierte Umgebung ohne chemische Pestizide – für reine Qualität und nachhaltige Produktion." },
+  { icon: Leaf,         number: "03", title: "Ernte & Pflege",        text: "Sorgfältiges Trimmen, Trocknen und Aushärten für optimales Aroma und maximale Qualität." },
+  { icon: FlaskConical, number: "04", title: "Qualitätsprüfung",      text: "THC-, CBD- und Terpenanalyse mit voller Transparenz für unsere Mitglieder." },
 ];
 
 export default function Growing() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(".grow-card",
-        { opacity: 0, y: 48 },
-        { opacity: 1, y: 0, duration: 0.82, stagger: 0.14, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true } }
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
+      );
+      gsap.fromTo(".grow-connector",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
       );
     }, sectionRef);
     return () => ctx.revert();
@@ -34,48 +42,77 @@ export default function Growing() {
       id="growing"
       ref={sectionRef}
       className="section"
-      style={{ background: "var(--bg-surface)", position: "relative" }}
+      style={{ background: "var(--bg-surface)" }}
     >
       <div className="section-inner">
-        <div className="section-header center">
-          <span className="eyebrow">Anbau</span>
-          <h2 className="font-playfair section-title">Vom Samen zur Qualität</h2>
+        {/* Header */}
+        <div className="section-header" style={{ marginBottom: "56px" }}>
+          <span className="eyebrow">Unser Anbau</span>
+          <h2 className="font-playfair section-title">Von der Saat zur Qualität.</h2>
           <p className="section-subtitle">
-            Transparenz ist unser Fundament. Erfahre, wie wir Cannabis mit Sorgfalt und Leidenschaft für unsere Mitglieder anbauen.
+            Vereinseigener Anbau — für Mitglieder, von Mitgliedern. Transparent, nachhaltig, geprüft.
           </p>
         </div>
 
+        {/* Step connector line */}
+        <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }} className="grow-step-header" aria-hidden="true">
+          {steps.map((step, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                <div style={{
+                  width: "28px", height: "28px",
+                  border: "1px solid var(--border)",
+                  background: "var(--bg-elevated)",
+                  borderRadius: "2px",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0,
+                }}>
+                  <span className="font-montserrat" style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.08em", color: "var(--lilac)" }}>
+                    {step.number}
+                  </span>
+                </div>
+                <span className="font-montserrat" style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>
+                  {step.title}
+                </span>
+              </div>
+              {i < steps.length - 1 && (
+                <div
+                  className="grow-connector"
+                  style={{
+                    flex: 1,
+                    height: "1px",
+                    background: "var(--border)",
+                    margin: "0 12px",
+                    transformOrigin: "left",
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
         {/* Cards grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }} className="grow-grid">
           {steps.map((step, i) => (
             <div
               key={i}
               className="grow-card card"
               style={{
-                padding: "40px 32px",
-                position: "relative",
+                padding: "32px 28px",
                 display: "flex",
                 flexDirection: "column",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "32px" }}>
-                <div
-                  style={{
-                    width: "48px", height: "48px",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    background: "rgba(192,175,211,0.08)",
-                    border: "1px solid rgba(192,175,211,0.15)",
-                  }}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "28px" }}>
+                <step.icon size={20} style={{ color: "var(--lilac)" }} />
+                <span
+                  className="font-montserrat"
+                  style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.3em", color: "var(--text-muted)" }}
                 >
-                  <step.icon size={20} style={{ color: "var(--lilac)" }} />
-                </div>
-                <p className="font-playfair"
-                   style={{ fontSize: "3rem", lineHeight: 0.8, color: "rgba(192,175,211,0.15)", fontWeight: 700 }}>
                   {step.number}
-                </p>
+                </span>
               </div>
-              
-              <h3 className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--cream)", marginBottom: "12px", fontWeight: 600 }}>
+              <h3 className="font-playfair" style={{ fontSize: "1.125rem", color: "var(--cream)", marginBottom: "10px", fontWeight: 600 }}>
                 {step.title}
               </h3>
               <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)" }}>
@@ -87,46 +124,46 @@ export default function Growing() {
 
         {/* Banner */}
         <div
-          className="grow-card"
           style={{
-            marginTop: "80px",
-            padding: "56px",
-            background: "linear-gradient(135deg, rgba(192,175,211,0.08) 0%, rgba(192,175,211,0.02) 100%)",
-            border: "1px solid rgba(192,175,211,0.15)",
+            marginTop: "64px",
+            padding: "48px 56px",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
+            borderRadius: "2px",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "40px",
-            position: "relative",
-            overflow: "hidden",
+            gap: "32px",
           }}
+          className="grow-banner"
         >
-          {/* Banner Glow */}
-          <div style={{
-            position: "absolute", top: "0", right: "0",
-            width: "300px", height: "300px",
-            background: "radial-gradient(circle, rgba(192,175,211,0.1) 0%, transparent 70%)",
-            transform: "translate(30%, -30%)",
-            pointerEvents: "none",
-          }} />
-
-          <div style={{ maxWidth: "640px", position: "relative", zIndex: 1 }}>
-            <h3 className="font-playfair gradient-text" style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "16px", lineHeight: 1.2 }}>
-              Vereinseigener Anbau — für Mitglieder, von Mitgliedern
+          <div style={{ maxWidth: "600px" }}>
+            <h3 className="font-playfair" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, marginBottom: "12px", lineHeight: 1.2, color: "var(--cream)" }}>
+              Vereinseigener Anbau —{" "}
+              <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>für Mitglieder, von Mitgliedern</span>
             </h3>
             <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)" }}>
               Als Mitglied des Cloudy Clubs hast du das Recht auf deine monatliche Menge gemäß § CanG.
-              Keine graue Zone, keine Unsicherheit — nur ehrliches Cannabis aus unserer eigenen Anlage.
+              Keine graue Zone — nur ehrliches Cannabis aus unserer eigenen Anlage.
             </p>
           </div>
-          <div style={{ position: "relative", zIndex: 1 }}>
-            <Link href="/membership" className="btn-primary" style={{ gap: "10px" }}>
-              Mitglied werden <ArrowRight size={14} />
-            </Link>
-          </div>
+          <Link href="/membership" className="btn-primary" style={{ flexShrink: 0 }}>
+            Mitglied werden <ArrowRight size={13} />
+          </Link>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .grow-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .grow-step-header { display: none !important; }
+          .grow-banner { padding: 36px 28px !important; }
+        }
+        @media (max-width: 520px) {
+          .grow-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }
