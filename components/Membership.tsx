@@ -28,19 +28,65 @@ const requirements = [
 ];
 
 export default function Membership() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const price1Ref    = useRef<HTMLSpanElement>(null);
+  const price2Ref    = useRef<HTMLSpanElement>(null);
+  const headlineRef  = useRef<HTMLHeadingElement>(null);
+  const line1Ref     = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
+      // Line-mask headline reveal
+      if (!prefersReduced) {
+        gsap.fromTo(line1Ref.current,
+          { y: "105%", skewX: -3 },
+          {
+            y: "0%", skewX: 0, duration: 0.9, ease: "power4.out",
+            scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
+          }
+        );
+      }
+
+      // Columns stagger in
       gsap.fromTo(".mem-col",
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true },
+        }
       );
+
+      if (!prefersReduced) {
+        // Counter — aufnahme (50€)
+        const counter1 = { val: 0 };
+        gsap.to(counter1, {
+          val: 50,
+          duration: 1.6,
+          ease: "power2.out",
+          snap: { val: 1 },
+          scrollTrigger: { trigger: price1Ref.current, start: "top 85%", once: true },
+          onUpdate() {
+            if (price1Ref.current) price1Ref.current.textContent = String(Math.round(counter1.val));
+          },
+        });
+
+        // Counter — monatlich (25€)
+        const counter2 = { val: 0 };
+        gsap.to(counter2, {
+          val: 25,
+          duration: 1.4,
+          ease: "power2.out",
+          snap: { val: 1 },
+          scrollTrigger: { trigger: price2Ref.current, start: "top 85%", once: true },
+          onUpdate() {
+            if (price2Ref.current) price2Ref.current.textContent = String(Math.round(counter2.val));
+          },
+        });
+      }
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
@@ -54,7 +100,11 @@ export default function Membership() {
       <div className="section-inner">
         <div className="section-header" style={{ marginBottom: "56px" }}>
           <span className="eyebrow">Mitgliedschaft</span>
-          <h2 className="font-playfair section-title">Werde Teil des Clubs.</h2>
+          <h2 ref={headlineRef} className="font-playfair section-title">
+            <span className="line-mask" style={{ display: "block" }}>
+              <span ref={line1Ref} className="line-inner">Werde Teil des Clubs.</span>
+            </span>
+          </h2>
           <p className="section-subtitle">
             Transparent, fair und unkompliziert. Hier siehst du alles, was du über eine Mitgliedschaft im Cloudy Club wissen musst.
           </p>
@@ -81,8 +131,12 @@ export default function Membership() {
 
             <div style={{ paddingBottom: "24px", marginBottom: "24px", borderBottom: "1px solid var(--border)" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                <span className="font-playfair" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>
-                  50
+                <span
+                  ref={price1Ref}
+                  className="font-playfair"
+                  style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}
+                >
+                  0
                 </span>
                 <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--cream)", fontWeight: 500 }}>€</span>
               </div>
@@ -93,8 +147,12 @@ export default function Membership() {
 
             <div style={{ paddingBottom: "28px", marginBottom: "28px", borderBottom: "1px solid var(--border)" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                <span className="font-playfair" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--lilac)", fontWeight: 700, lineHeight: 1 }}>
-                  25
+                <span
+                  ref={price2Ref}
+                  className="font-playfair"
+                  style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--lilac)", fontWeight: 700, lineHeight: 1 }}
+                >
+                  0
                 </span>
                 <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--lilac)", fontWeight: 500 }}>€</span>
               </div>

@@ -26,7 +26,7 @@
 
 /* ─── Reset ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { font-size: 16px; }
 body {
   background-color: var(--bg);
   color: var(--text-primary);
@@ -36,6 +36,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ─── Default cursor ─── */
+* { cursor: auto; }
 
 /* ─── Grain texture ─── */
 body::after {
@@ -77,7 +80,6 @@ body::after {
   height: 1px;
   background: var(--lilac);
 }
-.divider-center { margin-left: auto; margin-right: auto; }
 
 /* ─── Nav link ─── */
 .nav-link {
@@ -91,7 +93,6 @@ body::after {
   padding-bottom: 3px;
   background: none;
   border: none;
-  cursor: pointer;
   text-decoration: none;
 }
 .nav-link::after {
@@ -126,16 +127,25 @@ body::after {
   text-transform: uppercase;
   border: none;
   border-radius: 2px;
-  cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   white-space: nowrap;
   flex-shrink: 0;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover::after { transform: translateX(0); }
 .btn-primary:hover {
-  background: var(--lilac-light);
   transform: translateY(-1px);
-  box-shadow: 0 8px 28px rgba(192,175,211,0.22);
+  box-shadow: 0 8px 28px rgba(192,175,211,0.25);
 }
 .btn-primary:active { transform: translateY(0); box-shadow: none; }
 
@@ -155,7 +165,6 @@ body::after {
   text-transform: uppercase;
   border: 1px solid rgba(244,241,234,0.22);
   border-radius: 2px;
-  cursor: pointer;
   transition: background 0.22s ease, border-color 0.22s ease;
   white-space: nowrap;
   flex-shrink: 0;
@@ -205,6 +214,16 @@ body::after {
 }
 .section-header.center .section-subtitle { margin-left: auto; margin-right: auto; }
 
+/* ─── Line-mask text reveal ─── */
+.line-mask {
+  display: block;
+  overflow: hidden;
+}
+.line-inner {
+  display: block;
+  will-change: transform;
+}
+
 /* ─── Float animation ─── */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -227,13 +246,6 @@ body::after {
 }
 .accordion-body.open { max-height: 400px; }
 
-/* ─── Page transition ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.page-enter { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both; }
-
 /* ─── Glow blob ─── */
 .glow-blob {
   position: absolute;
@@ -241,6 +253,43 @@ body::after {
   filter: blur(120px);
   pointer-events: none;
 }
+
+/* ─── Ticker marquee ─── */
+@keyframes ticker-ltr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.3333%); }
+}
+@keyframes ticker-rtl {
+  from { transform: translateX(-33.3333%); }
+  to   { transform: translateX(0); }
+}
+.ticker-inner {
+  animation: ticker-ltr 22s linear infinite;
+}
+.ticker-inner-rev {
+  animation: ticker-rtl 22s linear infinite;
+}
+.ticker-inner:hover,
+.ticker-inner-rev:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Horizontal scroll section ─── */
+.h-scroll-section {
+  overflow: hidden;
+  position: relative;
+}
+.h-scroll-track {
+  display: flex;
+  will-change: transform;
+}
+
+/* ─── Page transition ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both; }
 
 /* ─── Responsive helpers ─── */
 @media (max-width: 768px) {

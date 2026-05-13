@@ -3,82 +3,142 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const STARS = [
-  { top: "12%", left: "10%",  delay: 0,   size: 7  },
-  { top: "20%", left: "82%",  delay: 1.4, size: 5  },
-  { top: "60%", left: "7%",   delay: 0.7, size: 6  },
-  { top: "72%", left: "88%",  delay: 2.1, size: 9  },
-  { top: "38%", left: "76%",  delay: 0.4, size: 5  },
-  { top: "8%",  left: "55%",  delay: 2.4, size: 7  },
-  { top: "85%", left: "22%",  delay: 1.6, size: 5  },
-  { top: "50%", left: "93%",  delay: 0.9, size: 4  },
+  { top: "14%", left: "9%",  delay: 0,   size: 7  },
+  { top: "22%", left: "83%", delay: 1.4, size: 5  },
+  { top: "58%", left: "6%",  delay: 0.7, size: 6  },
+  { top: "70%", left: "87%", delay: 2.1, size: 9  },
+  { top: "40%", left: "78%", delay: 0.4, size: 5  },
+  { top: "9%",  left: "57%", delay: 2.4, size: 7  },
+  { top: "82%", left: "20%", delay: 1.6, size: 5  },
+  { top: "52%", left: "92%", delay: 0.9, size: 4  },
 ];
 
 const STATS = [
-  { value: "50g",    label: "monatl. Abgabe" },
-  { value: "§CanG",  label: "100% legal & konform" },
-  { value: "18+",    label: "Mindestalter" },
+  { value: 50,     suffix: "g",     label: "monatl. Abgabe",     display: "50g" },
+  { value: null,   suffix: "",      label: "100% legal & konform", display: "§CanG" },
+  { value: 18,     suffix: "+",     label: "Mindestalter",        display: "18+" },
 ];
 
 export default function Hero() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const cloudRef    = useRef<HTMLDivElement>(null);
-  const starsRef    = useRef<HTMLDivElement>(null);
-  const eyebrowRef  = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subRef      = useRef<HTMLParagraphElement>(null);
-  const ctaRef      = useRef<HTMLDivElement>(null);
-  const statsRef    = useRef<HTMLDivElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const bgRef        = useRef<HTMLDivElement>(null);
+  const textColRef   = useRef<HTMLDivElement>(null);
+  const visualColRef = useRef<HTMLDivElement>(null);
+  const cloudRef     = useRef<HTMLDivElement>(null);
+  const starsRef     = useRef<HTMLDivElement>(null);
+  const eyebrowRef   = useRef<HTMLDivElement>(null);
+  const line1Ref     = useRef<HTMLSpanElement>(null);
+  const line2Ref     = useRef<HTMLSpanElement>(null);
+  const subRef       = useRef<HTMLParagraphElement>(null);
+  const ctaRef       = useRef<HTMLDivElement>(null);
+  const statsRef     = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      if (!prefersReduced) {
+        // ── Entrance timeline ──
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.fromTo(starsRef.current, { opacity: 0 }, { opacity: 1, duration: 2 });
+        // Stars fade in quietly
+        tl.fromTo(starsRef.current, { opacity: 0 }, { opacity: 1, duration: 2 });
 
-      tl.fromTo(cloudRef.current,
-        { opacity: 0, x: 24 },
-        { opacity: 1, x: 0, duration: 0.9 },
-        "-=1.6"
-      );
-
-      tl.fromTo(eyebrowRef.current,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.8"
-      );
-
-      const words = headlineRef.current?.querySelectorAll("span.word");
-      if (words?.length) {
-        tl.fromTo(words,
-          { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out" },
-          "-=0.3"
+        // Cloud slides in from right
+        tl.fromTo(cloudRef.current,
+          { opacity: 0, x: 40, scale: 0.9 },
+          { opacity: 1, x: 0,  scale: 1, duration: 1.2 },
+          "-=1.8"
         );
+
+        // Eyebrow fades up
+        tl.fromTo(eyebrowRef.current,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          "-=0.9"
+        );
+
+        // Line-mask reveals — text slides up from behind clip
+        tl.fromTo([line1Ref.current, line2Ref.current],
+          { y: "108%", skewX: -4 },
+          { y: "0%", skewX: 0, duration: 1, stagger: 0.14, ease: "power4.out" },
+          "-=0.5"
+        );
+
+        // Sub + CTA fade up
+        tl.fromTo(subRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          "-=0.4"
+        );
+        tl.fromTo(ctaRef.current,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          "-=0.45"
+        );
+
+        // Stats stagger in
+        tl.fromTo(".stats-stat",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.55 },
+          "-=0.35"
+        );
+
+        // ── Scroll parallax ──
+        // Text column moves up faster → feels closer
+        gsap.to(textColRef.current, {
+          y: -90,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Visual moves up slower → appears further away (depth)
+        gsap.to(visualColRef.current, {
+          y: -35,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Stars move even slower
+        gsap.to(starsRef.current, {
+          y: -18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Background image parallax — slowest layer, creates depth
+        gsap.to(bgRef.current, {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
       }
-
-      tl.fromTo(subRef.current,
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 },
-        "-=0.3"
-      );
-
-      tl.fromTo(ctaRef.current,
-        { y: 8, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5 },
-        "-=0.3"
-      );
-
-      tl.fromTo(".stats-stat",
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 },
-        "-=0.3"
-      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -93,16 +153,50 @@ export default function Hero() {
         display: "flex",
         flexDirection: "column",
         background: "var(--bg)",
-        paddingTop: "64px",
         overflow: "hidden",
       }}
     >
+      {/* ── Parallax background image ── */}
+      <div
+        ref={bgRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0, left: 0, right: 0,
+          height: "115%",
+          backgroundImage: "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          willChange: "transform",
+          zIndex: 0,
+        }}
+      />
+      {/* Dark overlay — heavier on left (text side), lighter right (image side) */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", inset: 0, zIndex: 1,
+          background: "linear-gradient(to right, rgba(19,19,17,0.96) 0%, rgba(19,19,17,0.82) 40%, rgba(19,19,17,0.55) 70%, rgba(19,19,17,0.25) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Bottom fade to bg color */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", bottom: 0, left: 0, right: 0,
+          height: "180px", zIndex: 1,
+          background: "linear-gradient(to top, var(--bg) 0%, transparent 100%)",
+          pointerEvents: "none",
+        }}
+      />
+
       {/* ── Ambient glows ── */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2 }}>
         <div className="glow-blob" style={{
-          top: "10%", left: "-8%",
-          width: "500px", height: "500px",
-          background: "radial-gradient(circle, rgba(192,175,211,0.06) 0%, transparent 70%)",
+          top: "5%", left: "-10%",
+          width: "520px", height: "520px",
+          background: "radial-gradient(circle, rgba(192,175,211,0.07) 0%, transparent 70%)",
         }} />
         <div className="glow-blob" style={{
           bottom: "5%", right: "-8%",
@@ -111,31 +205,37 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* ── Top border ── */}
+      {/* ── Top rule ── */}
       <div aria-hidden="true" style={{
         position: "absolute",
-        top: "64px",
-        left: 0, right: 0,
+        top: 0, left: 0, right: 0,
         height: "1px",
         background: "linear-gradient(to right, transparent 0%, var(--border) 20%, var(--border) 80%, transparent 100%)",
+        zIndex: 2,
       }} />
 
-      {/* ── Main split layout ── */}
-      <div style={{
-        flex: 1,
-        maxWidth: "1200px",
-        margin: "0 auto",
-        width: "100%",
-        padding: "0 40px",
-        display: "grid",
-        gridTemplateColumns: "55% 45%",
-        alignItems: "center",
-        minHeight: "calc(100vh - 64px - 120px)",
-      }} className="hero-grid">
-
-        {/* Left: text content */}
-        <div style={{ paddingRight: "64px", paddingTop: "60px", paddingBottom: "60px" }}>
-
+      {/* ── Split layout ── */}
+      <div
+        style={{
+          flex: 1,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          width: "100%",
+          padding: "0 40px",
+          display: "grid",
+          gridTemplateColumns: "55% 45%",
+          alignItems: "center",
+          minHeight: "calc(100vh - 120px)",
+          position: "relative",
+          zIndex: 2,
+        }}
+        className="hero-grid"
+      >
+        {/* ── Left: text ── */}
+        <div
+          ref={textColRef}
+          style={{ paddingRight: "64px", paddingTop: "60px", paddingBottom: "60px" }}
+        >
           {/* Eyebrow tag */}
           <div
             ref={eyebrowRef}
@@ -162,9 +262,8 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* Headline */}
+          {/* Headline — line-mask reveal */}
           <h1
-            ref={headlineRef}
             className="font-playfair"
             style={{
               fontSize: "clamp(2.75rem, 6.5vw, 5.25rem)",
@@ -175,11 +274,15 @@ export default function Hero() {
               letterSpacing: "-0.02em",
             }}
           >
-            <span className="word" style={{ display: "inline-block", marginRight: "0.22em" }}>Willkommen</span>
-            <span className="word" style={{ display: "inline-block", marginRight: "0.22em" }}>im</span>
-            <br />
-            <span className="word" style={{ display: "inline-block", color: "var(--lilac)", fontStyle: "italic", marginRight: "0.18em" }}>Cloudy</span>
-            <span className="word" style={{ display: "inline-block" }}>Club.</span>
+            <span className="line-mask" style={{ display: "block" }}>
+              <span ref={line1Ref} className="line-inner">Willkommen im</span>
+            </span>
+            <span className="line-mask" style={{ display: "block" }}>
+              <span ref={line2Ref} className="line-inner">
+                <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>Cloudy</span>
+                {" "}Club.
+              </span>
+            </span>
           </h1>
 
           {/* Subtext */}
@@ -195,8 +298,8 @@ export default function Hero() {
               marginBottom: "40px",
             }}
           >
-            Dein Zuhause für gemeinsamen Anbau, verantwortungsvollen Konsum und echte
-            Community in Osnabrück. Sicher, transparent, zusammen.
+            Dein Zuhause für gemeinsamen Anbau, verantwortungsvollen Konsum
+            und echte Community in Osnabrück. Sicher, transparent, zusammen.
           </p>
 
           {/* CTAs */}
@@ -229,8 +332,19 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right: visual */}
-        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", height: "100%", minHeight: "380px" }} className="hero-visual-col">
+        {/* ── Right: visual ── */}
+        <div
+          ref={visualColRef}
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            minHeight: "380px",
+          }}
+          className="hero-visual-col"
+        >
           {/* Stars */}
           <div ref={starsRef} aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
             {STARS.map((s, i) => (
@@ -239,10 +353,8 @@ export default function Hero() {
                 className="star-twinkle"
                 style={{
                   position: "absolute",
-                  top: s.top,
-                  left: s.left,
-                  width: s.size,
-                  height: s.size,
+                  top: s.top, left: s.left,
+                  width: s.size, height: s.size,
                   animationDelay: `${s.delay}s`,
                 }}
                 viewBox="0 0 20 20"
@@ -257,40 +369,35 @@ export default function Hero() {
           <div aria-hidden="true" style={{
             position: "absolute",
             width: "360px", height: "360px",
-            background: "radial-gradient(circle, rgba(192,175,211,0.07) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(192,175,211,0.08) 0%, transparent 70%)",
             filter: "blur(40px)",
             pointerEvents: "none",
           }} />
 
-          {/* Cloud illustration */}
-          <div ref={cloudRef} className="float-anim" style={{ position: "relative", zIndex: 1 }}>
+          {/* Cloud */}
+          <div ref={cloudRef} className="float-anim" style={{ position: "relative", zIndex: 1, opacity: 0.55 }}>
             <svg
-              width="320"
-              height="260"
+              width="340" height="280"
               viewBox="0 0 320 260"
               aria-hidden="true"
               style={{ display: "block", filter: "drop-shadow(0 20px 60px rgba(192,175,211,0.18))" }}
             >
               <defs>
                 <radialGradient id="hcg1" cx="50%" cy="55%" r="52%">
-                  <stop offset="0%" stopColor="#C0AFD3" stopOpacity="0.6" />
+                  <stop offset="0%" stopColor="#C0AFD3" stopOpacity="0.62" />
                   <stop offset="100%" stopColor="#9B88C0" stopOpacity="0.28" />
                 </radialGradient>
               </defs>
-              {/* Crescent moon */}
               <path
                 d="M178 38 C204 22, 244 42, 237 78 C228 52, 204 46, 183 62 C170 42, 175 38, 178 38Z"
                 fill="none" stroke="rgba(192,175,211,0.65)" strokeWidth="1.5" strokeLinecap="round"
               />
-              {/* Cloud layers */}
               <ellipse cx="158" cy="186" rx="130" ry="60" fill="url(#hcg1)" />
               <ellipse cx="112" cy="168" rx="86"  ry="54" fill="#C0AFD3" opacity="0.3" />
-              <ellipse cx="210" cy="174" rx="74"  ry="48" fill="#B8AAD0" opacity="0.25" />
-              <ellipse cx="158" cy="150" rx="66"  ry="50" fill="#D4C8E8" opacity="0.18" />
-              <ellipse cx="130" cy="138" rx="46"  ry="34" fill="#E2D8F0" opacity="0.14" />
-              {/* Outline */}
-              <ellipse cx="158" cy="186" rx="130" ry="60" fill="none" stroke="rgba(192,175,211,0.35)" strokeWidth="1" />
-              {/* Sparkle stars */}
+              <ellipse cx="210" cy="174" rx="74"  ry="48" fill="#B8AAD0" opacity="0.24" />
+              <ellipse cx="158" cy="150" rx="66"  ry="50" fill="#D4C8E8" opacity="0.17" />
+              <ellipse cx="130" cy="138" rx="46"  ry="34" fill="#E2D8F0" opacity="0.13" />
+              <ellipse cx="158" cy="186" rx="130" ry="60" fill="none" stroke="rgba(192,175,211,0.32)" strokeWidth="1" />
               <path d="M42 72 L44.5 65 L47 72 L54 74.5 L47 77 L44.5 84 L42 77 L35 74.5Z" fill="#C0AFD3" opacity="0.65" />
               <path d="M272 92 L274.5 86 L277 92 L283 94.5 L277 97 L274.5 103 L272 97 L266 94.5Z" fill="#C0AFD3" opacity="0.5" />
               <path d="M76 218 L77.5 214 L79 218 L83 219.5 L79 221 L77.5 225 L76 221 L72 219.5Z" fill="#8B9880" opacity="0.55" />
@@ -300,7 +407,7 @@ export default function Hero() {
       </div>
 
       {/* ── Stats bar ── */}
-      <div style={{ borderTop: "1px solid var(--border)" }}>
+      <div style={{ borderTop: "1px solid var(--border)", position: "relative", zIndex: 2 }}>
         <div
           ref={statsRef}
           style={{
@@ -323,7 +430,7 @@ export default function Hero() {
               }}
             >
               <p className="font-playfair" style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>
-                {s.value}
+                {s.display}
               </p>
               <p className="font-montserrat" style={{ fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: "6px" }}>
                 {s.label}
@@ -333,27 +440,17 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Responsive ── */}
       <style>{`
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            min-height: auto !important;
+            min-height: calc(100vh - 120px) !important;
           }
           .hero-grid > div:first-child {
             padding-right: 0 !important;
-            padding-top: 48px !important;
             padding-bottom: 0 !important;
           }
-          .hero-visual-col {
-            display: none !important;
-          }
-        }
-        @media (max-width: 480px) {
-          .hero-grid > div:first-child {
-            padding-top: 40px !important;
-            padding-bottom: 0 !important;
-          }
+          .hero-visual-col { display: none !important; }
         }
       `}</style>
     </section>
