@@ -1,13 +1,15 @@
-import Hero        from "@/components/Hero";
-import About       from "@/components/About";
-import Growing     from "@/components/Growing";
-import News        from "@/components/News";
-import Membership  from "@/components/Membership";
-import Prevention  from "@/components/Prevention";
-import FAQ         from "@/components/FAQ";
-import Location    from "@/components/Location";
-import Ticker      from "@/components/Ticker";
-import ParallaxPanel from "@/components/ParallaxPanel";
+import Hero           from "@/components/Hero";
+import About          from "@/components/About";
+import Growing        from "@/components/Growing";
+import WhyCloudy      from "@/components/WhyCloudy";
+import Prevention     from "@/components/Prevention";
+import Membership     from "@/components/Membership";
+import FAQ            from "@/components/FAQ";
+import Location       from "@/components/Location";
+import SEOSection     from "@/components/SEOSection";
+import News           from "@/components/News";
+import Ticker         from "@/components/Ticker";
+import ParallaxPanel  from "@/components/ParallaxPanel";
 
 export default function Home() {
   return (
@@ -15,7 +17,7 @@ export default function Home() {
       {/* ── 1. Hero ── */}
       <Hero />
 
-      {/* ── 2. About ── */}
+      {/* ── 2. About — photo left, values right ── */}
       <About />
 
       {/* ── 3. Cinematic break — community quote ── */}
@@ -29,33 +31,16 @@ export default function Home() {
         overlayOpacity={0.58}
       />
 
-      {/* ── 4. Growing process ── */}
+      {/* ── 4. Growing — compact quality cards with icons ── */}
       <Growing />
 
-      {/* ── 5. Cinematic break — growth quote ── */}
-      <ParallaxPanel
-        image="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2000&q=80"
-        eyebrow="Anbau & Qualität"
-        headline="Von der Saat"
-        headlineItalic="zur Perfektion."
-        sub="Vereinseigener Anbau ohne Kompromisse. Transparente Qualität, die du siehst, riechst und fühlst."
-        align="left"
-        overlayOpacity={0.65}
-      />
+      {/* ── 5. Why Cloudy Club — features list ── */}
+      <WhyCloudy />
 
-      {/* ── 6. Prevention ── */}
-      <Prevention />
-
-      {/* ── 7. News — horizontal scroll ── */}
-      <News />
-
-      {/* ── 8. Ticker ── */}
-      <Ticker inverted />
-
-      {/* ── 9. Membership ── */}
+      {/* ── 6. Membership ── */}
       <Membership />
 
-      {/* ── 10. Cinematic break — join CTA ── */}
+      {/* ── 7. Cinematic break — join CTA ── */}
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80"
         eyebrow="Mitglied werden"
@@ -67,11 +52,23 @@ export default function Home() {
         cta={{ label: "Jetzt bewerben", href: "/membership" }}
       />
 
-      {/* ── 11. FAQ ── */}
+      {/* ── 8. Prevention — Genuss mit Verantwortung ── */}
+      <Prevention />
+
+      {/* ── 9. FAQ ── */}
       <FAQ />
 
-      {/* ── 12. Location ── */}
+      {/* ── 10. Location ── */}
       <Location />
+
+      {/* ── 11. SEO — nearby cities ── */}
+      <SEOSection />
+
+      {/* ── 12. News — horizontal scroll ── */}
+      <News />
+
+      {/* ── 13. Ticker ── */}
+      <Ticker inverted />
     </>
   );
 }
