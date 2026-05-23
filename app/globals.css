@@ -39,6 +39,7 @@ body {
 
 /* ─── Default cursor ─── */
 * { cursor: auto; }
+a, button, [role="button"], [role="switch"], label[for], summary { cursor: pointer; }
 
 /* ─── Grain texture ─── */
 body::after {
