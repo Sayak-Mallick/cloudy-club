@@ -4,55 +4,40 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import { Heart, Shield, Users, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Ticker from "./Ticker";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const values = [
-  {
-    icon: Heart,
-    title: "Gemeinschaft",
-    text: "Wir sind ein eingetragener Verein, der Menschen verbindet, die Cannabis verantwortungsbewusst und offen leben möchten.",
-  },
-  {
-    icon: Shield,
-    title: "Sicherheit",
-    text: "Kontrollierter Anbau, transparente Qualität und klare Regelungen nach deutschem Recht – deine Gesundheit steht an erster Stelle.",
-  },
-  {
-    icon: Users,
-    title: "Offenheit",
-    text: "Jeder ab 18 Jahren ist willkommen. Kein Stigma, kein Stress – einfach ein Ort, an dem du du selbst sein kannst.",
-  },
-];
-
 export default function About() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const visualRef   = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const line1Ref    = useRef<HTMLSpanElement>(null);
-  const line2Ref    = useRef<HTMLSpanElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const visualRef    = useRef<HTMLDivElement>(null);
+  const headlineRef  = useRef<HTMLHeadingElement>(null);
+  const line1Ref     = useRef<HTMLSpanElement>(null);
+  const line2Ref     = useRef<HTMLSpanElement>(null);
+  const eyebrowRef   = useRef<HTMLSpanElement>(null);
+  const ctaArrowRef  = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      // Clip-path wipe reveal on the visual card
+
+      /* ── 1. Image card: clip-path wipe from left ── */
       gsap.fromTo(visualRef.current,
-        { clipPath: "inset(0 100% 0 0 round 2px)" },
+        { clipPath: "inset(0 100% 0 0 round 20px)" },
         {
-          clipPath: "inset(0 0% 0 0 round 2px)",
-          duration: 1.3,
+          clipPath: "inset(0 0% 0 0 round 20px)",
+          duration: 1.4,
           ease: "power3.inOut",
           scrollTrigger: { trigger: visualRef.current, start: "top 78%", once: true },
         }
       );
 
-      // Parallax on visual — drifts up slightly as section scrolls out
+      /* ── 2. Parallax drift on image ── */
       gsap.to(visualRef.current, {
-        y: -50,
+        y: -48,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -62,29 +47,69 @@ export default function About() {
         },
       });
 
-      // Line-mask headline reveal
+      /* ── 3. Eyebrow: fade + slide up ── */
+      gsap.fromTo(eyebrowRef.current,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: headlineRef.current, start: "top 84%", once: true },
+        }
+      );
+
+      /* ── 4. Headline: line-mask slide-up reveal ── */
       gsap.fromTo([line1Ref.current, line2Ref.current],
-        { y: "105%", skewX: -3 },
+        { y: "110%", skewX: -4 },
         {
           y: "0%", skewX: 0,
-          duration: 0.95, stagger: 0.13, ease: "power4.out",
+          duration: 1.0, stagger: 0.14, ease: "power4.out",
           scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
         }
       );
 
-      // Value items stagger in
-      gsap.fromTo(".about-item",
-        { opacity: 0, y: 28 },
+      /* ── 5. Body paragraphs: stagger fade + rise ── */
+      gsap.fromTo(".about-para",
+        { opacity: 0, y: 24 },
         {
           opacity: 1, y: 0,
-          duration: 0.7, stagger: 0.12, ease: "power2.out",
-          scrollTrigger: { trigger: ".about-item", start: "top 82%", once: true },
+          duration: 0.75, stagger: 0.18, ease: "power2.out",
+          scrollTrigger: { trigger: ".about-para", start: "top 85%", once: true },
         }
       );
+
+      /* ── 6. CTA: fade + rise ── */
+      gsap.fromTo(".about-cta",
+        { opacity: 0, y: 14 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.65, ease: "power2.out",
+          scrollTrigger: { trigger: ".about-cta", start: "top 90%", once: true },
+        }
+      );
+
+      /* ── 7. Stats badge: slide up from below image ── */
+      gsap.fromTo(".about-badge",
+        { opacity: 0, y: 20, scale: 0.9 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.7, ease: "back.out(1.4)",
+          delay: 0.5,
+          scrollTrigger: { trigger: visualRef.current, start: "top 78%", once: true },
+        }
+      );
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+
+  /* CTA arrow hover handlers */
+  const handleCtaEnter = () => {
+    gsap.to(ctaArrowRef.current, { x: 5, duration: 0.25, ease: "power2.out" });
+  };
+  const handleCtaLeave = () => {
+    gsap.to(ctaArrowRef.current, { x: 0, duration: 0.25, ease: "power2.inOut" });
+  };
 
   return (
     <>
@@ -92,141 +117,229 @@ export default function About() {
         id="about"
         ref={sectionRef}
         className="section"
-        style={{ background: "var(--bg)" }}
+        style={{ background: "var(--cream, #f5f0eb)" }}
       >
         <div
           className="section-inner about-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "96px", alignItems: "center" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "96px",
+            alignItems: "center",
+          }}
         >
-          {/* Left: real photo with clip-path reveal + parallax */}
+
+          {/* ── Left: photo with stats badge ── */}
           <div ref={visualRef} style={{ position: "relative" }}>
-            <div style={{
-              height: "560px",
-              border: "1px solid var(--border)",
-              borderRadius: "2px",
-              position: "relative",
-              overflow: "hidden",
-            }}>
-              {/* Parallax photo */}
+            <div
+              className="about-image-card"
+              style={{
+                height: "580px",
+                borderRadius: "20px",
+                position: "relative",
+                overflow: "hidden",
+                boxShadow: "0 24px 64px rgba(0,0,0,0.10)",
+              }}
+            >
+              {/* Parallax photo layer */}
               <div
+                className="about-photo"
                 style={{
                   position: "absolute",
                   top: "-12%", left: 0, right: 0,
                   height: "124%",
-                  backgroundImage: "url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=85')",
+                  backgroundImage: "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1400&q=85')",
                   backgroundSize: "cover",
-                  backgroundPosition: "center top",
+                  backgroundPosition: "center",
                   willChange: "transform",
+                  transition: "transform 0.6s ease",
                 }}
               />
 
-              {/* Subtle dark scrim so badge reads clearly */}
+              {/* Bottom gradient scrim */}
               <div aria-hidden="true" style={{
                 position: "absolute", inset: 0,
-                background: "linear-gradient(to top, rgba(19,19,17,0.75) 0%, rgba(19,19,17,0.1) 60%, transparent 100%)",
+                background: "linear-gradient(to top, rgba(19,19,17,0.55) 0%, rgba(19,19,17,0.05) 55%, transparent 100%)",
+                pointerEvents: "none",
               }} />
 
-              {/* Corner accents */}
-              <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, width: 56, height: 56, borderTop: "1px solid rgba(192,175,211,0.5)", borderLeft: "1px solid rgba(192,175,211,0.5)", zIndex: 2 }} />
-              <div aria-hidden="true" style={{ position: "absolute", bottom: 0, right: 0, width: 56, height: 56, borderBottom: "1px solid rgba(192,175,211,0.3)", borderRight: "1px solid rgba(192,175,211,0.3)", zIndex: 2 }} />
-
-              {/* Badge */}
-              <div style={{
-                position: "absolute", bottom: "24px", left: "24px", zIndex: 3,
-                padding: "6px 14px",
-                background: "rgba(19,19,17,0.7)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(192,175,211,0.25)",
-                borderRadius: "2px",
-              }}>
-                <p className="eyebrow" style={{ fontSize: "0.5625rem", letterSpacing: "0.28em" }}>Cannabis Social Club e.V.</p>
+              {/* Stats badge */}
+              <div
+                className="about-badge"
+                style={{
+                  position: "absolute",
+                  bottom: "28px",
+                  right: "28px",
+                  zIndex: 3,
+                  padding: "16px 22px",
+                  background: "rgba(30,28,26,0.52)",
+                  backdropFilter: "blur(14px)",
+                  WebkitBackdropFilter: "blur(14px)",
+                  borderRadius: "14px",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  textAlign: "center",
+                  minWidth: "110px",
+                }}
+              >
+                <p
+                  className="font-playfair"
+                  style={{
+                    fontSize: "2.25rem",
+                    fontWeight: 700,
+                    color: "#f0ece6",
+                    lineHeight: 1,
+                  }}
+                >
+                  500+
+                </p>
+                <p
+                  className="font-montserrat"
+                  style={{
+                    fontSize: "0.625rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(240,236,230,0.65)",
+                    marginTop: "6px",
+                  }}
+                >
+                  Mitgliederplätze
+                </p>
               </div>
-            </div>
-
-            {/* e.V. badge */}
-            <div
-              className="hidden lg:flex"
-              style={{
-                position: "absolute",
-                bottom: "-24px", right: "-24px",
-                width: "108px", height: "108px",
-                background: "var(--lilac)",
-                borderRadius: "2px",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "3px",
-              }}
-            >
-              <p className="font-playfair" style={{ fontSize: "2rem", color: "var(--bg)", lineHeight: 1, fontWeight: 700 }}>e.V.</p>
-              <p className="font-montserrat" style={{ fontSize: "0.4375rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(19,19,17,0.65)" }}>Eingetragener</p>
-              <p className="font-montserrat" style={{ fontSize: "0.4375rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(19,19,17,0.65)" }}>Verein</p>
             </div>
           </div>
 
-          {/* Right: content */}
+          {/* ── Right: content ── */}
           <div>
-            <div className="section-header" style={{ marginBottom: "40px" }}>
-              <span className="eyebrow">Wer wir sind</span>
+            <div className="section-header" style={{ marginBottom: "36px" }}>
+
+              {/* Eyebrow — hidden until GSAP fires */}
+              <span
+                ref={eyebrowRef}
+                className="eyebrow"
+                style={{ color: "rgba(50,45,40,0.55)", opacity: 0 }}
+              >
+                Über den Club
+              </span>
+
+              {/* Headline */}
               <h2
                 ref={headlineRef}
                 className="font-playfair section-title"
+                style={{ color: "#1a1814" }}
               >
-                <span className="line-mask" style={{ display: "block" }}>
-                  <span ref={line1Ref} className="line-inner">Mehr als ein Club —</span>
+                <span className="about-line-mask">
+                  <span ref={line1Ref} className="about-line-inner">
+                    Mehr als ein Club —
+                  </span>
                 </span>
-                <span className="line-mask" style={{ display: "block" }}>
-                  <span ref={line2Ref} className="line-inner" style={{ fontStyle: "italic" }}>eine Gemeinschaft.</span>
+                <span className="about-line-mask">
+                  <span
+                    ref={line2Ref}
+                    className="about-line-inner"
+                    style={{ fontStyle: "italic", color: "var(--lilac)" }}
+                  >
+                    eine Bewegung
+                  </span>
                 </span>
               </h2>
-              <p className="section-subtitle">
-                Der Cloudy Club ist mehr als ein Cannabis Social Club – wir sind eine Gemeinschaft,
-                die für verantwortungsvollen, transparenten und würdevollen Umgang mit Cannabis steht.
+            </div>
+
+            {/* Body paragraphs — hidden until GSAP fires */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              <p
+                className="about-para font-montserrat"
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 300,
+                  lineHeight: 1.85,
+                  color: "rgba(30,26,22,0.68)",
+                  opacity: 0,
+                }}
+              >
+                Der Cloudy Club Osnabrück ist mehr als eine Anbauvereinigung. Wir schaffen
+                einen geschützten Raum für verantwortungsvollen Cannabis-Genuss, Aufklärung
+                und echte Gemeinschaft — fernab vom Schwarzmarkt.
+              </p>
+              <p
+                className="about-para font-montserrat"
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 300,
+                  lineHeight: 1.85,
+                  color: "rgba(30,26,22,0.68)",
+                  opacity: 0,
+                }}
+              >
+                Unsere Mission: Transparenz, Qualität und Sicherheit für alle Mitglieder.
+                Wir setzen neue Maßstäbe für Cannabis-Kultur in der Friedensstadt.
               </p>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {values.map((v, i) => (
-                <div
-                  key={i}
-                  className="about-item"
-                  style={{
-                    display: "flex",
-                    gap: "20px",
-                    alignItems: "flex-start",
-                    padding: "24px 0",
-                    borderBottom: "1px solid var(--border)",
-                  }}
-                >
-                  <v.icon size={20} style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "3px" }} />
-                  <div>
-                    <h3 className="font-playfair" style={{ fontSize: "1.125rem", color: "var(--cream)", marginBottom: "6px", fontWeight: 600 }}>
-                      {v.title}
-                    </h3>
-                    <p className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.8, color: "var(--text-secondary)" }}>
-                      {v.text}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ marginTop: "36px" }}>
-              <Link href="/membership" className="btn-primary">
-                Mitglied werden <ArrowRight size={13} />
+            {/* CTA text link — hidden until GSAP fires */}
+            <div style={{ marginTop: "40px" }}>
+              <Link
+                href="/about"
+                className="about-cta font-montserrat"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontSize: "0.9375rem",
+                  fontWeight: 500,
+                  color: "#1a1814",
+                  textDecoration: "none",
+                  borderBottom: "1.5px solid #1a1814",
+                  paddingBottom: "3px",
+                  opacity: 0,
+                }}
+                onMouseEnter={handleCtaEnter}
+                onMouseLeave={handleCtaLeave}
+              >
+                Mehr über uns erfahren
+                {/* @ts-ignore – ref on SVG inside Lucide */}
+                <ArrowRight ref={ctaArrowRef} size={15} strokeWidth={2} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
         </div>
 
         <style>{`
+          /* ── Line-mask: clip the slide-up headline ── */
+          .about-line-mask {
+            display: block;
+            overflow: hidden;
+            padding-bottom: 0.08em; /* prevent descender clip */
+          }
+          .about-line-inner {
+            display: block;
+            transform: translateY(110%);   /* matches GSAP fromTo */
+          }
+
+          /* ── Image hover: subtle zoom ── */
+          .about-image-card:hover .about-photo {
+            transform: scale(1.04);
+            transition: transform 0.7s ease;
+          }
+
+          /* ── Badge: gentle float loop ── */
+          .about-badge {
+            animation: badgeFloat 4s ease-in-out infinite;
+          }
+          @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0px);  }
+            50%       { transform: translateY(-6px); }
+          }
+
+          /* ── Responsive ── */
           @media (max-width: 900px) {
-            .about-grid { grid-template-columns: 1fr !important; gap: 56px !important; }
+            .about-grid {
+              grid-template-columns: 1fr !important;
+              gap: 52px !important;
+            }
           }
         `}</style>
       </section>
 
-      {/* Ticker between sections */}
       <Ticker />
     </>
   );

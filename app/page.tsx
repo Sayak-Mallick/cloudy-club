@@ -18,6 +18,7 @@ export default function Home() {
       <Hero />
 
       {/* ── 2. About — photo left, values right ── */}
+      <WhyCloudy />
       <About />
 
       {/* ── 3. Cinematic break — community quote ── */}
@@ -35,7 +36,7 @@ export default function Home() {
       <Growing />
 
       {/* ── 5. Why Cloudy Club — features list ── */}
-      <WhyCloudy />
+      
 
       {/* ── 6. Membership ── */}
       <Membership />

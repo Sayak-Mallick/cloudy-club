@@ -9,35 +9,35 @@ import { ArrowRight } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 const STARS = [
-  { top: "14%", left: "9%",  delay: 0,   size: 7  },
-  { top: "22%", left: "83%", delay: 1.4, size: 5  },
-  { top: "58%", left: "6%",  delay: 0.7, size: 6  },
-  { top: "70%", left: "87%", delay: 2.1, size: 9  },
-  { top: "40%", left: "78%", delay: 0.4, size: 5  },
-  { top: "9%",  left: "57%", delay: 2.4, size: 7  },
-  { top: "82%", left: "20%", delay: 1.6, size: 5  },
-  { top: "52%", left: "92%", delay: 0.9, size: 4  },
+  { top: "14%", left: "9%", delay: 0, size: 7 },
+  { top: "22%", left: "83%", delay: 1.4, size: 5 },
+  { top: "58%", left: "6%", delay: 0.7, size: 6 },
+  { top: "70%", left: "87%", delay: 2.1, size: 9 },
+  { top: "40%", left: "78%", delay: 0.4, size: 5 },
+  { top: "9%", left: "57%", delay: 2.4, size: 7 },
+  { top: "82%", left: "20%", delay: 1.6, size: 5 },
+  { top: "52%", left: "92%", delay: 0.9, size: 4 },
 ];
 
 const STATS = [
-  { value: 50,     suffix: "g",     label: "monatl. Abgabe",     display: "50g" },
-  { value: null,   suffix: "",      label: "100% legal & konform", display: "§CanG" },
-  { value: 18,     suffix: "+",     label: "Mindestalter",        display: "18+" },
+  { value: 50, suffix: "g", label: "monatl. Abgabe", display: "50g" },
+  { value: null, suffix: "", label: "100% legal & konform", display: "§CanG" },
+  { value: 18, suffix: "+", label: "Mindestalter", display: "18+" },
 ];
 
 export default function Hero() {
-  const sectionRef   = useRef<HTMLElement>(null);
-  const bgRef        = useRef<HTMLDivElement>(null);
-  const textColRef   = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const textColRef = useRef<HTMLDivElement>(null);
   const visualColRef = useRef<HTMLDivElement>(null);
-  const cloudRef     = useRef<HTMLDivElement>(null);
-  const starsRef     = useRef<HTMLDivElement>(null);
-  const eyebrowRef   = useRef<HTMLDivElement>(null);
-  const line1Ref     = useRef<HTMLSpanElement>(null);
-  const line2Ref     = useRef<HTMLSpanElement>(null);
-  const subRef       = useRef<HTMLParagraphElement>(null);
-  const ctaRef       = useRef<HTMLDivElement>(null);
-  const statsRef     = useRef<HTMLDivElement>(null);
+  const cloudRef = useRef<HTMLDivElement>(null);
+  const starsRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const line1Ref = useRef<HTMLSpanElement>(null);
+  const line2Ref = useRef<HTMLSpanElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -393,50 +393,16 @@ export default function Hero() {
                 fill="none" stroke="rgba(192,175,211,0.65)" strokeWidth="1.5" strokeLinecap="round"
               />
               <ellipse cx="158" cy="186" rx="130" ry="60" fill="url(#hcg1)" />
-              <ellipse cx="112" cy="168" rx="86"  ry="54" fill="#C0AFD3" opacity="0.3" />
-              <ellipse cx="210" cy="174" rx="74"  ry="48" fill="#B8AAD0" opacity="0.24" />
-              <ellipse cx="158" cy="150" rx="66"  ry="50" fill="#D4C8E8" opacity="0.17" />
-              <ellipse cx="130" cy="138" rx="46"  ry="34" fill="#E2D8F0" opacity="0.13" />
+              <ellipse cx="112" cy="168" rx="86" ry="54" fill="#C0AFD3" opacity="0.3" />
+              <ellipse cx="210" cy="174" rx="74" ry="48" fill="#B8AAD0" opacity="0.24" />
+              <ellipse cx="158" cy="150" rx="66" ry="50" fill="#D4C8E8" opacity="0.17" />
+              <ellipse cx="130" cy="138" rx="46" ry="34" fill="#E2D8F0" opacity="0.13" />
               <ellipse cx="158" cy="186" rx="130" ry="60" fill="none" stroke="rgba(192,175,211,0.32)" strokeWidth="1" />
               <path d="M42 72 L44.5 65 L47 72 L54 74.5 L47 77 L44.5 84 L42 77 L35 74.5Z" fill="#C0AFD3" opacity="0.65" />
               <path d="M272 92 L274.5 86 L277 92 L283 94.5 L277 97 L274.5 103 L272 97 L266 94.5Z" fill="#C0AFD3" opacity="0.5" />
               <path d="M76 218 L77.5 214 L79 218 L83 219.5 L79 221 L77.5 225 L76 221 L72 219.5Z" fill="#8B9880" opacity="0.55" />
             </svg>
           </div>
-        </div>
-      </div>
-
-      {/* ── Stats bar ── */}
-      <div style={{ borderTop: "1px solid var(--border)", position: "relative", zIndex: 2 }}>
-        <div
-          ref={statsRef}
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "28px 40px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {STATS.map((s, i) => (
-            <div
-              key={i}
-              className="stats-stat"
-              style={{
-                flex: 1,
-                textAlign: "center",
-                borderRight: i < STATS.length - 1 ? "1px solid var(--border)" : "none",
-                padding: "4px 0",
-              }}
-            >
-              <p className="font-playfair" style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}>
-                {s.display}
-              </p>
-              <p className="font-montserrat" style={{ fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: "6px" }}>
-                {s.label}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
 

@@ -3,73 +3,86 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
-import { ArrowRight, ShieldCheck, Users, Zap, Leaf } from "lucide-react";
+import { Shield, Leaf, Users, Lock } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const benefits = [
+const features = [
   {
-    icon: ShieldCheck,
-    title: "100 % Legal & Konform",
-    text: "Vollständig nach dem Konsumcannabisgesetz (KCanG) betrieben. Keine Grauzone, kein Risiko — nur klare Regeln.",
+    icon: Shield,
+    title: "100% Legal & Konform",
+    text: "Wir handeln strikt nach dem KCanG. Deine Mitgliedschaft ist rechtlich abgesichert und vollständig transparent.",
+  },
+  {
+    icon: Leaf,
+    title: "Reinheit ohne Kompromisse",
+    text: "Frei von Schadstoffen, Pestiziden und Streckmitteln. Laborgeprüfte Qualität aus kontrolliertem Anbau.",
   },
   {
     icon: Users,
     title: "Lebendige Community",
-    text: "Echte Gemeinschaft in Osnabrück: Workshops, Events und ein offenes Netzwerk von Gleichgesinnten.",
+    text: "Ein Ort der Begegnung. Workshops, Tastings und Events fördern den Austausch in sicherer Atmosphäre.",
   },
   {
-    icon: Zap,
-    title: "High-Tech Anlage",
-    text: "Modernste Anbautechnik mit präziser Klimasteuerung — für gleichbleibend hohe Qualität jede Ernte.",
-  },
-  {
-    icon: Leaf,
-    title: "Ohne Schadstoffe",
-    text: "Pestizidfreier Vereinsanbau, regelmäßige Labor-Checks und volle Transparenz über jede Charge.",
+    icon: Lock,
+    title: "Maximale Diskretion",
+    text: "Deine Daten sind bei uns sicher. DSGVO-konform, verschlüsselt und auf deutschen Servern gespeichert.",
   },
 ];
 
 export default function WhyCloudy() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const line1Ref   = useRef<HTMLSpanElement>(null);
-  const line2Ref   = useRef<HTMLSpanElement>(null);
-  const headRef    = useRef<HTMLHeadingElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const eyebrowRef   = useRef<HTMLSpanElement>(null);
+  const headlineRef  = useRef<HTMLHeadingElement>(null);
+  const headLineRef  = useRef<HTMLSpanElement>(null);
+  const subtitleRef  = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      // Headline line-mask reveal
-      gsap.fromTo([line1Ref.current, line2Ref.current],
-        { y: "105%", skewX: -3 },
+
+      /* ── 1. Eyebrow: fade + rise ── */
+      gsap.fromTo(eyebrowRef.current,
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: headlineRef.current, start: "top 85%", once: true },
+        }
+      );
+
+      /* ── 2. Headline: single-line mask slide-up ── */
+      gsap.fromTo(headLineRef.current,
+        { y: "110%", skewX: -3 },
         {
           y: "0%", skewX: 0,
-          duration: 0.95, stagger: 0.13, ease: "power4.out",
-          scrollTrigger: { trigger: headRef.current, start: "top 80%", once: true },
+          duration: 1.05, ease: "power4.out",
+          scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
         }
       );
 
-      // Benefit cards stagger
-      gsap.fromTo(".why-benefit",
-        { opacity: 0, x: 24 },
+      /* ── 3. Subtitle: fade + rise (slight delay) ── */
+      gsap.fromTo(subtitleRef.current,
+        { opacity: 0, y: 18 },
         {
-          opacity: 1, x: 0,
-          duration: 0.7, stagger: 0.11, ease: "power2.out",
-          scrollTrigger: { trigger: ".why-list", start: "top 80%", once: true },
+          opacity: 1, y: 0,
+          duration: 0.75, ease: "power2.out", delay: 0.22,
+          scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
         }
       );
 
-      // Left column fade
-      gsap.fromTo(".why-left-sub",
-        { opacity: 0, y: 20 },
+      /* ── 4. Cards: stagger up from below ── */
+      gsap.fromTo(".why-card",
+        { opacity: 0, y: 40, scale: 0.97 },
         {
-          opacity: 1, y: 0, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true },
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.72, stagger: 0.13, ease: "power2.out",
+          scrollTrigger: { trigger: ".why-cards-grid", start: "top 82%", once: true },
         }
       );
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -79,112 +92,166 @@ export default function WhyCloudy() {
     <section
       id="why"
       ref={sectionRef}
-      className="section"
-      style={{ background: "var(--bg)" }}
+      style={{
+        minHeight: "100vh",
+        background: "var(--cream, #f5f0eb)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "100px 24px",
+      }}
     >
-      <div
-        className="section-inner why-grid"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "96px", alignItems: "start" }}
-      >
-        {/* Left: headline + sub + CTA */}
-        <div style={{ position: "sticky", top: "80px" }}>
-          <div className="section-header" style={{ marginBottom: "36px" }}>
-            <span className="eyebrow">Warum Cloudy Club?</span>
-            <h2 ref={headRef} className="font-playfair section-title">
-              <span className="line-mask" style={{ display: "block" }}>
-                <span ref={line1Ref} className="line-inner">Der Club,</span>
-              </span>
-              <span className="line-mask" style={{ display: "block" }}>
-                <span ref={line2Ref} className="line-inner" style={{ fontStyle: "italic", color: "var(--lilac)" }}>
-                  der anders denkt.
-                </span>
-              </span>
-            </h2>
-          </div>
 
-          <p
-            className="why-left-sub font-montserrat"
+      {/* ── Centered header ── */}
+      <div
+        style={{
+          textAlign: "center",
+          maxWidth: "680px",
+          width: "100%",
+          marginBottom: "64px",
+        }}
+      >
+        <span
+          ref={eyebrowRef}
+          className="eyebrow"
+          style={{ color: "rgba(50,45,40,0.50)", opacity: 0 }}
+        >
+          Warum Cloudy Club
+        </span>
+
+        <h2
+          ref={headlineRef}
+          className="font-playfair"
+          style={{
+            fontSize: "clamp(2.25rem, 4.5vw, 3.75rem)",
+            fontWeight: 700,
+            color: "#1a1814",
+            lineHeight: 1.1,
+            margin: "18px 0 26px",
+            overflow: "hidden",           /* acts as the line-mask */
+            paddingBottom: "0.06em",      /* prevent descender clip */
+          }}
+        >
+          <span ref={headLineRef} style={{ display: "block" }}>
+            Neue Standards für Cannabis-Kultur
+          </span>
+        </h2>
+
+        <p
+          ref={subtitleRef}
+          className="font-montserrat"
+          style={{
+            fontSize: "1rem",
+            fontWeight: 300,
+            lineHeight: 1.85,
+            color: "rgba(30,26,22,0.62)",
+            opacity: 0,
+          }}
+        >
+          Wir verbinden höchste Qualität mit verantwortungsvollem Genuss — in
+          einer Community, die Vertrauen und Transparenz lebt.
+        </p>
+      </div>
+
+      {/* ── 4-column feature cards ── */}
+      <div
+        className="why-cards-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "20px",
+          width: "100%",
+          maxWidth: "1200px",
+        }}
+      >
+        {features.map((f, i) => (
+          <div
+            key={i}
+            className="why-card"
             style={{
-              fontSize: "0.9375rem",
-              fontWeight: 300,
-              lineHeight: 1.85,
-              color: "var(--text-secondary)",
-              marginBottom: "40px",
-              maxWidth: "440px",
+              background: "#ffffff",
+              border: "1px solid rgba(0,0,0,0.055)",
+              borderRadius: "18px",
+              padding: "32px 26px 36px",
+              boxShadow: "0 2px 20px rgba(0,0,0,0.038)",
+              opacity: 0,
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            Wir sind kein gewöhnlicher Club. Wir verbinden verantwortungsvollen Konsum
-            mit echter Gemeinschaft — offen, transparent und vollständig im Rahmen des deutschen Rechts.
-          </p>
-
-          <Link href="/membership" className="btn-primary">
-            Jetzt Mitglied werden <ArrowRight size={13} />
-          </Link>
-        </div>
-
-        {/* Right: benefit list */}
-        <div className="why-list" style={{ display: "flex", flexDirection: "column" }}>
-          {benefits.map((b, i) => (
+            {/* Icon badge */}
             <div
-              key={i}
-              className="why-benefit"
+              className="why-icon-badge"
               style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "flex-start",
-                padding: "28px 0",
-                borderBottom: i < benefits.length - 1 ? "1px solid var(--border)" : "none",
-              }}
-            >
-              {/* Icon badge */}
-              <div style={{
-                width: 44, height: 44,
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                borderRadius: "2px",
+                width: 46,
+                height: 46,
+                background: "rgba(192,175,211,0.18)",
+                borderRadius: "11px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                flexShrink: 0,
-              }}>
-                <b.icon size={18} style={{ color: "var(--lilac)" }} />
-              </div>
-
-              {/* Text */}
-              <div>
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: "1.125rem",
-                    color: "var(--cream)",
-                    fontWeight: 600,
-                    marginBottom: "8px",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {b.title}
-                </h3>
-                <p
-                  className="font-montserrat"
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 300,
-                    lineHeight: 1.8,
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {b.text}
-                </p>
-              </div>
+                marginBottom: "28px",
+                transition: "background 0.25s ease",
+              }}
+            >
+              <f.icon
+                size={19}
+                strokeWidth={1.6}
+                style={{ color: "var(--lilac-dark, #9B88C0)" }}
+              />
             </div>
-          ))}
-        </div>
+
+            {/* Title */}
+            <h3
+              className="font-playfair"
+              style={{
+                fontSize: "1.1875rem",
+                fontWeight: 700,
+                color: "#1a1814",
+                lineHeight: 1.3,
+                marginBottom: "14px",
+              }}
+            >
+              {f.title}
+            </h3>
+
+            {/* Body */}
+            <p
+              className="font-montserrat"
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 300,
+                lineHeight: 1.82,
+                color: "rgba(30,26,22,0.60)",
+              }}
+            >
+              {f.text}
+            </p>
+          </div>
+        ))}
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .why-grid { grid-template-columns: 1fr !important; gap: 56px !important; }
-          .why-grid > div:first-child { position: static !important; }
+        /* Card hover: lift + border brightens + icon badge deepens */
+        .why-card {
+          transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+        }
+        .why-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.09);
+          border-color: rgba(192,175,211,0.45);
+        }
+        .why-card:hover .why-icon-badge {
+          background: rgba(192,175,211,0.30);
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 1024px) {
+          .why-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 560px) {
+          .why-cards-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
