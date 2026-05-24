@@ -34,8 +34,6 @@ export default function Home() {
 
       {/* ── 4. Growing — compact quality cards with icons ── */}
       <Growing />
-
-      {/* ── 5. Why Cloudy Club — features list ── */}
       
 
       {/* ── 6. Membership ── */}

@@ -3,62 +3,90 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
-import { ArrowRight, Thermometer, Dna, Clock, FlaskConical } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const qualities = [
   {
     number: "01",
-    icon: Thermometer,
     title: "Controlled Environment",
-    text: "Klimaoptimierter Anbau mit präziser Steuerung von Licht, Temperatur und Luftfeuchtigkeit – für maximale Konsistenz in jeder Charge.",
+    text: "Perfektes Klima und Hygiene für Schädlingsfreiheit ohne Chemie.",
   },
   {
     number: "02",
-    icon: Dna,
     title: "Top Genetik",
-    text: "Sorgfältig ausgewählte Sorten mit herausragenden Terpenprofilen, Stabilität und Ertrag – von unserem Anbauerteam kuratiert.",
+    text: "Nur die besten Phänotypen schaffen es in unseren Anbau.",
   },
   {
     number: "03",
-    icon: Clock,
-    title: "Slow-Curing",
-    text: "Langsame, schonende Reifung für optimales Aroma, Terpenerhalt und maximale Qualität. Kein Kompromiss bei der Nachbehandlung.",
+    title: "Slow Curing",
+    text: "Geduldige Trocknung und Fermentation für das volle Aroma.",
   },
   {
     number: "04",
-    icon: FlaskConical,
     title: "Labor-Checks",
-    text: "THC-, CBD- und Terpenanalyse nach jeder Ernte – mit voller Transparenz für alle Mitglieder im Mitgliederbereich veröffentlicht.",
+    text: "Regelmäßige Analysen auf Wirkstoffgehalt und Reinheit.",
   },
 ];
 
 export default function Growing() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const bgRef       = useRef<HTMLDivElement>(null);
+  const eyebrowRef  = useRef<HTMLSpanElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const headLineRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
+
+      /* ── 1. Background parallax — image drifts up as section scrolls past ── */
+      gsap.fromTo(bgRef.current,
+        { y: 0 },
+        {
+          y: "-160px",
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+
+      /* ── 2. Eyebrow: fade + rise ── */
+      gsap.fromTo(eyebrowRef.current,
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.65, ease: "power2.out",
+          scrollTrigger: { trigger: headlineRef.current, start: "top 85%", once: true },
+        }
+      );
+
+      /* ── 3. Headline: line-mask slide-up ── */
+      gsap.fromTo(headLineRef.current,
+        { y: "110%", skewX: -3 },
+        {
+          y: "0%", skewX: 0,
+          duration: 1.05, ease: "power4.out",
+          scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
+        }
+      );
+
+      /* ── 4. Cards: stagger fade-up ── */
       gsap.fromTo(".quality-card",
-        { opacity: 0, y: 36 },
+        { opacity: 0, y: 42, scale: 0.97 },
         {
-          opacity: 1, y: 0,
+          opacity: 1, y: 0, scale: 1,
           duration: 0.75, stagger: 0.13, ease: "power3.out",
-          scrollTrigger: { trigger: ".quality-grid", start: "top 78%", once: true },
+          scrollTrigger: { trigger: ".quality-grid", start: "top 80%", once: true },
         }
       );
-      gsap.fromTo(".grow-banner",
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1, y: 0,
-          duration: 0.8, ease: "power2.out",
-          scrollTrigger: { trigger: ".grow-banner", start: "top 84%", once: true },
-        }
-      );
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -68,160 +96,182 @@ export default function Growing() {
     <section
       id="growing"
       ref={sectionRef}
-      className="section"
-      style={{ background: "var(--bg-surface)" }}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "100px 24px",
+      }}
     >
-      <div className="section-inner">
-        {/* Section header */}
-        <div className="section-header center" style={{ marginBottom: "64px" }}>
-          <span className="eyebrow">Unser Anbau</span>
-          <h2 className="font-playfair section-title">
-            Qualität durch{" "}
-            <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>Hingabe.</span>
+      {/* ── Parallax background image ── */}
+      <div
+        ref={bgRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "-20%",
+          left: 0,
+          width: "100%",
+          height: "140%",
+          backgroundImage: "url('https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1800&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          willChange: "transform",
+          zIndex: 0,
+        }}
+      />
+
+      {/* ── Dark overlay ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, rgba(10,10,8,0.62) 0%, rgba(10,10,8,0.52) 60%, rgba(10,10,8,0.68) 100%)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* ── Content ── */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          width: "100%",
+          maxWidth: "1200px",
+        }}
+      >
+        {/* Centered header */}
+        <div
+          style={{
+            textAlign: "center",
+            marginBottom: "64px",
+          }}
+        >
+          <span
+            ref={eyebrowRef}
+            className="eyebrow"
+            style={{
+              color: "rgba(192,175,211,0.75)",
+              letterSpacing: "0.32em",
+              opacity: 0,
+            }}
+          >
+            Qualitätsversprechen
+          </span>
+
+          <h2
+            ref={headlineRef}
+            className="font-playfair"
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
+              fontWeight: 700,
+              color: "#f4f1ea",
+              lineHeight: 1.1,
+              marginTop: "18px",
+              overflow: "hidden",
+              paddingBottom: "0.06em",
+            }}
+          >
+            <span ref={headLineRef} style={{ display: "block" }}>
+              Qualität durch Hingabe
+            </span>
           </h2>
-          <p className="section-subtitle">
-            Vereinseigener Anbau ohne Kompromisse — für Mitglieder, von Mitgliedern.
-            Transparent, nachhaltig und jede Charge geprüft.
-          </p>
         </div>
 
-        {/* 2 × 2 quality cards */}
+        {/* 4-column frosted-glass cards */}
         <div
           className="quality-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "24px",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "18px",
           }}
         >
           {qualities.map((q) => (
             <div
               key={q.number}
-              className="quality-card card"
+              className="quality-card"
               style={{
-                padding: "40px 36px",
+                background: "rgba(255,255,255,0.07)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.13)",
+                borderRadius: "16px",
+                padding: "36px 28px 40px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "20px",
-                background: "var(--bg-card)",
+                gap: "0",
+                opacity: 0,
               }}
             >
-              {/* Number + icon row */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span
-                  className="font-playfair"
-                  style={{
-                    fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
-                    fontWeight: 700,
-                    color: "var(--bg-elevated)",
-                    lineHeight: 1,
-                    userSelect: "none",
-                  }}
-                >
-                  {q.number}
-                </span>
-                <div style={{
-                  width: 48, height: 48,
-                  borderRadius: "2px",
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}>
-                  <q.icon size={20} style={{ color: "var(--lilac)" }} />
-                </div>
-              </div>
+              {/* Number */}
+              <span
+                className="font-playfair"
+                style={{
+                  fontSize: "clamp(2.25rem, 4vw, 3rem)",
+                  fontWeight: 700,
+                  color: "rgba(255,255,255,0.20)",
+                  lineHeight: 1,
+                  userSelect: "none",
+                  marginBottom: "28px",
+                }}
+              >
+                {q.number}
+              </span>
 
-              {/* Content */}
-              <div>
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: "clamp(1.125rem, 2vw, 1.375rem)",
-                    fontWeight: 700,
-                    color: "var(--cream)",
-                    lineHeight: 1.2,
-                    marginBottom: "12px",
-                  }}
-                >
-                  {q.title}
-                </h3>
-                <p
-                  className="font-montserrat"
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 300,
-                    lineHeight: 1.85,
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {q.text}
-                </p>
-              </div>
+              {/* Title */}
+              <h3
+                className="font-playfair"
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: 700,
+                  color: "#f4f1ea",
+                  lineHeight: 1.25,
+                  marginBottom: "14px",
+                }}
+              >
+                {q.title}
+              </h3>
 
-              {/* Bottom accent line */}
-              <div style={{ width: 32, height: 1, background: "var(--lilac)", marginTop: "auto" }} />
+              {/* Body */}
+              <p
+                className="font-montserrat"
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 300,
+                  lineHeight: 1.82,
+                  color: "rgba(244,241,234,0.62)",
+                }}
+              >
+                {q.text}
+              </p>
             </div>
           ))}
-        </div>
-
-        {/* CTA banner */}
-        <div
-          className="grow-banner"
-          style={{
-            marginTop: "48px",
-            padding: "48px 56px",
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "2px",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "32px",
-          }}
-        >
-          <div style={{ maxWidth: "600px" }}>
-            <h3
-              className="font-playfair"
-              style={{
-                fontSize: "clamp(1.375rem, 3vw, 1.875rem)",
-                fontWeight: 700,
-                marginBottom: "10px",
-                lineHeight: 1.2,
-                color: "var(--cream)",
-              }}
-            >
-              Vereinseigener Anbau —{" "}
-              <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>
-                für Mitglieder, von Mitgliedern
-              </span>
-            </h3>
-            <p
-              className="font-montserrat"
-              style={{
-                fontSize: "0.9375rem",
-                fontWeight: 300,
-                lineHeight: 1.8,
-                color: "var(--text-secondary)",
-              }}
-            >
-              Als Mitglied des Cloudy Clubs hast du das Recht auf deine monatliche Menge gemäß §&nbsp;CanG.
-              Keine graue Zone — nur ehrliches Cannabis aus unserer eigenen Anlage.
-            </p>
-          </div>
-          <Link href="/membership" className="btn-primary" style={{ flexShrink: 0 }}>
-            Mitglied werden <ArrowRight size={13} />
-          </Link>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        /* Card hover: subtle border brighten + lift */
+        .quality-card {
+          transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+        }
+        .quality-card:hover {
+          transform: translateY(-6px);
+          border-color: rgba(192,175,211,0.40);
+          background: rgba(255,255,255,0.11) !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+          .quality-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 560px) {
           .quality-grid { grid-template-columns: 1fr !important; }
-          .grow-banner  { padding: 36px 28px !important; }
         }
       `}</style>
     </section>
