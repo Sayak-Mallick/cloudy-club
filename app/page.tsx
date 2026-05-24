@@ -1,7 +1,8 @@
 import Hero           from "@/components/Hero";
 import About          from "@/components/About";
 import Growing        from "@/components/Growing";
-import WhyCloudy      from "@/components/WhyCloudy";
+import WhyCloudyBento from "@/components/WhyCloudyBento";
+import WirSind        from "@/components/WirSind";
 import Milestones     from "@/components/Milestones";
 import Prevention     from "@/components/Prevention";
 import Membership     from "@/components/Membership";
@@ -11,6 +12,7 @@ import SEOSection     from "@/components/SEOSection";
 import News           from "@/components/News";
 import Ticker         from "@/components/Ticker";
 import ParallaxPanel  from "@/components/ParallaxPanel";
+import WhyCloudy from "@/components/WhyCloudy";
 
 export default function Home() {
   return (
@@ -18,8 +20,10 @@ export default function Home() {
       {/* ── 1. Hero ── */}
       <Hero />
 
-      {/* ── 2. About — photo left, values right ── */}
+      {/* ── 2. Why Cloudy Club — bento grid ── */}
       <WhyCloudy />
+      <WhyCloudyBento />
+      <WirSind />
       <About />
 
       {/* ── 3. Cinematic break — community quote ── */}

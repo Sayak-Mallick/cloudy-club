@@ -8,83 +8,56 @@ import { Check, ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const benefits = [
-  "Monatliche Cannabis-Abgabe gemäß § CanG",
-  "Zugang zu vereinseigenen Anbauflächen",
-  "Exklusive Mitglieder-Events & Workshops",
-  "Strain-Atlas mit Terpenprofilen",
-  "Prävention & Beratungsangebote",
-  "Stimmrecht auf Vereinsversammlungen",
-  "Mitglieder-Newsletter & Neuigkeiten",
-  "Transparente Kostenstruktur",
+/* ── Data ─────────────────────────────────────────────── */
+const freeTier = [
+  "News-Updates",
+  "Einladung zu Events",
+  "Community Zugang",
 ];
 
-const requirements = [
-  "Mindestalter: 18 Jahre",
-  "Hauptwohnsitz in Deutschland",
-  "6 Monate nachgewiesener Aufenthalt in Deutschland",
-  "Bereitschaft zur Präventionsschulung",
-  "Akzeptanz der Vereinssatzung",
+const memberFeatures = [
+  "Priorisierte Aufnahme",
+  "Stimmrecht",
+  "Lounge-Zutritt",
+  "Member-Events",
 ];
 
 export default function Membership() {
-  const sectionRef   = useRef<HTMLElement>(null);
-  const price1Ref    = useRef<HTMLSpanElement>(null);
-  const price2Ref    = useRef<HTMLSpanElement>(null);
-  const headlineRef  = useRef<HTMLHeadingElement>(null);
-  const line1Ref     = useRef<HTMLSpanElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const line1Ref    = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
-      // Line-mask headline reveal
+      /* Headline line-mask */
       if (!prefersReduced) {
         gsap.fromTo(line1Ref.current,
           { y: "105%", skewX: -3 },
-          {
-            y: "0%", skewX: 0, duration: 0.9, ease: "power4.out",
-            scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true },
-          }
+          { y: "0%", skewX: 0, duration: 0.95, ease: "power4.out",
+            scrollTrigger: { trigger: headlineRef.current, start: "top 82%", once: true } }
         );
       }
 
-      // Columns stagger in
-      gsap.fromTo(".mem-col",
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true },
-        }
+      /* Left col: eyebrow + subtitle + free card */
+      gsap.fromTo(".mem-left-text",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true } }
+      );
+      gsap.fromTo(".mem-free-card",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.12,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true } }
       );
 
-      if (!prefersReduced) {
-        // Counter — aufnahme (50€)
-        const counter1 = { val: 0 };
-        gsap.to(counter1, {
-          val: 50,
-          duration: 1.6,
-          ease: "power2.out",
-          snap: { val: 1 },
-          scrollTrigger: { trigger: price1Ref.current, start: "top 85%", once: true },
-          onUpdate() {
-            if (price1Ref.current) price1Ref.current.textContent = String(Math.round(counter1.val));
-          },
-        });
-
-        // Counter — monatlich (25€)
-        const counter2 = { val: 0 };
-        gsap.to(counter2, {
-          val: 25,
-          duration: 1.4,
-          ease: "power2.out",
-          snap: { val: 1 },
-          scrollTrigger: { trigger: price2Ref.current, start: "top 85%", once: true },
-          onUpdate() {
-            if (price2Ref.current) price2Ref.current.textContent = String(Math.round(counter2.val));
-          },
-        });
-      }
+      /* Right: main pricing card */
+      gsap.fromTo(".mem-main-card",
+        { opacity: 0, x: 32 },
+        { opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 76%", once: true } }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -97,181 +70,234 @@ export default function Membership() {
       className="section"
       style={{ background: "var(--bg)" }}
     >
-      <div className="section-inner">
-        <div className="section-header" style={{ marginBottom: "56px" }}>
-          <span className="eyebrow">Mitgliedschaft</span>
-          <h2 ref={headlineRef} className="font-playfair section-title">
-            <span className="line-mask" style={{ display: "block" }}>
-              <span ref={line1Ref} className="line-inner">Werde Teil des Clubs.</span>
-            </span>
-          </h2>
-          <p className="section-subtitle">
-            Transparent, fair und unkompliziert. Hier siehst du alles, was du über eine Mitgliedschaft im Cloudy Club wissen musst.
-          </p>
-        </div>
+      <div
+        className="section-inner mem-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.45fr",
+          gap: "40px",
+          alignItems: "center",
+        }}
+      >
 
-        {/* Three-column grid */}
-        <div
-          className="mem-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr", gap: "24px", alignItems: "start" }}
-        >
-          {/* Costs card */}
+        {/* ── LEFT COLUMN ───────────────────────────────── */}
+        <div>
+          {/* Eyebrow + headline */}
+          <div className="mem-left-text" style={{ marginBottom: "28px", opacity: 0 }}>
+            <span className="eyebrow">Membership</span>
+            <h2
+              ref={headlineRef}
+              className="font-playfair"
+              style={{
+                fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
+                fontWeight: 700,
+                color: "var(--cream)",
+                lineHeight: 1.0,
+                margin: "12px 0 20px",
+                overflow: "hidden",
+              }}
+            >
+              <span style={{ display: "block", overflow: "hidden" }}>
+                <span ref={line1Ref} style={{ display: "block" }}>
+                  Mitglied werden
+                </span>
+              </span>
+            </h2>
+            <p
+              className="font-montserrat"
+              style={{
+                fontSize: "0.9375rem",
+                fontWeight: 300,
+                lineHeight: 1.8,
+                color: "var(--text-secondary)",
+                maxWidth: "400px",
+              }}
+            >
+              Sichere dir deinen Platz im Cannabis Social Club für Osnabrück.
+              Die Plätze sind gesetzlich limitiert.
+            </p>
+          </div>
+
+          {/* Free tier card */}
           <div
-            className="mem-col"
+            className="mem-free-card"
             style={{
               background: "var(--bg-elevated)",
               border: "1px solid var(--border)",
-              borderRadius: "2px",
-              padding: "40px 32px",
-              display: "flex",
-              flexDirection: "column",
+              borderRadius: "16px",
+              padding: "28px 28px 32px",
+              opacity: 0,
             }}
           >
-            <span className="eyebrow" style={{ marginBottom: "32px", display: "block" }}>Beiträge</span>
-
-            <div style={{ paddingBottom: "24px", marginBottom: "24px", borderBottom: "1px solid var(--border)" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                <span
-                  ref={price1Ref}
-                  className="font-playfair"
-                  style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1 }}
-                >
-                  0
-                </span>
-                <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--cream)", fontWeight: 500 }}>€</span>
-              </div>
-              <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-secondary)" }}>
-                Einmalige Aufnahmegebühr
-              </p>
-            </div>
-
-            <div style={{ paddingBottom: "28px", marginBottom: "28px", borderBottom: "1px solid var(--border)" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                <span
-                  ref={price2Ref}
-                  className="font-playfair"
-                  style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", color: "var(--lilac)", fontWeight: 700, lineHeight: 1 }}
-                >
-                  0
-                </span>
-                <span className="font-playfair" style={{ fontSize: "1.25rem", color: "var(--lilac)", fontWeight: 500 }}>€</span>
-              </div>
-              <p className="font-montserrat" style={{ fontSize: "0.8125rem", fontWeight: 300, color: "var(--text-secondary)" }}>
-                Pro Monat
-              </p>
-            </div>
-
-            <p className="font-montserrat" style={{ fontSize: "0.75rem", fontWeight: 300, lineHeight: 1.7, color: "var(--text-muted)", marginBottom: "32px", flex: 1 }}>
-              Keine versteckten Kosten. Beiträge dienen ausschließlich dem Vereinsbetrieb und Anbau.
+            <p className="font-playfair" style={{
+              fontSize: "1.0625rem", fontWeight: 700,
+              color: "var(--cream)", marginBottom: "4px",
+            }}>
+              Interessent
+            </p>
+            <p className="font-playfair" style={{
+              fontSize: "1.5rem", fontWeight: 700,
+              color: "var(--text-secondary)", marginBottom: "20px",
+            }}>
+              Kostenlos
             </p>
 
+            <ul style={{ listStyle: "none", marginBottom: "24px" }}>
+              {freeTier.map((item) => (
+                <li key={item} style={{
+                  display: "flex", alignItems: "center", gap: "10px",
+                  padding: "7px 0",
+                }}>
+                  <Check size={13} style={{ color: "var(--lilac)", flexShrink: 0 }} />
+                  <span className="font-montserrat" style={{
+                    fontSize: "0.875rem", fontWeight: 300,
+                    color: "var(--text-secondary)",
+                  }}>
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
             <Link
-              href="#cannanas-embed"
-              className="btn-primary"
-              style={{ width: "100%", justifyContent: "center" }}
+              href="/membership"
+              className="font-montserrat"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "7px",
+                fontSize: "0.875rem", fontWeight: 600,
+                color: "var(--cream)", textDecoration: "none",
+                borderBottom: "1px solid rgba(244,241,234,0.35)",
+                paddingBottom: "2px",
+                transition: "opacity 0.2s ease",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
             >
-              Mitglied werden <ArrowRight size={13} />
+              Hier Registrieren <ArrowRight size={13} strokeWidth={2} />
             </Link>
-          </div>
-
-          {/* Benefits list */}
-          <div className="mem-col">
-            <span className="eyebrow" style={{ display: "block", marginBottom: "12px" }}>Was du bekommst</span>
-            <h3 className="font-playfair" style={{ fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: "var(--cream)", marginBottom: "32px", lineHeight: 1.2 }}>
-              Deine Vorteile als Mitglied.
-            </h3>
-            <ul style={{ listStyle: "none" }}>
-              {benefits.map((b, i) => (
-                <li
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: "14px",
-                    alignItems: "flex-start",
-                    padding: "14px 0",
-                    borderBottom: "1px solid var(--border)",
-                  }}
-                >
-                  <Check size={15} style={{ color: "var(--lilac)", flexShrink: 0, marginTop: "3px" }} />
-                  <span className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-secondary)" }}>
-                    {b}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Requirements */}
-          <div className="mem-col">
-            <span className="eyebrow" style={{ display: "block", marginBottom: "32px" }}>Voraussetzungen</span>
-            <ul style={{ listStyle: "none" }}>
-              {requirements.map((r, i) => (
-                <li
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: "14px",
-                    alignItems: "flex-start",
-                    padding: "14px 0",
-                    borderBottom: "1px solid var(--border)",
-                  }}
-                >
-                  <span className="font-montserrat" style={{ color: "var(--lilac)", fontWeight: 700, flexShrink: 0, fontSize: "0.875rem", marginTop: "1px" }}>
-                    —
-                  </span>
-                  <span className="font-montserrat" style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.6, color: "var(--text-secondary)" }}>
-                    {r}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
-        {/* Application form placeholder */}
+        {/* ── RIGHT COLUMN — main membership card ──────── */}
         <div
-          id="cannanas-embed"
+          className="mem-main-card"
           style={{
-            marginTop: "48px",
-            background: "var(--bg-surface)",
-            border: "1px solid var(--border)",
-            borderRadius: "2px",
-            padding: "56px 48px",
-            textAlign: "center",
+            position: "relative",
+            background: "var(--bg-card)",
+            border: "1px solid var(--lilac)",
+            borderRadius: "20px",
+            padding: "40px 36px 44px",
+            opacity: 0,
+            /* Subtle lilac glow */
+            boxShadow: "0 0 48px rgba(192,175,211,0.08)",
           }}
         >
-          <span className="eyebrow" style={{ display: "block", marginBottom: "12px" }}>Beitrittsformular</span>
-          <h3 className="font-playfair" style={{ fontSize: "1.625rem", fontWeight: 700, color: "var(--cream)", marginBottom: "12px" }}>
-            Mitgliedschaft beantragen
-          </h3>
-          <p className="font-montserrat" style={{ fontSize: "0.9375rem", fontWeight: 300, color: "var(--text-secondary)", marginBottom: "32px" }}>
-            Das Antragsformular wird hier eingebettet.
-          </p>
+          {/* LIMITIERT badge — top-right tab */}
           <div style={{
-            minHeight: "120px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "var(--bg-card)",
-            border: "1px dashed var(--border)",
-            borderRadius: "2px",
-            padding: "24px",
+            position: "absolute",
+            top: 0, right: 24,
+            background: "var(--lilac)",
+            color: "var(--bg)",
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "0.625rem",
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            padding: "6px 14px 8px",
+            borderRadius: "0 0 10px 10px",
           }}>
-            <p className="font-montserrat" style={{ fontSize: "0.8125rem", color: "var(--text-muted)", fontWeight: 400, letterSpacing: "0.04em" }}>
-              [Cannanas-Formular wird hier eingebettet]
-            </p>
+            LIMITIERT
           </div>
+
+          {/* Title */}
+          <h3 className="font-playfair" style={{
+            fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+            fontWeight: 700, color: "var(--cream)",
+            marginBottom: "12px", marginTop: "8px",
+          }}>
+            Membership
+          </h3>
+
+          {/* Price */}
+          <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "32px" }}>
+            <span className="font-playfair" style={{
+              fontSize: "clamp(2.75rem, 5vw, 3.75rem)",
+              fontWeight: 700, color: "var(--lilac)",
+              lineHeight: 1,
+            }}>
+              10€
+            </span>
+            <span className="font-montserrat" style={{
+              fontSize: "1rem", fontWeight: 300,
+              color: "var(--text-secondary)",
+            }}>
+              /Monat
+            </span>
+          </div>
+
+          {/* Features — 2-column grid */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "1fr 1fr",
+            gap: "14px 24px", marginBottom: "36px",
+          }}>
+            {memberFeatures.map((f) => (
+              <div key={f} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                {/* Circular check badge */}
+                <div style={{
+                  width: 28, height: 28, borderRadius: "50%",
+                  background: "rgba(192,175,211,0.14)",
+                  border: "1px solid rgba(192,175,211,0.28)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0,
+                }}>
+                  <Check size={12} strokeWidth={2.5} style={{ color: "var(--lilac)" }} />
+                </div>
+                <span className="font-montserrat" style={{
+                  fontSize: "0.9rem", fontWeight: 400,
+                  color: "var(--text-secondary)",
+                }}>
+                  {f}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA button */}
+          <Link
+            href="/membership"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "52px",
+              background: "var(--lilac)",
+              borderRadius: "10px",
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "0.8125rem",
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "var(--bg)",
+              textDecoration: "none",
+              transition: "opacity 0.22s ease, transform 0.22s ease",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLAnchorElement).style.opacity = "0.88";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+            }}
+          >
+            Mitgliedschaft Anfragen
+          </Link>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          .mem-grid { grid-template-columns: 1fr 1fr !important; }
-          .mem-grid > .mem-col:first-child { grid-column: 1 / -1; }
-        }
-        @media (max-width: 640px) {
-          .mem-grid { grid-template-columns: 1fr !important; }
-          .mem-grid > .mem-col:first-child { grid-column: auto; }
+        @media (max-width: 860px) {
+          .mem-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
         }
       `}</style>
     </section>
