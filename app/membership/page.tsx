@@ -18,7 +18,7 @@ export default function MembershipPage() {
         sub="Transparent, fair und unkompliziert. Hier findest du alles, was du über eine Mitgliedschaft im Cloudy Club wissen musst."
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=85"
         imagePosition="center"
-        align="left"
+        align="center"
         overlayOpacity={0.72}
         cta={{ label: "Jetzt bewerben", href: "#cannanas-embed" }}
       />

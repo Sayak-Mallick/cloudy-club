@@ -19,7 +19,7 @@ export default function AboutPage() {
         sub="Wir sind ein eingetragener Cannabis Social Club in Osnabrück. Transparent, offen und mit echter Leidenschaft für Qualität und Gemeinschaft."
         image="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=2000&q=85"
         imagePosition="center top"
-        align="left"
+        align="center"
         overlayOpacity={0.72}
       />
       <About />

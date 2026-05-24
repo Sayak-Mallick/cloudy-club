@@ -18,7 +18,7 @@ export default function GrowingPage() {
         sub="Vereinseigener Anbau ohne Kompromisse — kontrolliert, nachhaltig und vollständig transparent für unsere Mitglieder."
         image="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2000&q=85"
         imagePosition="center"
-        align="left"
+        align="center"
         overlayOpacity={0.68}
       />
       <Growing />

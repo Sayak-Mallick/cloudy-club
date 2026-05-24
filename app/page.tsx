@@ -2,6 +2,7 @@ import Hero           from "@/components/Hero";
 import About          from "@/components/About";
 import Growing        from "@/components/Growing";
 import WhyCloudy      from "@/components/WhyCloudy";
+import Milestones     from "@/components/Milestones";
 import Prevention     from "@/components/Prevention";
 import Membership     from "@/components/Membership";
 import FAQ            from "@/components/FAQ";
@@ -34,7 +35,9 @@ export default function Home() {
 
       {/* ── 4. Growing — compact quality cards with icons ── */}
       <Growing />
-      
+
+      {/* ── 5. Milestones — alternating timeline ── */}
+      <Milestones />
 
       {/* ── 6. Membership ── */}
       <Membership />
@@ -57,14 +60,10 @@ export default function Home() {
       {/* ── 9. FAQ ── */}
       <FAQ />
 
-      {/* ── 10. Location ── */}
-      <Location />
+      {/* <Location /> */}
 
-      {/* ── 11. SEO — nearby cities ── */}
-      <SEOSection />
-
-      {/* ── 12. News — horizontal scroll ── */}
-      <News />
+      {/* <SEOSection />
+      <News /> */}
 
       {/* ── 13. Ticker ── */}
       <Ticker inverted />

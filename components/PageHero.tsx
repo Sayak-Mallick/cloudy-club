@@ -28,7 +28,7 @@ export default function PageHero({
   sub,
   image,
   imagePosition = "center",
-  align = "left",
+  align = "center",
   cta,
   height = "68vh",
   overlayOpacity = 0.7,

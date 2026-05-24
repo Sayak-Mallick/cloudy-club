@@ -18,7 +18,7 @@ export default function PreventionPage() {
         sub="Informierter Konsum ist kein Pflichtprogramm — er ist gelebte Vereinskultur. Wir klären auf, ohne zu urteilen."
         image="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=2000&q=85"
         imagePosition="center"
-        align="left"
+        align="center"
         overlayOpacity={0.72}
       />
       <Prevention />
