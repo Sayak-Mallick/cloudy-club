@@ -3,6 +3,7 @@ import About          from "@/components/About";
 import Growing        from "@/components/Growing";
 import WhyCloudyBento from "@/components/WhyCloudyBento";
 import WirSind        from "@/components/WirSind";
+import StandortHome   from "@/components/StandortHome";
 import Milestones     from "@/components/Milestones";
 import Prevention     from "@/components/Prevention";
 import Membership     from "@/components/Membership";
@@ -17,16 +18,16 @@ import WhyCloudy from "@/components/WhyCloudy";
 export default function Home() {
   return (
     <>
-      {/* ── 1. Hero ── */}
       <Hero />
-
-      {/* ── 2. Why Cloudy Club — bento grid ── */}
-      <WhyCloudy />
-      <WhyCloudyBento />
       <WirSind />
-      <About />
-
-      {/* ── 3. Cinematic break — community quote ── */}
+      <Growing />
+      <WhyCloudyBento />
+      <Membership />
+      <Prevention />
+      <FAQ />
+      <StandortHome />
+      <WhyCloudy />
+      <About /> 
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=2000&q=80"
         eyebrow="Unsere Mission"
@@ -36,17 +37,7 @@ export default function Home() {
         align="center"
         overlayOpacity={0.58}
       />
-
-      {/* ── 4. Growing — compact quality cards with icons ── */}
-      <Growing />
-
-      {/* ── 5. Milestones — alternating timeline ── */}
       <Milestones />
-
-      {/* ── 6. Membership ── */}
-      <Membership />
-
-      {/* ── 7. Cinematic break — join CTA ── */}
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80"
         eyebrow="Mitglied werden"
@@ -57,19 +48,8 @@ export default function Home() {
         overlayOpacity={0.68}
         cta={{ label: "Jetzt bewerben", href: "/membership" }}
       />
-
-      {/* ── 8. Prevention — Genuss mit Verantwortung ── */}
-      <Prevention />
-
-      {/* ── 9. FAQ ── */}
-      <FAQ />
-
-      {/* <Location /> */}
-
       {/* <SEOSection />
       <News /> */}
-
-      {/* ── 13. Ticker ── */}
       <Ticker inverted />
     </>
   );
