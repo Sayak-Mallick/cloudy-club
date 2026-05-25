@@ -26,18 +26,6 @@ export default function Home() {
       <Prevention />
       <FAQ />
       <StandortHome />
-      <WhyCloudy />
-      <About /> 
-      <ParallaxPanel
-        image="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=2000&q=80"
-        eyebrow="Unsere Mission"
-        headline="Gemeinsam sicher,"
-        headlineItalic="gemeinsam besser."
-        sub="Der Cloudy Club steht für einen neuen Standard im verantwortungsvollen Umgang mit Cannabis — offen, ehrlich und in echter Gemeinschaft."
-        align="center"
-        overlayOpacity={0.58}
-      />
-      <Milestones />
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80"
         eyebrow="Mitglied werden"

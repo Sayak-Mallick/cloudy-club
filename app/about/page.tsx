@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import About        from "@/components/About";
-import WhyCloudy    from "@/components/WhyCloudy";
+import About from "@/components/About";
+import WhyCloudy from "@/components/WhyCloudy";
 import ParallaxPanel from "@/components/ParallaxPanel";
-import PageHero     from "@/components/PageHero";
+import PageHero from "@/components/PageHero";
+import Milestones from "@/components/Milestones";
 
 export const metadata: Metadata = {
   title: "Über uns – Cloudy Club Osnabrück",
@@ -24,6 +25,7 @@ export default function AboutPage() {
       />
       <About />
       <WhyCloudy />
+      <Milestones />
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80"
         eyebrow="Mitglied werden"
