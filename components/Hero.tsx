@@ -221,7 +221,7 @@ export default function Hero() {
           maxWidth: "1200px",
           margin: "0 auto",
           width: "100%",
-          padding: "0 40px",
+          padding: "0 clamp(16px, 4vw, 40px)",
           display: "grid",
           gridTemplateColumns: "55% 45%",
           alignItems: "center",
@@ -234,7 +234,7 @@ export default function Hero() {
         {/* ── Left: text ── */}
         <div
           ref={textColRef}
-          style={{ paddingRight: "64px", paddingTop: "60px", paddingBottom: "60px" }}
+          style={{ paddingRight: "clamp(0px, 5vw, 64px)", paddingTop: "60px", paddingBottom: "60px" }}
         >
           {/* Eyebrow tag */}
           <div

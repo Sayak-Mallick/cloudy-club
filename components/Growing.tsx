@@ -104,7 +104,7 @@ export default function Growing() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "100px 24px",
+        padding: "clamp(72px,10vw,120px) clamp(16px,4vw,24px)",
       }}
     >
       {/* ── Parallax background image ── */}

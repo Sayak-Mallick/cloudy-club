@@ -131,9 +131,9 @@ export default function Prevention() {
 
       /* Resource rows */
       gsap.fromTo(".prev-res-row",
-        { opacity: 0, x: -20 },
+        { opacity: 0, y: 16 },
         {
-          opacity: 1, x: 0, duration: 0.6, stagger: 0.13, ease: "power2.out",
+          opacity: 1, y: 0, duration: 0.6, stagger: 0.13, ease: "power2.out",
           scrollTrigger: { trigger: ".prev-res-list", start: "top 84%", once: true },
         }
       );
@@ -159,7 +159,7 @@ export default function Prevention() {
   };
 
   return (
-    <div ref={rootRef}>
+    <div ref={rootRef} style={{ overflowX: "clip" }}>
 
       {/* ══════════════════════════════════════════════════════
           1 · HINWEIS  ── centered warning card

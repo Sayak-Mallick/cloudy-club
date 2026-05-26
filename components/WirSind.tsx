@@ -107,6 +107,7 @@ export default function WirSind() {
         minHeight: "100svh",
         position: "relative",
         overflow: "hidden",
+        overflowX: "clip",
         display: "flex",
         alignItems: "center",
         padding: "clamp(40px,7vw,80px) clamp(16px,4vw,24px)",

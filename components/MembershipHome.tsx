@@ -72,7 +72,8 @@ export default function MembershipHome() {
       id="membership-home"
       style={{
         background: bg,
-        padding: "clamp(80px,10vw,130px) clamp(20px,4vw,40px)",
+        padding: "clamp(72px,10vw,130px) clamp(16px,4vw,40px)",
+        overflowX: "clip",   /* contain horizontal GSAP entrance translations */
       }}
     >
       <div
@@ -342,13 +343,15 @@ export default function MembershipHome() {
         }
 
         /* Responsive */
-        @media (max-width: 780px) {
-          .mh-inner { grid-template-columns: 1fr !important; }
+        @media (max-width: 860px) {
+          .mh-inner { grid-template-columns: 1fr !important; gap: 28px !important; }
           .mh-main-card { order: -1; }
         }
         @media (max-width: 480px) {
           .mh-feat-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
         }
+        /* Never wider than the viewport */
+        .mh-free-card, .mh-main-card { max-width: 100%; }
       `}</style>
     </section>
   );

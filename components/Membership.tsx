@@ -191,7 +191,7 @@ export default function Membership() {
   const sp: React.CSSProperties = { background: L.bg, padding: "clamp(80px,10vw,130px) clamp(20px,4vw,40px)" };
 
   return (
-    <div ref={rootRef}>
+    <div ref={rootRef} style={{ overflowX: "clip" }}>
 
       {/* ══════════════════════════════════════════════════════
           1 · BENEFITS — "Was dich erwartet"   LIGHT
@@ -570,11 +570,16 @@ export default function Membership() {
         @media (max-width: 1024px) {
           .mem-ben-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
-        @media (max-width: 620px) {
-          .mem-ben-grid { grid-template-columns: 1fr !important; }
+        @media (max-width: 700px) {
           .mem-price-cards { grid-template-columns: 1fr !important; }
           .mem-steps-grid  { grid-template-columns: 1fr !important; gap: 28px !important; }
         }
+        @media (max-width: 560px) {
+          .mem-ben-grid { grid-template-columns: 1fr !important; }
+        }
+        /* Safety: no card ever wider than viewport */
+        .mem-ben-card, .mem-card-free, .mem-card-paid,
+        .mem-step-card, .mem-form-card { max-width: 100%; }
       `}</style>
     </div>
   );
