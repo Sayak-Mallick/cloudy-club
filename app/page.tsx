@@ -6,7 +6,7 @@ import WirSind        from "@/components/WirSind";
 import StandortHome   from "@/components/StandortHome";
 import Milestones     from "@/components/Milestones";
 import Prevention     from "@/components/Prevention";
-import Membership     from "@/components/Membership";
+import MembershipHome from "@/components/MembershipHome";
 import FAQ            from "@/components/FAQ";
 import Location       from "@/components/Location";
 import SEOSection     from "@/components/SEOSection";
@@ -23,7 +23,7 @@ export default function Home() {
       <WirSind />
       <Growing />
       <WhyCloudyBento />
-      <Membership />
+      <MembershipHome />
       <Prevention />
       <FAQ />
       <StandortHome />
