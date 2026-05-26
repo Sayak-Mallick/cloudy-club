@@ -104,12 +104,12 @@ export default function WirSind() {
       id="wir-sind"
       ref={sectionRef}
       style={{
-        minHeight: "100vh",
+        minHeight: "100svh",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
-        padding: "clamp(48px,7vw,80px) 24px",
+        padding: "clamp(40px,7vw,80px) clamp(16px,4vw,24px)",
       }}
     >
       {/* ── Parallax background — city aerial ── */}
@@ -150,8 +150,8 @@ export default function WirSind() {
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "24px",
-          padding: "clamp(32px,4vw,52px) clamp(28px,4vw,48px)",
+          borderRadius: "clamp(16px,3vw,24px)",
+          padding: "clamp(24px,4vw,52px) clamp(20px,4vw,48px)",
         }}
       >
         {/* ── Header row ── */}
@@ -162,8 +162,8 @@ export default function WirSind() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            marginBottom: "28px",
-            gap: "32px",
+            marginBottom: "clamp(20px,3vw,28px)",
+            gap: "clamp(12px,3vw,32px)",
             flexWrap: "wrap",
           }}
         >
@@ -178,7 +178,7 @@ export default function WirSind() {
             <h2
               className="ws-headline font-playfair"
               style={{
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(1.6rem, 5vw, 3rem)",
                 fontWeight: 700,
                 color: "var(--cream)",
                 lineHeight: 1.1,
@@ -197,7 +197,7 @@ export default function WirSind() {
           <p
             className="ws-subtitle font-montserrat"
             style={{
-              fontSize: "0.9375rem",
+              fontSize: "clamp(0.8125rem,2vw,0.9375rem)",
               fontWeight: 300,
               color: "rgba(244,241,234,0.50)",
               maxWidth: "340px",
@@ -215,7 +215,7 @@ export default function WirSind() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "14px",
+            gap: "clamp(10px,1.5vw,14px)",
           }}
         >
           {cards.map((c, i) => (
@@ -226,8 +226,8 @@ export default function WirSind() {
                 gridColumn: c.large ? "span 2" : "span 1",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                padding: "24px 24px 28px",
+                borderRadius: "clamp(12px,2vw,16px)",
+                padding: "clamp(16px,2.5vw,24px) clamp(16px,2.5vw,24px) clamp(20px,3vw,28px)",
                 display: "flex",
                 flexDirection: "column",
                 minHeight: c.large ? "220px" : "190px",
@@ -245,16 +245,17 @@ export default function WirSind() {
             >
               {/* Top row: icon + arrow */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div style={{
+                <div className="ws-icon-wrap" style={{
                   width: 38, height: 38,
                   borderRadius: "10px",
                   background: "rgba(192,175,211,0.12)",
                   border: "1px solid rgba(192,175,211,0.18)",
                   display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0,
                 }}>
-                  <c.icon size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
+                  <c.icon className="ws-icon" size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
                 </div>
-                <ArrowUpRight size={16} strokeWidth={1.6} style={{ color: "rgba(244,241,234,0.22)" }} />
+                <ArrowUpRight className="ws-arrow" size={16} strokeWidth={1.6} style={{ color: "rgba(244,241,234,0.22)" }} />
               </div>
 
               {/* Spacer */}
@@ -292,14 +293,53 @@ export default function WirSind() {
       </div>
 
       <style>{`
+        /* ── Tablet (≤860px): 2-col grid ── */
         @media (max-width: 860px) {
-          .ws-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .ws-grid .ws-card:first-child { grid-column: span 2 !important; }
+          .ws-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .ws-grid .ws-card:first-child {
+            grid-column: span 2 !important;
+          }
+          .ws-card {
+            min-height: 160px !important;
+          }
         }
-        @media (max-width: 540px) {
-          .ws-grid { grid-template-columns: 1fr !important; }
-          .ws-grid .ws-card { grid-column: span 1 !important; }
-          .ws-header-row { flex-direction: column; align-items: flex-start !important; }
+
+        /* ── Mobile (≤768px): full single column ── */
+        @media (max-width: 768px) {
+          .ws-header-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+          }
+          .ws-subtitle {
+            max-width: 100% !important;
+          }
+          .ws-grid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+          }
+          .ws-grid .ws-card,
+          .ws-grid .ws-card:first-child {
+            grid-column: span 1 !important;
+            width: 100% !important;
+            min-height: 130px !important;
+          }
+          /* smaller icon box */
+          .ws-icon-wrap {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 8px !important;
+          }
+          .ws-icon {
+            width: 13px !important;
+            height: 13px !important;
+          }
+          .ws-arrow {
+            width: 13px !important;
+            height: 13px !important;
+          }
         }
       `}</style>
     </section>

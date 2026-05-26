@@ -13,7 +13,7 @@ const features = [
     icon: ShieldCheck,
     title: "100% Legal & Konform",
     text: "Wir handeln strikt nach dem KCanG. Deine Mitgliedschaft ist rechtlich abgesichert und vollständig transparent.",
-    large: true,   // spans 2 cols
+    large: true,
   },
   {
     icon: Leaf,
@@ -104,12 +104,12 @@ export default function WhyCloudyBento() {
       id="why"
       ref={sectionRef}
       style={{
-        minHeight: "100vh",
+        minHeight: "100svh",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
-        padding: "clamp(48px,7vw,80px) 24px",
+        padding: "clamp(40px,7vw,80px) clamp(16px,4vw,24px)",
       }}
     >
       {/* ── Parallax background ── */}
@@ -150,8 +150,8 @@ export default function WhyCloudyBento() {
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "24px",
-          padding: "clamp(32px,4vw,52px) clamp(28px,4vw,48px)",
+          borderRadius: "clamp(16px,3vw,24px)",
+          padding: "clamp(24px,4vw,52px) clamp(20px,4vw,48px)",
         }}
       >
 
@@ -163,8 +163,8 @@ export default function WhyCloudyBento() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            marginBottom: "28px",
-            gap: "32px",
+            marginBottom: "clamp(20px,3vw,28px)",
+            gap: "clamp(12px,3vw,32px)",
             flexWrap: "wrap",
           }}
         >
@@ -179,7 +179,7 @@ export default function WhyCloudyBento() {
             <h2
               className="wcb-headline font-playfair"
               style={{
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(1.6rem, 5vw, 3rem)",
                 fontWeight: 700,
                 color: "var(--cream)",
                 lineHeight: 1.1,
@@ -198,7 +198,7 @@ export default function WhyCloudyBento() {
           <p
             className="wcb-subtitle font-montserrat"
             style={{
-              fontSize: "0.9375rem",
+              fontSize: "clamp(0.8125rem,2vw,0.9375rem)",
               fontWeight: 300,
               color: "rgba(244,241,234,0.50)",
               maxWidth: "340px",
@@ -216,7 +216,7 @@ export default function WhyCloudyBento() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "14px",
+            gap: "clamp(10px,1.5vw,14px)",
           }}
         >
           {features.map((f, i) => (
@@ -227,8 +227,8 @@ export default function WhyCloudyBento() {
                 gridColumn: f.large ? "span 2" : "span 1",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                padding: "24px 24px 28px",
+                borderRadius: "clamp(12px,2vw,16px)",
+                padding: "clamp(16px,2.5vw,24px) clamp(16px,2.5vw,24px) clamp(20px,3vw,28px)",
                 display: "flex",
                 flexDirection: "column",
                 minHeight: f.large ? "220px" : "190px",
@@ -246,13 +246,9 @@ export default function WhyCloudyBento() {
               }}
             >
               {/* Top row: icon + arrow */}
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-              }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 {/* Icon badge */}
-                <div style={{
+                <div className="wcb-icon-wrap" style={{
                   width: 38, height: 38,
                   borderRadius: "10px",
                   background: "rgba(192,175,211,0.12)",
@@ -260,12 +256,14 @@ export default function WhyCloudyBento() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  flexShrink: 0,
                 }}>
-                  <f.icon size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
+                  <f.icon className="wcb-icon" size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
                 </div>
 
                 {/* Arrow */}
                 <ArrowUpRight
+                  className="wcb-arrow"
                   size={16}
                   strokeWidth={1.6}
                   style={{ color: "rgba(244,241,234,0.22)" }}
@@ -283,6 +281,7 @@ export default function WhyCloudyBento() {
                     fontSize: f.large ? "1.25rem" : "1.0625rem",
                     fontWeight: 700,
                     color: "var(--cream)",
+                    marginTop: "16px",
                     marginBottom: "8px",
                     lineHeight: 1.25,
                   }}
@@ -307,14 +306,53 @@ export default function WhyCloudyBento() {
       </div>
 
       <style>{`
+        /* ── Tablet (≤860px): 2-col grid ── */
         @media (max-width: 860px) {
-          .wcb-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .wcb-grid .wcb-card:first-child { grid-column: span 2 !important; }
+          .wcb-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .wcb-grid .wcb-card:first-child {
+            grid-column: span 2 !important;
+          }
+          .wcb-card {
+            min-height: 160px !important;
+          }
         }
-        @media (max-width: 540px) {
-          .wcb-grid { grid-template-columns: 1fr !important; }
-          .wcb-grid .wcb-card { grid-column: span 1 !important; }
-          .wcb-header-row { flex-direction: column; align-items: flex-start !important; }
+
+        /* ── Mobile (≤768px): full single column ── */
+        @media (max-width: 768px) {
+          .wcb-header-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+          }
+          .wcb-subtitle {
+            max-width: 100% !important;
+          }
+          .wcb-grid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+          }
+          .wcb-grid .wcb-card,
+          .wcb-grid .wcb-card:first-child {
+            grid-column: span 1 !important;
+            width: 100% !important;
+            min-height: 130px !important;
+          }
+          /* smaller icon box */
+          .wcb-icon-wrap {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 8px !important;
+          }
+          .wcb-icon {
+            width: 13px !important;
+            height: 13px !important;
+          }
+          .wcb-arrow {
+            width: 13px !important;
+            height: 13px !important;
+          }
         }
       `}</style>
     </section>

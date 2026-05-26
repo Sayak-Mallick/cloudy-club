@@ -210,6 +210,7 @@ export default function WhyCloudy() {
                 fontWeight: 700,
                 color: "#1a1814",
                 lineHeight: 1.3,
+                marginTop: "16px",
                 marginBottom: "14px",
               }}
             >
