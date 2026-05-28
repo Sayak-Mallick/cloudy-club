@@ -353,7 +353,7 @@ export default function GrowingFull() {
             aspectRatio: "4/3",
           }}>
             <img
-              src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=900&q=80"
+              src="/assets/Nachhaltigkeit.png"
               alt="Cannabis Pflanze"
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />

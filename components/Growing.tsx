@@ -92,6 +92,8 @@ export default function Growing() {
     return () => ctx.revert();
   }, []);
 
+  const headerImage = "/assets/Anbau.png"; // Local image path for the hero background
+
   return (
     <section
       id="growing"
@@ -117,7 +119,7 @@ export default function Growing() {
           left: 0,
           width: "100%",
           height: "140%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1800&q=80')",
+          backgroundImage: `url('${headerImage}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           willChange: "transform",

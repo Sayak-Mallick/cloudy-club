@@ -144,6 +144,8 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
+  const headerImage = "/assets/main-hero.png";
+
   return (
     <section
       ref={sectionRef}
@@ -164,7 +166,7 @@ export default function Hero() {
           position: "absolute",
           top: 0, left: 0, right: 0,
           height: "115%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000&q=80')",
+          backgroundImage: `url('${headerImage}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           willChange: "transform",
