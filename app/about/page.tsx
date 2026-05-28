@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Lerne den Cloudy Club kennen – wer wir sind, was uns antreibt und warum Gemeinschaft, Sicherheit und Offenheit unsere drei Säulen sind.",
 };
 
+const headerImage  = "/assets/Über-uns.png";
+
 export default function AboutPage() {
   return (
     <div className="page-enter">
@@ -18,7 +20,7 @@ export default function AboutPage() {
         headline="Mehr als ein Club —"
         headlineItalic="eine Gemeinschaft."
         sub="Wir sind ein eingetragener Cannabis Social Club in Osnabrück. Transparent, offen und mit echter Leidenschaft für Qualität und Gemeinschaft."
-        image="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=2000&q=85"
+        image={headerImage}
         imagePosition="center top"
         align="center"
         overlayOpacity={0.72}

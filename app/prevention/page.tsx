@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Prävention und Aufklärung: Wie der Cloudy Club verantwortungsvollen Cannabis-Konsum fördert und seine Mitglieder informiert.",
 };
 
+const headerImage = "/assets/Prävention.png";
+
 export default function PreventionPage() {
   return (
     <div className="page-enter">
@@ -15,7 +17,7 @@ export default function PreventionPage() {
         headline="Verantwortung als"
         headlineItalic="Fundament"
         sub="Jugendschutz und Gesundheit stehen an erster Stelle. Wir fördern einen bewussten Umgang mit Cannabis und bieten umfassende Unterstützung."
-        image="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=2000&q=85"
+        image={headerImage}
         imagePosition="center"
         align="center"
         overlayOpacity={0.72}

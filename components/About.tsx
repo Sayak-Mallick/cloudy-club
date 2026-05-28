@@ -148,7 +148,7 @@ export default function About() {
                   position: "absolute",
                   top: "-12%", left: 0, right: 0,
                   height: "124%",
-                  backgroundImage: "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1400&q=85')",
+                  backgroundImage: "url('/assets/Unsere-Geschichte.png')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   willChange: "transform",
@@ -238,7 +238,7 @@ export default function About() {
                     className="about-line-inner"
                     style={{ fontStyle: "italic", color: "var(--lilac)" }}
                   >
-                    eine Bewegung
+                    Unsere Geschichte
                   </span>
                 </span>
               </h2>
