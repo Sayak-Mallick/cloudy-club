@@ -3,47 +3,25 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Award, MapPin, Users, CalendarDays, Eye, ArrowUpRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Identity cards ───────────────────────────────────── */
-const cards = [
-  {
-    icon: Award,
-    title: "Cannabis Social Club e.V.",
-    text: "Wir sind ein eingetragener Verein nach § 26 BGB — gegründet 2024 in Osnabrück als erste lizenzierte Anbauvereinigung der Region.",
-    large: true,
-  },
-  {
-    icon: MapPin,
-    title: "Verwurzelt in Osnabrück",
-    text: "Unser Herz schlägt für die Friedensstadt. Lokal verankert, regional vernetzt.",
-    large: false,
-  },
-  {
-    icon: Users,
-    title: "500+ Mitgliederplätze",
-    text: "Gesetzlich begrenzt für höchste Betreuungsqualität und exklusive Mitgliedschaft.",
-    large: false,
-  },
-  {
-    icon: CalendarDays,
-    title: "Gegründet 2024",
-    text: "Pioniere der neuen Cannabis-Gesetzgebung in Deutschland — von Anfang an dabei.",
-    large: false,
-  },
-  {
-    icon: Eye,
-    title: "Volle Transparenz",
-    text: "Alle Mitglieder erhalten Einsicht in Anbau, Finanzen und Vereinsentscheidungen.",
-    large: false,
-  },
+const featured = {
+  stat: "§ 26",
+  label: "BGB · Eingetragener Verein",
+  title: "Cannabis Social Club e.V.",
+  body: "Eingetragener Verein nach BGB — gegründet 2024 in Osnabrück als erste lizenzierte Anbauvereinigung der Region.",
+};
+
+const stats = [
+  { stat: "500+", title: "Mitgliederplätze",  body: "Gesetzlich begrenzt für höchste Betreuungsqualität und exklusive Mitgliedschaft." },
+  { stat: "#1",   title: "Osnabrück",          body: "Erste lizenzierte Anbauvereinigung der Friedensstadt. Lokal verankert, regional vernetzt." },
+  { stat: "2024", title: "Gegründet",           body: "Pioniere der neuen Cannabis-Gesetzgebung in Deutschland — von Anfang an dabei." },
+  { stat: "100%", title: "Transparent",         body: "Anbau, Finanzen und Vereinsentscheidungen offen einsehbar für alle Mitglieder." },
 ];
 
 export default function WirSind() {
   const sectionRef = useRef<HTMLElement>(null);
-  const bgRef      = useRef<HTMLDivElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,49 +29,31 @@ export default function WirSind() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-
-      /* ── Parallax background ── */
-      gsap.fromTo(bgRef.current,
-        { y: 0 },
-        {
-          y: "-18%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        }
-      );
-
-      /* ── Header ── */
       gsap.fromTo(".ws-eyebrow",
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
-      gsap.fromTo(".ws-headline",
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.08,
+      gsap.fromTo(".ws-headline-inner",
+        { y: "108%", skewX: -2 },
+        { y: "0%", skewX: 0, duration: 1.05, ease: "power4.out", delay: 0.06,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
       gsap.fromTo(".ws-subtitle",
         { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out", delay: 0.18,
+        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out", delay: 0.22,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
-
-      /* ── Cards stagger ── */
-      gsap.fromTo(".ws-card",
-        { opacity: 0, y: 30, scale: 0.97 },
-        {
-          opacity: 1, y: 0, scale: 1,
-          duration: 0.65, stagger: 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: ".ws-grid", start: "top 82%", once: true },
-        }
+      gsap.fromTo(".ws-featured",
+        { opacity: 0, x: -16 },
+        { opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
+          scrollTrigger: { trigger: ".ws-grid", start: "top 82%", once: true } }
       );
-
+      gsap.fromTo(".ws-stat-card",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.09, ease: "power2.out",
+          scrollTrigger: { trigger: ".ws-grid", start: "top 82%", once: true } }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -104,105 +64,54 @@ export default function WirSind() {
       id="wir-sind"
       ref={sectionRef}
       style={{
-        minHeight: "100svh",
+        background: "var(--bg)",
+        padding: "clamp(80px,10vw,140px) clamp(20px,4vw,40px)",
         position: "relative",
         overflow: "hidden",
         overflowX: "clip",
-        display: "flex",
-        alignItems: "center",
-        padding: "clamp(40px,7vw,80px) clamp(16px,4vw,24px)",
       }}
     >
-      {/* ── Parallax background — city aerial ── */}
-      <div
-        ref={bgRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "-20%", left: 0,
-          width: "100%", height: "140%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1800&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          willChange: "transform",
-          zIndex: 0,
-        }}
-      />
+      {/* Decorative glow — top right */}
+      <div aria-hidden="true" style={{
+        position: "absolute",
+        top: "-100px", right: "-60px",
+        width: "520px", height: "520px",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(155,136,192,0.13) 0%, transparent 68%)",
+        pointerEvents: "none",
+      }} />
 
-      {/* ── Dark overlay ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute", inset: 0,
-          background: "rgba(8,8,6,0.80)",
-          zIndex: 1,
-        }}
-      />
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
 
-      {/* ── Main container ── */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          maxWidth: "1200px",
-          width: "100%",
-          margin: "0 auto",
-          background: "rgba(22,21,18,0.88)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "clamp(16px,3vw,24px)",
-          padding: "clamp(24px,4vw,52px) clamp(20px,4vw,48px)",
-        }}
-      >
-        {/* ── Header row ── */}
-        <div
-          ref={headerRef}
-          className="ws-header-row"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: "clamp(20px,3vw,28px)",
-            gap: "clamp(12px,3vw,32px)",
-            flexWrap: "wrap",
-          }}
-        >
-          {/* Left */}
-          <div>
-            <span
-              className="ws-eyebrow eyebrow"
-              style={{ opacity: 0, color: "rgba(192,175,211,0.6)" }}
-            >
-              Über uns
-            </span>
-            <h2
-              className="ws-headline font-playfair"
-              style={{
-                fontSize: "clamp(1.6rem, 5vw, 3rem)",
-                fontWeight: 700,
-                color: "var(--cream)",
-                lineHeight: 1.1,
-                marginTop: "10px",
-                opacity: 0,
-              }}
-            >
+        {/* ── Section header ── */}
+        <div ref={headerRef} style={{ marginBottom: "clamp(40px,6vw,72px)" }}>
+          <span className="ws-eyebrow eyebrow" style={{ opacity: 0 }}>Über uns</span>
+          <h2
+            className="font-playfair"
+            style={{
+              fontSize: "clamp(2rem,5vw,3.5rem)",
+              fontWeight: 700,
+              color: "var(--cream)",
+              lineHeight: 1.08,
+              marginTop: "14px",
+              overflow: "hidden",
+              paddingBottom: "0.05em",
+            }}
+          >
+            <span className="ws-headline-inner" style={{ display: "block" }}>
               Wir sind{" "}
-              <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>
-                Cloudy Club.
-              </span>
-            </h2>
-          </div>
-
-          {/* Right: subtitle */}
+              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>Cloudy Club.</em>
+            </span>
+          </h2>
           <p
             className="ws-subtitle font-montserrat"
             style={{
-              fontSize: "clamp(0.8125rem,2vw,0.9375rem)",
+              marginTop: "20px",
+              fontSize: "0.9375rem",
               fontWeight: 300,
-              color: "rgba(244,241,234,0.50)",
-              maxWidth: "340px",
-              lineHeight: 1.75,
+              color: "var(--text-secondary)",
+              maxWidth: "420px",
+              lineHeight: 1.82,
               opacity: 0,
             }}
           >
@@ -210,82 +119,144 @@ export default function WirSind() {
           </p>
         </div>
 
-        {/* ── Bento grid ── */}
+        {/* ── Grid ── */}
         <div
           className="ws-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "clamp(10px,1.5vw,14px)",
+            gap: "16px",
           }}
         >
-          {cards.map((c, i) => (
+          {/* Featured card — spans 2 columns */}
+          <div
+            className="ws-featured"
+            style={{
+              gridColumn: "span 2",
+              position: "relative",
+              overflow: "hidden",
+              background: "rgba(155,136,192,0.055)",
+              border: "1px solid rgba(155,136,192,0.16)",
+              borderTop: "2px solid var(--lilac)",
+              borderRadius: "12px",
+              padding: "clamp(24px,3.5vw,40px)",
+              minHeight: "clamp(220px,28vw,300px)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              opacity: 0,
+              transition: "border-color 0.28s ease",
+            }}
+          >
+            {/* Watermark stat */}
+            <span aria-hidden="true" style={{
+              position: "absolute",
+              top: "-0.08em", right: "20px",
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: "clamp(5rem,12vw,10rem)",
+              fontWeight: 700,
+              fontStyle: "italic",
+              color: "var(--lilac)",
+              opacity: 0.08,
+              lineHeight: 1,
+              userSelect: "none",
+              pointerEvents: "none",
+              letterSpacing: "-0.02em",
+            }}>
+              {featured.stat}
+            </span>
+
+            {/* Top label */}
+            <span style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: "0.625rem",
+              fontWeight: 700,
+              letterSpacing: "0.26em",
+              textTransform: "uppercase",
+              color: "var(--lilac)",
+              opacity: 0.85,
+            }}>
+              {featured.label}
+            </span>
+
+            {/* Bottom: title + body */}
+            <div>
+              <h3 className="font-playfair" style={{
+                fontSize: "clamp(1.25rem,2.8vw,1.875rem)",
+                fontWeight: 700,
+                color: "var(--cream)",
+                lineHeight: 1.2,
+                marginBottom: "12px",
+              }}>
+                {featured.title}
+              </h3>
+              <p className="font-montserrat" style={{
+                fontSize: "0.875rem",
+                fontWeight: 300,
+                lineHeight: 1.8,
+                color: "var(--text-secondary)",
+                maxWidth: "500px",
+              }}>
+                {featured.body}
+              </p>
+            </div>
+          </div>
+
+          {/* Small stat cards */}
+          {stats.map((s, i) => (
             <div
               key={i}
-              className="ws-card"
+              className="ws-stat-card"
               style={{
-                gridColumn: c.large ? "span 2" : "span 1",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "clamp(12px,2vw,16px)",
-                padding: "clamp(16px,2.5vw,24px) clamp(16px,2.5vw,24px) clamp(20px,3vw,28px)",
+                borderLeft: "2px solid var(--lilac)",
+                borderRadius: "0 8px 8px 0",
+                padding: "clamp(18px,2.5vw,28px) clamp(16px,2vw,24px)",
                 display: "flex",
                 flexDirection: "column",
-                minHeight: c.large ? "220px" : "190px",
+                minHeight: "clamp(180px,22vw,240px)",
+                background: "rgba(255,255,255,0.02)",
                 opacity: 0,
-                transition: "background 0.25s ease, border-color 0.25s ease",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(192,175,211,0.07)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(192,175,211,0.22)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.04)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.08)";
+                transition: "background 0.25s ease",
               }}
             >
-              {/* Top row: icon + arrow */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div className="ws-icon-wrap" style={{
-                  width: 38, height: 38,
-                  borderRadius: "10px",
-                  background: "rgba(192,175,211,0.12)",
-                  border: "1px solid rgba(192,175,211,0.18)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  flexShrink: 0,
-                }}>
-                  <c.icon className="ws-icon" size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
-                </div>
-                <ArrowUpRight className="ws-arrow" size={16} strokeWidth={1.6} style={{ color: "rgba(244,241,234,0.22)" }} />
-              </div>
+              {/* Stat number */}
+              <span className="font-playfair" style={{
+                fontSize: "clamp(2rem,3.8vw,3rem)",
+                fontWeight: 700,
+                fontStyle: "italic",
+                color: "var(--lilac)",
+                lineHeight: 1,
+                marginBottom: "auto",
+              }}>
+                {s.stat}
+              </span>
 
-              {/* Spacer */}
-              <div style={{ flex: 1 }} />
+              {/* Thin rule */}
+              <div style={{
+                width: "24px",
+                height: "1px",
+                background: "rgba(192,175,211,0.30)",
+                margin: "clamp(14px,2vw,20px) 0",
+              }} />
 
               {/* Text */}
               <div>
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: c.large ? "1.25rem" : "1.0625rem",
-                    fontWeight: 700,
-                    color: "var(--cream)",
-                    marginBottom: "8px",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {c.title}
+                <h3 className="font-playfair" style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "var(--cream)",
+                  marginBottom: "8px",
+                  lineHeight: 1.2,
+                }}>
+                  {s.title}
                 </h3>
-                <p
-                  className="font-montserrat"
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 300,
-                    lineHeight: 1.75,
-                    color: "rgba(244,241,234,0.48)",
-                  }}
-                >
-                  {c.text}
+                <p className="font-montserrat" style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 300,
+                  lineHeight: 1.75,
+                  color: "var(--text-secondary)",
+                }}>
+                  {s.body}
                 </p>
               </div>
             </div>
@@ -294,53 +265,22 @@ export default function WirSind() {
       </div>
 
       <style>{`
-        /* ── Tablet (≤860px): 2-col grid ── */
-        @media (max-width: 860px) {
-          .ws-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .ws-grid .ws-card:first-child {
-            grid-column: span 2 !important;
-          }
-          .ws-card {
-            min-height: 160px !important;
-          }
+        .ws-stat-card:hover {
+          background: rgba(155,136,192,0.06) !important;
+        }
+        .ws-featured:hover {
+          border-color: rgba(155,136,192,0.32) !important;
+          border-top-color: var(--lilac) !important;
         }
 
-        /* ── Mobile (≤768px): full single column ── */
-        @media (max-width: 768px) {
-          .ws-header-row {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 10px !important;
-          }
-          .ws-subtitle {
-            max-width: 100% !important;
-          }
-          .ws-grid {
-            grid-template-columns: 1fr !important;
-            gap: 10px !important;
-          }
-          .ws-grid .ws-card,
-          .ws-grid .ws-card:first-child {
-            grid-column: span 1 !important;
-            width: 100% !important;
-            min-height: 130px !important;
-          }
-          /* smaller icon box */
-          .ws-icon-wrap {
-            width: 28px !important;
-            height: 28px !important;
-            border-radius: 8px !important;
-          }
-          .ws-icon {
-            width: 13px !important;
-            height: 13px !important;
-          }
-          .ws-arrow {
-            width: 13px !important;
-            height: 13px !important;
-          }
+        @media (max-width: 860px) {
+          .ws-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .ws-featured { grid-column: span 2 !important; }
+        }
+        @media (max-width: 540px) {
+          .ws-grid { grid-template-columns: 1fr !important; }
+          .ws-featured { grid-column: span 1 !important; }
+          .ws-stat-card { min-height: 150px !important; }
         }
       `}</style>
     </section>

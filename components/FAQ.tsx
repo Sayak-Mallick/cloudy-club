@@ -114,7 +114,7 @@ export default function FAQ() {
       id="faq"
       ref={sectionRef}
       style={{
-        background: "var(--cream, #f5f0eb)",
+        background: "var(--bg)",
         padding: "clamp(96px, 12vw, 160px) 24px",
         display: "flex",
         flexDirection: "column",
@@ -126,7 +126,7 @@ export default function FAQ() {
         <span
           ref={eyebrowRef}
           className="eyebrow"
-          style={{ color: "rgba(50,45,40,0.50)", opacity: 0 }}
+          style={{ opacity: 0 }}
         >
           FAQ
         </span>
@@ -137,7 +137,7 @@ export default function FAQ() {
           style={{
             fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)",
             fontWeight: 700,
-            color: "#1a1814",
+            color: "var(--cream)",
             lineHeight: 1.1,
             marginTop: "16px",
             overflow: "hidden",
@@ -166,11 +166,11 @@ export default function FAQ() {
             key={i}
             className="faq-card"
             style={{
-              background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.07)",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
               borderRadius: "14px",
               overflow: "hidden",
-              boxShadow: "0 2px 12px rgba(0,0,0,0.035)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.25)",
               opacity: 0,
             }}
           >
@@ -196,7 +196,7 @@ export default function FAQ() {
                 style={{
                   fontSize: "1.0625rem",
                   fontWeight: 600,
-                  color: open === i ? "rgba(30,26,22,0.95)" : "rgba(30,26,22,0.82)",
+                  color: open === i ? "var(--cream)" : "var(--text-secondary)",
                   lineHeight: 1.4,
                   transition: "color 0.2s ease",
                 }}
@@ -209,7 +209,7 @@ export default function FAQ() {
                 style={{
                   flexShrink: 0,
                   display: "flex",
-                  color: "rgba(30,26,22,0.40)",
+                  color: "var(--text-muted)",
                   transformOrigin: "center",
                 }}
               >
@@ -226,7 +226,7 @@ export default function FAQ() {
                   fontSize: "0.9375rem",
                   fontWeight: 300,
                   lineHeight: 1.82,
-                  color: "rgba(30,26,22,0.58)",
+                  color: "var(--text-secondary)",
                 }}
               >
                 {faq.a}
@@ -247,9 +247,9 @@ export default function FAQ() {
             gap: "8px",
             fontSize: "0.9375rem",
             fontWeight: 500,
-            color: "#1a1814",
+            color: "var(--cream)",
             textDecoration: "none",
-            borderBottom: "1.5px solid #1a1814",
+            borderBottom: "1.5px solid rgba(244,241,234,0.35)",
             paddingBottom: "3px",
           }}
           onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}

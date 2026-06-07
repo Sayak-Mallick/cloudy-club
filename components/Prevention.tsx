@@ -5,84 +5,26 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  AlertTriangle,
-  BookOpen,
-  Share2,
-  Heart,
-  Shield,
-  Info,
-  Users,
-  ExternalLink,
-  ArrowRight,
+  AlertTriangle, BookOpen, Share2, Heart,
+  Shield, Info, Users, ArrowUpRight, ArrowRight,
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Light-theme tokens ──────────────────────────────────────────────────── */
-const L = {
-  bg:         "#f5f0eb",        // --cream surface
-  card:       "#ffffff",
-  cardBorder: "rgba(0,0,0,0.07)",
-  cardShadow: "0 2px 20px rgba(0,0,0,0.04)",
-  headline:   "#1a1814",
-  body:       "rgba(26,24,20,0.58)",
-  muted:      "rgba(26,24,20,0.32)",
-  eyebrow:    "rgba(50,45,40,0.50)",
-  divider:    "rgba(26,24,20,0.10)",
-  iconBg:     "rgba(192,175,211,0.20)",
-  iconBgHov:  "rgba(192,175,211,0.35)",
-  icon:       "#9B88C0",        // --lilac-dark
-  lilac:      "#C0AFD3",
-};
-
-/* ─── Data ────────────────────────────────────────────────────────────────── */
 const pillars = [
-  {
-    icon: Users,
-    title: "Präventionsbeauftragter",
-    text: "Ein qualifizierter Ansprechpartner kümmert sich um alle Belange des Gesundheitsschutzes und der Prävention.",
-  },
-  {
-    icon: BookOpen,
-    title: "Aufklärung & Bildung",
-    text: "Regelmäßige Workshops und Info-Veranstaltungen zu Wirkungsweisen, Risiken und Safer Use.",
-  },
-  {
-    icon: Share2,
-    title: "Vernetzung",
-    text: "Aktive Kooperation mit Suchtberatungsstellen in Osnabrück und der weiteren Region.",
-  },
-  {
-    icon: Heart,
-    title: "Hilfsangebote",
-    text: "Frühzeitiges Erkennen von Risikomustern und Vermittlung professioneller Hilfe.",
-  },
-  {
-    icon: Shield,
-    title: "Jugendschutz",
-    text: "Strikte Einhaltung der Altersgrenze und aktive Maßnahmen zum Schutz Minderjähriger.",
-  },
-  {
-    icon: Info,
-    title: "Safer Use",
-    text: "Information über verantwortungsvollen Konsum, Dosierung und Wechselwirkungen.",
-  },
+  { icon: Users,    title: "Präventionsbeauftragter", text: "Ein qualifizierter Ansprechpartner kümmert sich um alle Belange des Gesundheitsschutzes und der Prävention." },
+  { icon: BookOpen, title: "Aufklärung & Bildung",    text: "Regelmäßige Workshops und Info-Veranstaltungen zu Wirkungsweisen, Risiken und Safer Use." },
+  { icon: Share2,   title: "Vernetzung",              text: "Aktive Kooperation mit Suchtberatungsstellen in Osnabrück und der weiteren Region." },
+  { icon: Heart,    title: "Hilfsangebote",           text: "Frühzeitiges Erkennen von Risikomustern und Vermittlung professioneller Hilfe." },
+  { icon: Shield,   title: "Jugendschutz",            text: "Strikte Einhaltung der Altersgrenze und aktive Maßnahmen zum Schutz Minderjähriger." },
+  { icon: Info,     title: "Safer Use",               text: "Information über verantwortungsvollen Konsum, Dosierung und Wechselwirkungen." },
 ];
 
 const resources = [
-  {
-    title: "Cannabis-Selbsttest",
-    desc: "Teste anonym, ob dein Konsum im grünen Bereich liegt.",
-    href: "https://www.drugscouts.de/de/selbsttest",
-  },
-  {
-    title: "Online Suchtberatung",
-    desc: "Anonyme und kostenlose Beratung durch Fachleute.",
-    href: "https://www.onlineberatung-sucht.de",
-  },
+  { title: "Cannabis-Selbsttest",  desc: "Teste anonym, ob dein Konsum im grünen Bereich liegt.", href: "https://www.drugscouts.de/de/selbsttest" },
+  { title: "Online Suchtberatung", desc: "Anonyme und kostenlose Beratung durch Fachleute.",       href: "https://www.onlineberatung-sucht.de" },
 ];
 
-/* ─── Component ──────────────────────────────────────────────────────────── */
 export default function Prevention() {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -91,121 +33,91 @@ export default function Prevention() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-
-      /* Hinweis card */
       gsap.fromTo(".prev-hinweis",
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1, y: 0, duration: 0.75, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-hinweis", start: "top 85%", once: true },
-        }
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.75, ease: "power2.out",
+          scrollTrigger: { trigger: ".prev-hinweis", start: "top 85%", once: true } }
       );
-
-      /* Pillars header */
       gsap.fromTo(".prev-pillars-hdr > *",
         { opacity: 0, y: 18 },
-        {
-          opacity: 1, y: 0, duration: 0.65, stagger: 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-pillars-hdr", start: "top 84%", once: true },
-        }
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: ".prev-pillars-hdr", start: "top 84%", once: true } }
       );
-
-      /* Pillar cards */
       gsap.fromTo(".prev-pillar-card",
-        { opacity: 0, y: 32, scale: 0.97 },
-        {
-          opacity: 1, y: 0, scale: 1,
-          duration: 0.65, stagger: 0.09, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-pillars-grid", start: "top 82%", once: true },
-        }
+        { opacity: 0, y: 28, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.09, ease: "power2.out",
+          scrollTrigger: { trigger: ".prev-pillars-grid", start: "top 82%", once: true } }
       );
-
-      /* Resources header */
-      gsap.fromTo(".prev-res-hdr > *",
+      gsap.fromTo(".prev-closing-hdr > *",
         { opacity: 0, y: 18 },
-        {
-          opacity: 1, y: 0, duration: 0.65, stagger: 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-res-hdr", start: "top 84%", once: true },
-        }
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: ".prev-closing-hdr", start: "top 84%", once: true } }
       );
-
-      /* Resource rows */
-      gsap.fromTo(".prev-res-row",
+      gsap.fromTo(".prev-res-card",
         { opacity: 0, y: 16 },
-        {
-          opacity: 1, y: 0, duration: 0.6, stagger: 0.13, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-res-list", start: "top 84%", once: true },
-        }
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power2.out",
+          scrollTrigger: { trigger: ".prev-res-grid", start: "top 84%", once: true } }
       );
-
-      /* CTA */
-      gsap.fromTo(".prev-cta-wrap > *",
-        { opacity: 0, y: 22 },
-        {
-          opacity: 1, y: 0, duration: 0.65, stagger: 0.12, ease: "power2.out",
-          scrollTrigger: { trigger: ".prev-cta-wrap", start: "top 85%", once: true },
-        }
+      gsap.fromTo(".prev-cta > *",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.13, ease: "power3.out",
+          scrollTrigger: { trigger: ".prev-cta", start: "top 85%", once: true } }
       );
-
     }, rootRef);
 
     return () => ctx.revert();
   }, []);
 
-  /* shared section padding */
   const sp: React.CSSProperties = {
-    background: L.bg,
-    padding: "clamp(72px,10vw,120px) clamp(20px,4vw,40px)",
+    padding: "clamp(64px,9vw,120px) clamp(20px,4vw,40px)",
   };
 
   return (
-    <div ref={rootRef} style={{ overflowX: "clip" }}>
+    <div ref={rootRef} style={{ overflowX: "clip", background: "var(--bg)" }}>
 
-      {/* ══════════════════════════════════════════════════════
-          1 · HINWEIS  ── centered warning card
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingBottom: "clamp(40px,6vw,64px)" }}>
-        <div style={{ maxWidth: "680px", margin: "0 auto" }}>
+      {/* ══════════════════════════════════════════════════
+          1 · WARNING BANNER
+      ══════════════════════════════════════════════════ */}
+      <section style={{ ...sp, paddingBottom: "clamp(36px,5vw,52px)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div
             className="prev-hinweis"
             style={{
-              background: L.card,
-              border: `1px solid ${L.cardBorder}`,
-              borderRadius: "18px",
-              boxShadow: L.cardShadow,
-              padding: "32px 36px",
               display: "flex",
-              gap: "20px",
+              gap: "clamp(16px,3vw,28px)",
               alignItems: "flex-start",
+              background: "rgba(155,136,192,0.07)",
+              border: "1px solid rgba(155,136,192,0.20)",
+              borderLeft: "3px solid var(--lilac)",
+              borderRadius: "10px",
+              padding: "clamp(20px,3vw,32px)",
               opacity: 0,
             }}
           >
-            {/* icon */}
             <div style={{
               flexShrink: 0,
-              width: 40, height: 40,
-              borderRadius: "10px",
-              background: L.iconBg,
+              width: 48, height: 48,
+              borderRadius: "12px",
+              background: "rgba(155,136,192,0.18)",
+              border: "1px solid rgba(155,136,192,0.40)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               marginTop: "2px",
             }}>
-              <AlertTriangle size={16} strokeWidth={1.8} style={{ color: L.icon }} />
+              <AlertTriangle size={20} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
             </div>
-
-            {/* text */}
             <div>
-              <h3
-                className="font-playfair"
-                style={{ fontSize: "1.0625rem", fontWeight: 700, color: L.headline, marginBottom: "10px" }}
-              >
-                Hinweis
+              <h3 className="font-playfair" style={{
+                fontSize: "1.0625rem", fontWeight: 700,
+                color: "var(--cream)", marginBottom: "10px",
+              }}>
+                Wichtiger Hinweis
               </h3>
-              <p
-                className="font-montserrat"
-                style={{ fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.85, color: L.body }}
-              >
+              <p className="font-montserrat" style={{
+                fontSize: "0.875rem", fontWeight: 300,
+                lineHeight: 1.85, color: "var(--text-secondary)", maxWidth: "680px",
+              }}>
                 Cannabis ist nicht harmlos. Der Konsum kann gesundheitliche Risiken bergen,
                 insbesondere für junge Erwachsene. Wir empfehlen ausdrücklich einen
                 verantwortungsvollen und informierten Umgang. Bei Fragen oder Bedenken stehen
@@ -216,113 +128,52 @@ export default function Prevention() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          2 · PRÄVENTION AUF ALLEN EBENEN ── 3 × 2 pillars
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingTop: "clamp(40px,6vw,64px)" }}>
+      {/* ══════════════════════════════════════════════════
+          2 · PRÄVENTION AUF ALLEN EBENEN
+      ══════════════════════════════════════════════════ */}
+      <section style={{ ...sp, paddingTop: "clamp(36px,5vw,52px)" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
-          {/* header */}
-          <div
-            className="prev-pillars-hdr"
-            style={{ textAlign: "center", marginBottom: "clamp(40px,6vw,64px)" }}
-          >
-            <span
-              className="font-montserrat eyebrow"
-              style={{ color: L.eyebrow }}
-            >
-              Unsere Säulen
-            </span>
-            <h2
-              className="font-playfair"
-              style={{
-                fontSize: "clamp(2rem,5vw,3.5rem)",
-                fontWeight: 700,
-                color: L.headline,
-                lineHeight: 1.1,
-                margin: "14px 0 18px",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Prävention auf allen Ebenen
+          <div className="prev-pillars-hdr" style={{ textAlign: "center", marginBottom: "clamp(40px,6vw,64px)" }}>
+            <span className="eyebrow">Unsere Säulen</span>
+            <h2 className="font-playfair" style={{
+              fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 700,
+              color: "var(--cream)", lineHeight: 1.1, margin: "14px 0 18px",
+            }}>
+              Prävention auf{" "}
+              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>allen Ebenen</em>
             </h2>
-            <p
-              className="font-montserrat"
-              style={{
-                fontSize: "0.9375rem",
-                fontWeight: 300,
-                lineHeight: 1.85,
-                color: L.body,
-                maxWidth: "480px",
-                margin: "0 auto",
-              }}
-            >
+            <p className="font-montserrat" style={{
+              fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.85,
+              color: "var(--text-secondary)", maxWidth: "480px", margin: "0 auto",
+            }}>
               Ein umfassendes Konzept für Gesundheitsschutz, Aufklärung und Unterstützung.
             </p>
           </div>
 
-          {/* grid */}
           <div className="prev-pillars-grid">
             {pillars.map((p, i) => (
-              <div
-                key={i}
-                className="prev-pillar-card"
-                style={{ opacity: 0 }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLDivElement;
-                  el.style.transform = "translateY(-5px)";
-                  el.style.boxShadow = "0 12px 36px rgba(0,0,0,0.09)";
-                  el.style.borderColor = "rgba(192,175,211,0.45)";
-                  const ico = el.querySelector(".prev-icon-bg") as HTMLElement | null;
-                  if (ico) ico.style.background = L.iconBgHov;
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLDivElement;
-                  el.style.transform = "translateY(0)";
-                  el.style.boxShadow = L.cardShadow;
-                  el.style.borderColor = L.cardBorder;
-                  const ico = el.querySelector(".prev-icon-bg") as HTMLElement | null;
-                  if (ico) ico.style.background = L.iconBg;
-                }}
-              >
-                {/* icon badge */}
-                <div
-                  className="prev-icon-bg"
-                  style={{
-                    width: 46, height: 46,
-                    borderRadius: "11px",
-                    background: L.iconBg,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: "24px",
-                    transition: "background 0.25s ease",
-                  }}
-                >
-                  <p.icon size={18} strokeWidth={1.6} style={{ color: L.icon }} />
+              <div key={i} className="prev-pillar-card" style={{ opacity: 0 }}>
+                <div className="prev-icon-bg" style={{
+                  width: 48, height: 48, borderRadius: "12px",
+                  background: "rgba(155,136,192,0.14)",
+                  border: "1px solid rgba(155,136,192,0.32)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: "24px",
+                  transition: "background 0.25s ease, border-color 0.25s ease",
+                }}>
+                  <p.icon size={20} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
                 </div>
-
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: "1.0625rem",
-                    fontWeight: 700,
-                    color: L.headline,
-                    lineHeight: 1.25,
-                    marginBottom: "12px",
-                  }}
-                >
+                <h3 className="font-playfair" style={{
+                  fontSize: "1.0625rem", fontWeight: 700,
+                  color: "var(--cream)", lineHeight: 1.25, marginBottom: "12px",
+                }}>
                   {p.title}
                 </h3>
-                <p
-                  className="font-montserrat"
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 300,
-                    lineHeight: 1.82,
-                    color: L.body,
-                  }}
-                >
+                <p className="font-montserrat" style={{
+                  fontSize: "0.875rem", fontWeight: 300,
+                  lineHeight: 1.82, color: "var(--text-secondary)",
+                }}>
                   {p.text}
                 </p>
               </div>
@@ -331,195 +182,218 @@ export default function Prevention() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          3 · DU BIST NICHT ALLEIN ── resource rows
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingTop: "clamp(40px,6vw,64px)" }}>
-        <div style={{ maxWidth: "780px", margin: "0 auto" }}>
+      {/* ══════════════════════════════════════════════════
+          3 · HILFE + CTA  (merged)
+      ══════════════════════════════════════════════════ */}
+      <section style={{ ...sp, paddingTop: "clamp(36px,5vw,52px)", background: "var(--bg-surface)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
-          {/* header */}
-          <div
-            className="prev-res-hdr"
-            style={{ textAlign: "center", marginBottom: "48px" }}
-          >
-            <span
-              className="font-montserrat eyebrow"
-              style={{ color: L.eyebrow }}
-            >
-              Hilfe &amp; Beratung
-            </span>
-            <h2
-              className="font-playfair"
-              style={{
-                fontSize: "clamp(2rem,5vw,3.25rem)",
-                fontWeight: 700,
-                color: L.muted,
-                lineHeight: 1.1,
-                margin: "14px 0 16px",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Du bist nicht allein
+          {/* Header */}
+          <div className="prev-closing-hdr" style={{ textAlign: "center", marginBottom: "clamp(32px,5vw,48px)" }}>
+            <span className="eyebrow">Hilfe &amp; Beratung</span>
+            <h2 className="font-playfair" style={{
+              fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 700,
+              color: "var(--cream)", lineHeight: 1.1, margin: "14px 0 16px",
+            }}>
+              Du bist{" "}
+              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>nicht allein</em>
             </h2>
-            <p
-              className="font-montserrat"
-              style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.85, color: L.body }}
-            >
+            <p className="font-montserrat" style={{
+              fontSize: "0.9375rem", fontWeight: 300,
+              lineHeight: 1.85, color: "var(--text-secondary)",
+            }}>
               Zweifel an deinem Konsum? Diese Ressourcen können helfen.
             </p>
           </div>
 
-          {/* rows */}
-          <div className="prev-res-list">
+          {/* Resource cards */}
+          <div className="prev-res-grid">
             {resources.map((r, i) => (
               <a
                 key={i}
                 href={r.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="prev-res-row"
+                className="prev-res-card"
                 style={{ opacity: 0 }}
               >
-                <div style={{ flex: 1 }}>
-                  <span
-                    className="prev-res-title font-playfair"
-                    style={{
-                      display: "block",
-                      fontSize: "1.0625rem",
-                      fontWeight: 600,
-                      color: L.headline,
-                      marginBottom: "4px",
-                      transition: "color 0.2s ease",
-                    }}
-                  >
-                    {r.title}
-                  </span>
-                  <span
-                    className="font-montserrat"
-                    style={{
-                      fontSize: "0.8125rem",
-                      fontWeight: 300,
-                      lineHeight: 1.65,
-                      color: L.body,
-                    }}
-                  >
-                    {r.desc}
+                {/* Top row: icon + arrow */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
+                  <div className="prev-res-badge" style={{
+                    width: 46, height: 46, borderRadius: "11px",
+                    background: "rgba(155,136,192,0.14)",
+                    border: "1px solid rgba(155,136,192,0.32)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    transition: "background 0.25s ease, border-color 0.25s ease",
+                  }}>
+                    <ArrowUpRight size={19} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
+                  </div>
+                  <span className="prev-res-tag font-montserrat" style={{
+                    fontSize: "0.625rem", fontWeight: 700,
+                    letterSpacing: "0.22em", textTransform: "uppercase",
+                    color: "var(--text-muted)",
+                    transition: "color 0.25s ease",
+                  }}>
+                    Extern
                   </span>
                 </div>
-                <ExternalLink
-                  size={16}
-                  strokeWidth={1.5}
-                  className="prev-res-icon"
-                  style={{ color: L.muted, flexShrink: 0, transition: "color 0.2s ease" }}
-                />
+
+                {/* Text */}
+                <h3 className="prev-res-title font-playfair" style={{
+                  fontSize: "1.125rem", fontWeight: 700,
+                  color: "var(--cream)", lineHeight: 1.2,
+                  marginBottom: "10px",
+                  transition: "color 0.25s ease",
+                }}>
+                  {r.title}
+                </h3>
+                <p className="font-montserrat" style={{
+                  fontSize: "0.8125rem", fontWeight: 300,
+                  lineHeight: 1.75, color: "var(--text-secondary)",
+                }}>
+                  {r.desc}
+                </p>
               </a>
             ))}
+          </div>
+
+          {/* Divider */}
+          <div style={{
+            width: "100%",
+            height: "1px",
+            background: "var(--border)",
+            margin: "clamp(48px,7vw,80px) 0",
+          }} />
+
+          {/* CTA */}
+          <div className="prev-cta" style={{ textAlign: "center", maxWidth: "640px", margin: "0 auto", position: "relative" }}>
+            {/* Glow */}
+            <div aria-hidden="true" style={{
+              position: "absolute",
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "560px", height: "320px",
+              background: "radial-gradient(ellipse, rgba(155,136,192,0.14) 0%, transparent 68%)",
+              pointerEvents: "none",
+            }} />
+
+            <h2 className="font-playfair" style={{
+              fontSize: "clamp(2.25rem,5.5vw,3.75rem)",
+              fontWeight: 700,
+              color: "var(--cream)",
+              lineHeight: 1.1,
+              marginBottom: "22px",
+              position: "relative",
+            }}>
+              Verantwortungsvoller Konsum
+              <br />
+              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>beginnt hier</em>
+            </h2>
+            <p className="font-montserrat" style={{
+              fontSize: "0.9375rem", fontWeight: 300,
+              lineHeight: 1.85, color: "var(--text-secondary)",
+              maxWidth: "460px", margin: "0 auto 40px",
+              position: "relative",
+            }}>
+              Werde Teil einer Gemeinschaft, die Aufklärung und Sicherheit an erste Stelle setzt.
+            </p>
+            <Link
+              href="/membership"
+              className="prev-cta-btn font-montserrat"
+              style={{ position: "relative" }}
+            >
+              Mitglied werden <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          4 · CTA ── "Verantwortungsvoller Konsum beginnt hier"
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingTop: "clamp(40px,6vw,80px)" }}>
-        <div
-          className="prev-cta-wrap"
-          style={{ textAlign: "center", maxWidth: "640px", margin: "0 auto" }}
-        >
-          <h2
-            className="font-playfair"
-            style={{
-              fontSize: "clamp(2rem,5vw,3.25rem)",
-              fontWeight: 700,
-              color: L.muted,
-              lineHeight: 1.15,
-              letterSpacing: "-0.02em",
-              marginBottom: "20px",
-            }}
-          >
-            Verantwortungsvoller Konsum
-            <br />
-            beginnt hier
-          </h2>
-          <p
-            className="font-montserrat"
-            style={{
-              fontSize: "0.9375rem",
-              fontWeight: 300,
-              lineHeight: 1.85,
-              color: L.body,
-              maxWidth: "460px",
-              margin: "0 auto 36px",
-            }}
-          >
-            Werde Teil einer Gemeinschaft, die Aufklärung und Sicherheit an erste Stelle setzt.
-          </p>
-          <Link href="/membership" className="prev-cta-btn font-montserrat">
-            Mitglied werden <ArrowRight size={13} />
-          </Link>
-        </div>
-      </section>
-
-      {/* ─── Scoped styles ──────────────────────────────────── */}
       <style>{`
-
         /* ── Pillar grid ── */
         .prev-pillars-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          gap: 18px;
         }
-
-        /* ── Pillar card ── */
         .prev-pillar-card {
-          background: ${L.card};
-          border: 1px solid ${L.cardBorder};
-          border-radius: 18px;
-          box-shadow: ${L.cardShadow};
-          padding: 32px 26px 36px;
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 30px 24px 34px;
           display: flex;
           flex-direction: column;
           transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
         }
-
-        /* ── Resource row ── */
-        .prev-res-row {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          padding: 24px 0;
-          border-bottom: 1px solid ${L.divider};
-          text-decoration: none;
-          transition: border-color 0.2s ease;
+        .prev-pillar-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 36px rgba(0,0,0,0.32);
+          border-color: var(--border-hover);
         }
-        .prev-res-row:first-child { border-top: 1px solid ${L.divider}; }
-        .prev-res-row:hover { border-color: rgba(192,175,211,0.50); }
-        .prev-res-row:hover .prev-res-title { color: #9B88C0 !important; }
-        .prev-res-row:hover .prev-res-icon  { color: #9B88C0 !important; }
+        .prev-pillar-card:hover .prev-icon-bg {
+          background: rgba(155,136,192,0.26) !important;
+          border-color: rgba(155,136,192,0.52) !important;
+        }
 
-        /* ── CTA button (dark pill on light bg) ── */
+        /* ── Resource cards ── */
+        .prev-res-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          max-width: 780px;
+          margin: 0 auto;
+        }
+        .prev-res-card {
+          display: flex;
+          flex-direction: column;
+          padding: 28px 28px 32px;
+          background: var(--bg-elevated);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          text-decoration: none;
+          transition: transform 0.26s ease, border-color 0.26s ease,
+                      background 0.26s ease, box-shadow 0.26s ease;
+        }
+        .prev-res-card:hover {
+          transform: translateY(-5px);
+          border-color: var(--border-hover);
+          background: var(--bg-card);
+          box-shadow: 0 10px 36px rgba(0,0,0,0.28);
+        }
+        .prev-res-card:hover .prev-res-badge {
+          background: rgba(155,136,192,0.26) !important;
+          border-color: rgba(155,136,192,0.54) !important;
+        }
+        .prev-res-card:hover .prev-res-title {
+          color: var(--lilac) !important;
+        }
+        .prev-res-card:hover .prev-res-tag {
+          color: var(--lilac) !important;
+        }
+
+        /* ── CTA button ── */
         .prev-cta-btn {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          height: 48px;
-          padding: 0 32px;
-          background: #2a2720;
-          color: #f5f0eb;
+          gap: 12px;
+          height: 58px;
+          padding: 0 48px;
+          background: var(--lilac);
+          color: var(--bg);
           font-size: 11px;
           font-weight: 700;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
           border: none;
-          border-radius: 4px;
+          border-radius: 2px;
           text-decoration: none;
           transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
         }
         .prev-cta-btn:hover {
-          background: #1a1814;
+          background: var(--lilac-dark);
           transform: translateY(-2px);
-          box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+          box-shadow: 0 10px 36px rgba(155,136,192,0.28);
         }
+        .prev-cta-btn:active { transform: none; box-shadow: none; }
 
         /* ── Responsive ── */
         @media (max-width: 900px) {
@@ -527,6 +401,7 @@ export default function Prevention() {
         }
         @media (max-width: 560px) {
           .prev-pillars-grid { grid-template-columns: 1fr !important; }
+          .prev-res-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

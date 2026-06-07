@@ -39,14 +39,10 @@ export default function StandortHome() {
         { opacity: 1, y: 0, duration: 0.55, ease: "power2.out", delay: 0.4, scrollTrigger: trigger }
       );
 
-      /* cards */
-      gsap.fromTo(".sl-photo-card",
-        { opacity: 0, x: 50, scale: 0.96 },
-        { opacity: 1, x: 0, scale: 1, duration: 0.95, ease: "power3.out", delay: 0.18, scrollTrigger: trigger }
-      );
+      /* map */
       gsap.fromTo(".sl-map-card",
-        { opacity: 0, x: -36, y: 24 },
-        { opacity: 1, x: 0, y: 0, duration: 0.95, ease: "power3.out", delay: 0.35, scrollTrigger: trigger }
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.85, ease: "power3.out", delay: 0.2, scrollTrigger: trigger }
       );
     }, sectionRef);
 
@@ -58,7 +54,7 @@ export default function StandortHome() {
       id="standort-home"
       ref={sectionRef}
       style={{
-        background: "var(--cream, #f5f0eb)",
+        background: "var(--bg-surface)",
         padding: "clamp(80px, 10vw, 120px) 24px",
         overflow: "hidden",
       }}
@@ -79,7 +75,7 @@ export default function StandortHome() {
         <div>
           <span
             className="sl-eyebrow eyebrow"
-            style={{ opacity: 0, color: "rgba(26,24,20,0.45)" }}
+            style={{ opacity: 0 }}
           >
             Standort
           </span>
@@ -89,7 +85,7 @@ export default function StandortHome() {
             style={{
               fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
               fontWeight: 700,
-              color: "#1a1814",
+              color: "var(--cream)",
               lineHeight: 1.05,
               margin: "14px 0 22px",
               opacity: 0,
@@ -107,7 +103,7 @@ export default function StandortHome() {
               fontSize: "0.9375rem",
               fontWeight: 300,
               lineHeight: 1.85,
-              color: "rgba(26,24,20,0.58)",
+              color: "var(--text-secondary)",
               maxWidth: "400px",
               marginBottom: "28px",
               opacity: 0,
@@ -135,7 +131,7 @@ export default function StandortHome() {
             <MapPin size={15} strokeWidth={1.7} style={{ color: "var(--lilac)" }} />
             <span
               className="font-montserrat"
-              style={{ fontSize: "0.8125rem", fontWeight: 500, color: "rgba(26,24,20,0.60)" }}
+              style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-secondary)" }}
             >
               Osnabrück, Niedersachsen
             </span>
@@ -152,9 +148,9 @@ export default function StandortHome() {
                 gap: "8px",
                 fontSize: "0.9375rem",
                 fontWeight: 700,
-                color: "#1a1814",
+                color: "var(--cream)",
                 textDecoration: "none",
-                borderBottom: "2px solid rgba(26,24,20,0.25)",
+                borderBottom: "2px solid rgba(244,241,234,0.25)",
                 paddingBottom: "3px",
                 opacity: 0,
                 transition: "opacity 0.2s ease",
@@ -167,81 +163,45 @@ export default function StandortHome() {
           </div>
         </div>
 
-        {/* ── RIGHT: stacked map cards ── */}
-        <div style={{ position: "relative", height: "clamp(320px, 38vw, 460px)" }}>
-
-          {/* Aerial photo card — behind, top-right */}
-          <div
-            className="sl-photo-card"
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: "82%",
-              height: "86%",
-              borderRadius: "22px",
-              overflow: "hidden",
-              boxShadow: "0 20px 56px rgba(0,0,0,0.13)",
-              opacity: 0,
-            }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=80"
-              alt="Osnabrück Luftansicht"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            />
-          </div>
-
-          {/* Map card — front, bottom-left */}
-          <div
-            className="sl-map-card"
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "72%",
-              height: "86%",
-              borderRadius: "18px",
-              overflow: "hidden",
-              boxShadow: "0 32px 80px rgba(0,0,0,0.38)",
-              opacity: 0,
-            }}
-          >
-            {/* ── Actual Google Maps embed ── */}
-            <iframe
-              src="https://maps.google.com/maps?q=Osnabrück,+Niedersachsen,+Germany&z=13&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: "none", display: "block" }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Osnabrück Karte"
-            />
-
-            {/* ── Bottom label overlay ── */}
-            <div style={{
-              position: "absolute",
-              bottom: 0, left: 0, right: 0,
-              background: "rgba(15,17,23,0.72)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              padding: "11px 18px",
-              pointerEvents: "none",
+        {/* ── RIGHT: map ── */}
+        <div
+          className="sl-map-card"
+          style={{
+            borderRadius: "16px",
+            overflow: "hidden",
+            border: "1px solid var(--border)",
+            boxShadow: "0 20px 56px rgba(0,0,0,0.40)",
+            height: "clamp(320px, 38vw, 480px)",
+            position: "relative",
+            opacity: 0,
+          }}
+        >
+          <iframe
+            src="https://maps.google.com/maps?q=Osnabrück,+Niedersachsen,+Germany&z=13&output=embed"
+            style={{ border: "none", display: "block", width: "100%", height: "100%" }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Osnabrück Karte"
+          />
+          <div style={{
+            position: "absolute",
+            bottom: 0, left: 0, right: 0,
+            background: "rgba(15,17,23,0.72)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            padding: "11px 18px",
+            pointerEvents: "none",
+          }}>
+            <span className="font-montserrat" style={{
+              fontSize: "0.625rem",
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              color: "rgba(255,255,255,0.75)",
+              textTransform: "uppercase",
             }}>
-              <span
-                className="font-montserrat"
-                style={{
-                  fontSize: "0.625rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.22em",
-                  color: "rgba(255,255,255,0.75)",
-                  textTransform: "uppercase",
-                }}
-              >
-                Osnabrück, Niedersachsen
-              </span>
-            </div>
+              Osnabrück, Niedersachsen
+            </span>
           </div>
         </div>
 

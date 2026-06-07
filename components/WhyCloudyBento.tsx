@@ -3,47 +3,20 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ShieldCheck, Leaf, Users, Zap, Lock, ArrowUpRight } from "lucide-react";
+import { ShieldCheck, Leaf, Users, Zap, Lock } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Feature cards ───────────────────────────────────── */
 const features = [
-  {
-    icon: ShieldCheck,
-    title: "100% Legal & Konform",
-    text: "Wir handeln strikt nach dem KCanG. Deine Mitgliedschaft ist rechtlich abgesichert und vollständig transparent.",
-    large: true,
-  },
-  {
-    icon: Leaf,
-    title: "Vereinseigener Anbau",
-    text: "Eigene Anbauflächen unter pharmazeutischen Bedingungen — jede Charge geprüft.",
-    large: false,
-  },
-  {
-    icon: Users,
-    title: "Lebendige Community",
-    text: "Workshops, Tastings und Events fördern den Austausch in sicherer Atmosphäre.",
-    large: false,
-  },
-  {
-    icon: Zap,
-    title: "High-Tech Anbau",
-    text: "LED-Klimatechnik für optimale Pflanzenentwicklung und volle Terpen-Entfaltung.",
-    large: false,
-  },
-  {
-    icon: Lock,
-    title: "Ohne Schadstoffe",
-    text: "Frei von Pestiziden und Streckmitteln. Laborgeprüfte Reinheit aus kontrolliertem Anbau.",
-    large: false,
-  },
+  { icon: ShieldCheck, title: "100% Legal & Konform",  text: "Wir handeln strikt nach dem KCanG. Deine Mitgliedschaft ist rechtlich abgesichert und vollständig transparent." },
+  { icon: Leaf,        title: "Vereinseigener Anbau",  text: "Eigene Anbauflächen unter pharmazeutischen Bedingungen — jede Charge geprüft." },
+  { icon: Users,       title: "Lebendige Community",   text: "Workshops, Tastings und Events fördern den Austausch in sicherer Atmosphäre." },
+  { icon: Zap,         title: "High-Tech Anbau",       text: "LED-Klimatechnik für optimale Pflanzenentwicklung und volle Terpen-Entfaltung." },
+  { icon: Lock,        title: "Ohne Schadstoffe",      text: "Frei von Pestiziden und Streckmitteln. Laborgeprüfte Reinheit aus kontrolliertem Anbau." },
 ];
 
 export default function WhyCloudyBento() {
   const sectionRef = useRef<HTMLElement>(null);
-  const bgRef      = useRef<HTMLDivElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,49 +24,26 @@ export default function WhyCloudyBento() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-
-      /* ── Parallax background ── */
-      gsap.fromTo(bgRef.current,
-        { y: 0 },
-        {
-          y: "-18%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        }
-      );
-
-      /* ── Header ── */
       gsap.fromTo(".wcb-eyebrow",
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
-      gsap.fromTo(".wcb-headline",
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.08,
+      gsap.fromTo(".wcb-headline-inner",
+        { y: "108%", skewX: -2 },
+        { y: "0%", skewX: 0, duration: 1.05, ease: "power4.out", delay: 0.06,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
       gsap.fromTo(".wcb-subtitle",
         { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out", delay: 0.18,
+        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out", delay: 0.22,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true } }
       );
-
-      /* ── Cards stagger ── */
-      gsap.fromTo(".wcb-card",
-        { opacity: 0, y: 30, scale: 0.97 },
-        {
-          opacity: 1, y: 0, scale: 1,
-          duration: 0.65, stagger: 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: ".wcb-grid", start: "top 82%", once: true },
-        }
+      gsap.fromTo(".wcb-row",
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.55, stagger: 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: ".wcb-items", start: "top 82%", once: true } }
       );
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -104,256 +54,175 @@ export default function WhyCloudyBento() {
       id="why"
       ref={sectionRef}
       style={{
-        minHeight: "100svh",
+        background: "var(--bg)",
+        padding: "clamp(80px,10vw,140px) clamp(20px,4vw,40px)",
         position: "relative",
         overflow: "hidden",
         overflowX: "clip",
-        display: "flex",
-        alignItems: "center",
-        padding: "clamp(40px,7vw,80px) clamp(16px,4vw,24px)",
       }}
     >
-      {/* ── Parallax background ── */}
-      <div
-        ref={bgRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "-20%", left: 0,
-          width: "100%", height: "140%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          willChange: "transform",
-          zIndex: 0,
-        }}
-      />
+      {/* Decorative glow — top right */}
+      <div aria-hidden="true" style={{
+        position: "absolute",
+        top: "-80px", right: "-60px",
+        width: "480px", height: "480px",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(155,136,192,0.13) 0%, transparent 68%)",
+        pointerEvents: "none",
+      }} />
 
-      {/* ── Dark overlay ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute", inset: 0,
-          background: "rgba(8,8,6,0.82)",
-          zIndex: 1,
-        }}
-      />
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
 
-      {/* ── Main container ── */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          maxWidth: "1200px",
-          width: "100%",
-          margin: "0 auto",
-          background: "rgba(22,21,18,0.88)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "clamp(16px,3vw,24px)",
-          padding: "clamp(24px,4vw,52px) clamp(20px,4vw,48px)",
-        }}
-      >
-
-        {/* ── Header row ── */}
+        {/* ── Two-column outer layout ── */}
         <div
-          ref={headerRef}
-          className="wcb-header-row"
+          className="wcb-outer"
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: "clamp(20px,3vw,28px)",
-            gap: "clamp(12px,3vw,32px)",
-            flexWrap: "wrap",
+            display: "grid",
+            gridTemplateColumns: "1fr 1.65fr",
+            gap: "clamp(40px,6vw,80px)",
+            alignItems: "start",
           }}
         >
-          {/* Left */}
-          <div>
-            <span
-              className="wcb-eyebrow eyebrow"
-              style={{ opacity: 0, color: "rgba(192,175,211,0.6)" }}
-            >
+          {/* ── Left: sticky header ── */}
+          <div
+            ref={headerRef}
+            className="wcb-header"
+            style={{ position: "sticky", top: "clamp(80px,10vw,100px)" }}
+          >
+            <span className="wcb-eyebrow eyebrow" style={{ opacity: 0 }}>
               Warum Cloudy Club
             </span>
             <h2
-              className="wcb-headline font-playfair"
+              className="font-playfair"
               style={{
-                fontSize: "clamp(1.6rem, 5vw, 3rem)",
+                fontSize: "clamp(1.875rem,4vw,3rem)",
                 fontWeight: 700,
                 color: "var(--cream)",
                 lineHeight: 1.1,
-                marginTop: "10px",
-                opacity: 0,
+                marginTop: "14px",
+                overflow: "hidden",
+                paddingBottom: "0.05em",
               }}
             >
-              Warum{" "}
-              <span style={{ color: "var(--lilac)", fontStyle: "italic" }}>
-                Cloudy Club?
+              <span className="wcb-headline-inner" style={{ display: "block" }}>
+                Warum{" "}
+                <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>
+                  Cloudy Club?
+                </em>
               </span>
             </h2>
-          </div>
-
-          {/* Right: subtitle */}
-          <p
-            className="wcb-subtitle font-montserrat"
-            style={{
-              fontSize: "clamp(0.8125rem,2vw,0.9375rem)",
-              fontWeight: 300,
-              color: "rgba(244,241,234,0.50)",
-              maxWidth: "340px",
-              lineHeight: 1.75,
-              opacity: 0,
-            }}
-          >
-            Wir setzen neue Maßstäbe für Anbauvereinigungen in der Region Osnabrück.
-          </p>
-        </div>
-
-        {/* ── Bento grid ── */}
-        <div
-          className="wcb-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "clamp(10px,1.5vw,14px)",
-          }}
-        >
-          {features.map((f, i) => (
-            <div
-              key={i}
-              className="wcb-card"
+            <p
+              className="wcb-subtitle font-montserrat"
               style={{
-                gridColumn: f.large ? "span 2" : "span 1",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "clamp(12px,2vw,16px)",
-                padding: "clamp(16px,2.5vw,24px) clamp(16px,2.5vw,24px) clamp(20px,3vw,28px)",
-                display: "flex",
-                flexDirection: "column",
-                minHeight: f.large ? "220px" : "190px",
+                marginTop: "20px",
+                fontSize: "0.9rem",
+                fontWeight: 300,
+                color: "var(--text-secondary)",
+                lineHeight: 1.82,
                 opacity: 0,
-                transition: "background 0.25s ease, border-color 0.25s ease",
-                cursor: "default",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(192,175,211,0.07)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(192,175,211,0.22)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.04)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.08)";
               }}
             >
-              {/* Top row: icon + arrow */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                {/* Icon badge */}
-                <div className="wcb-icon-wrap" style={{
-                  width: 38, height: 38,
-                  borderRadius: "10px",
-                  background: "rgba(192,175,211,0.12)",
-                  border: "1px solid rgba(192,175,211,0.18)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}>
-                  <f.icon className="wcb-icon" size={17} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
+              Wir setzen neue Maßstäbe für Anbauvereinigungen in der Region Osnabrück.
+            </p>
+
+            {/* Accent line */}
+            <div style={{
+              marginTop: "32px",
+              width: "36px",
+              height: "2px",
+              background: "var(--lilac)",
+            }} />
+          </div>
+
+          {/* ── Right: feature rows ── */}
+          <div className="wcb-items">
+            {features.map((f, i) => (
+              <div
+                key={i}
+                className="wcb-row"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "56px 1fr",
+                  gap: "clamp(16px,2.5vw,24px)",
+                  alignItems: "flex-start",
+                  padding: "clamp(20px,3vw,28px) clamp(12px,1.5vw,16px)",
+                  borderTop: "1px solid var(--border)",
+                  ...(i === features.length - 1
+                    ? { borderBottom: "1px solid var(--border)" }
+                    : {}),
+                  opacity: 0,
+                }}
+              >
+                {/* Icon badge — prominent purple */}
+                <div
+                  className="wcb-badge"
+                  style={{
+                    width: 52, height: 52,
+                    borderRadius: "13px",
+                    background: "rgba(155,136,192,0.18)",
+                    border: "1px solid rgba(155,136,192,0.42)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    transition: "background 0.25s ease, border-color 0.25s ease",
+                  }}
+                >
+                  <f.icon size={22} strokeWidth={1.5} style={{ color: "var(--lilac)" }} />
                 </div>
 
-                {/* Arrow */}
-                <ArrowUpRight
-                  className="wcb-arrow"
-                  size={16}
-                  strokeWidth={1.6}
-                  style={{ color: "rgba(244,241,234,0.22)" }}
-                />
+                {/* Text */}
+                <div style={{ paddingTop: "4px" }}>
+                  <h3
+                    className="font-playfair"
+                    style={{
+                      fontSize: "1.0625rem",
+                      fontWeight: 700,
+                      color: "var(--cream)",
+                      lineHeight: 1.25,
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p
+                    className="font-montserrat"
+                    style={{
+                      fontSize: "0.875rem",
+                      fontWeight: 300,
+                      lineHeight: 1.8,
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {f.text}
+                  </p>
+                </div>
               </div>
-
-              {/* Spacer pushes text to bottom */}
-              <div style={{ flex: 1 }} />
-
-              {/* Text */}
-              <div>
-                <h3
-                  className="font-playfair"
-                  style={{
-                    fontSize: f.large ? "1.25rem" : "1.0625rem",
-                    fontWeight: 700,
-                    color: "var(--cream)",
-                    marginTop: "16px",
-                    marginBottom: "8px",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {f.title}
-                </h3>
-                <p
-                  className="font-montserrat"
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 300,
-                    lineHeight: 1.75,
-                    color: "rgba(244,241,234,0.48)",
-                  }}
-                >
-                  {f.text}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       <style>{`
-        /* ── Tablet (≤860px): 2-col grid ── */
-        @media (max-width: 860px) {
-          .wcb-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .wcb-grid .wcb-card:first-child {
-            grid-column: span 2 !important;
-          }
-          .wcb-card {
-            min-height: 160px !important;
-          }
+        .wcb-row {
+          transition: background 0.22s ease;
+          cursor: default;
+        }
+        .wcb-row:hover {
+          background: rgba(155,136,192,0.05);
+        }
+        .wcb-row:hover .wcb-badge {
+          background: rgba(155,136,192,0.28) !important;
+          border-color: rgba(155,136,192,0.62) !important;
         }
 
-        /* ── Mobile (≤768px): full single column ── */
-        @media (max-width: 768px) {
-          .wcb-header-row {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 10px !important;
-          }
-          .wcb-subtitle {
-            max-width: 100% !important;
-          }
-          .wcb-grid {
-            grid-template-columns: 1fr !important;
-            gap: 10px !important;
-          }
-          .wcb-grid .wcb-card,
-          .wcb-grid .wcb-card:first-child {
-            grid-column: span 1 !important;
-            width: 100% !important;
-            min-height: 130px !important;
-          }
-          /* smaller icon box */
-          .wcb-icon-wrap {
-            width: 28px !important;
-            height: 28px !important;
-            border-radius: 8px !important;
-          }
-          .wcb-icon {
-            width: 13px !important;
-            height: 13px !important;
-          }
-          .wcb-arrow {
-            width: 13px !important;
-            height: 13px !important;
-          }
+        @media (max-width: 780px) {
+          .wcb-outer { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .wcb-header { position: static !important; }
+        }
+        @media (max-width: 480px) {
+          .wcb-row { grid-template-columns: 44px 1fr !important; }
+          .wcb-badge { width: 40px !important; height: 40px !important; }
         }
       `}</style>
     </section>

@@ -53,46 +53,59 @@ export default function SEOSection() {
           </p>
         </div>
 
-        {/* City chips grid */}
-        <div
-          className="seo-grid"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            justifyContent: "center",
-          }}
-        >
+        {/* City cards grid */}
+        <div className="seo-grid">
           {NEARBY_CITIES.map((city, i) => (
             <span
               key={i}
               className="seo-chip font-montserrat"
               style={{
-                fontSize: "11px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                fontSize: "0.8125rem",
                 fontWeight: 500,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.04em",
+                lineHeight: 1.4,
                 color: "var(--text-secondary)",
                 background: "var(--bg-card)",
                 border: "1px solid var(--border)",
-                borderRadius: "2px",
-                padding: "8px 16px",
-                whiteSpace: "nowrap",
-                transition: "color 0.2s ease, border-color 0.2s ease",
+                borderRadius: "12px",
+                padding: "20px 14px",
+                minHeight: "80px",
+                transition: "color 0.22s ease, border-color 0.22s ease, background 0.22s ease",
                 cursor: "default",
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.color = "var(--cream)";
                 (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)";
+                (e.currentTarget as HTMLElement).style.background = "var(--bg-elevated)";
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
                 (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+                (e.currentTarget as HTMLElement).style.background = "var(--bg-card)";
               }}
             >
               {city}
             </span>
           ))}
         </div>
+
+        <style>{`
+          .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+          }
+          @media (max-width: 900px) {
+            .seo-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          }
+          @media (max-width: 560px) {
+            .seo-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+        `}</style>
 
         {/* Bottom note */}
         <p

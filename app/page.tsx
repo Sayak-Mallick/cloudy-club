@@ -1,32 +1,35 @@
-import Hero           from "@/components/Hero";
-import About          from "@/components/About";
-import Growing        from "@/components/Growing";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Growing from "@/components/Growing";
 import WhyCloudyBento from "@/components/WhyCloudyBento";
-import WirSind        from "@/components/WirSind";
-import StandortHome   from "@/components/StandortHome";
-import Milestones     from "@/components/Milestones";
-import Prevention     from "@/components/Prevention";
+import WirSind from "@/components/WirSind";
+import StandortHome from "@/components/StandortHome";
+import Milestones from "@/components/Milestones";
+import Prevention from "@/components/Prevention";
 import MembershipHome from "@/components/MembershipHome";
-import FAQ            from "@/components/FAQ";
-import Location       from "@/components/Location";
-import SEOSection     from "@/components/SEOSection";
-import News           from "@/components/News";
-import Ticker         from "@/components/Ticker";
-import ParallaxPanel  from "@/components/ParallaxPanel";
+import FAQ from "@/components/FAQ";
+import Location from "@/components/Location";
+import SEOSection from "@/components/SEOSection";
+import News from "@/components/News";
+import Ticker from "@/components/Ticker";
+import ParallaxPanel from "@/components/ParallaxPanel";
 import WhyCloudy from "@/components/WhyCloudy";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <WhyCloudy />
       <WirSind />
+      <WhyCloudy />
       <Growing />
       <WhyCloudyBento />
       <MembershipHome />
+      <Ticker inverted />
       <Prevention />
       <FAQ />
       <StandortHome />
+      <SEOSection />
+      <News />
       <ParallaxPanel
         image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80"
         eyebrow="Mitglied werden"
@@ -37,8 +40,6 @@ export default function Home() {
         overlayOpacity={0.68}
         cta={{ label: "Jetzt bewerben", href: "/membership" }}
       />
-      {/* <SEOSection />
-      <News /> */}
       <Ticker inverted />
     </>
   );

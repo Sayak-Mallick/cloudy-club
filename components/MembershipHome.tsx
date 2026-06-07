@@ -180,13 +180,6 @@ export default function MembershipHome() {
                 </li>
               ))}
             </ul>
-
-            <Link
-              href="/membership#anmeldung"
-              className="mh-register-link font-montserrat"
-            >
-              Hier Registrieren <ArrowRight size={13} strokeWidth={2} />
-            </Link>
           </div>
         </div>
 

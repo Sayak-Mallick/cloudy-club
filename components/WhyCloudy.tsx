@@ -94,7 +94,7 @@ export default function WhyCloudy() {
       ref={sectionRef}
       style={{
         minHeight: "100vh",
-        background: "var(--cream, #f5f0eb)",
+        background: "var(--bg-surface)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -116,7 +116,7 @@ export default function WhyCloudy() {
         <span
           ref={eyebrowRef}
           className="eyebrow"
-          style={{ color: "rgba(50,45,40,0.50)", opacity: 0 }}
+          style={{ opacity: 0 }}
         >
           Warum Cloudy Club
         </span>
@@ -127,7 +127,7 @@ export default function WhyCloudy() {
           style={{
             fontSize: "clamp(2.25rem, 4.5vw, 3.75rem)",
             fontWeight: 700,
-            color: "#1a1814",
+            color: "var(--cream)",
             lineHeight: 1.1,
             margin: "18px 0 26px",
             overflow: "hidden",           /* acts as the line-mask */
@@ -146,7 +146,7 @@ export default function WhyCloudy() {
             fontSize: "1rem",
             fontWeight: 300,
             lineHeight: 1.85,
-            color: "rgba(30,26,22,0.62)",
+            color: "var(--text-secondary)",
             opacity: 0,
           }}
         >
@@ -171,11 +171,11 @@ export default function WhyCloudy() {
             key={i}
             className="why-card"
             style={{
-              background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.055)",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
               borderRadius: "18px",
               padding: "32px 26px 36px",
-              boxShadow: "0 2px 20px rgba(0,0,0,0.038)",
+              boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
               opacity: 0,
               display: "flex",
               flexDirection: "column",
@@ -209,7 +209,7 @@ export default function WhyCloudy() {
               style={{
                 fontSize: "1.1875rem",
                 fontWeight: 700,
-                color: "#1a1814",
+                color: "var(--cream)",
                 lineHeight: 1.3,
                 marginTop: "16px",
                 marginBottom: "14px",
@@ -225,7 +225,7 @@ export default function WhyCloudy() {
                 fontSize: "0.875rem",
                 fontWeight: 300,
                 lineHeight: 1.82,
-                color: "rgba(30,26,22,0.60)",
+                color: "var(--text-secondary)",
               }}
             >
               {f.text}
@@ -241,8 +241,8 @@ export default function WhyCloudy() {
         }
         .why-card:hover {
           transform: translateY(-6px);
-          box-shadow: 0 12px 40px rgba(0,0,0,0.09);
-          border-color: rgba(192,175,211,0.45);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+          border-color: var(--border-hover);
         }
         .why-card:hover .why-icon-badge {
           background: rgba(192,175,211,0.30);
