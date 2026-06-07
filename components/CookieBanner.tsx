@@ -21,10 +21,10 @@ export default function CookieBanner() {
       style={{
         position: "fixed",
         zIndex: 200,
-        background: "var(--charcoal)",
+        background: "var(--bg-elevated)",
         border: "1px solid rgba(192,175,211,0.2)",
         padding: "28px",
-        boxShadow: "0 24px 64px rgba(49,49,47,0.35)",
+        boxShadow: "0 24px 64px rgba(0,0,0,0.5)",
         animation: "cookieSlideUp 0.5s cubic-bezier(0.25,0.46,0.45,0.94) forwards",
       }}
     >

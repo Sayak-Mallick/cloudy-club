@@ -131,7 +131,7 @@ export default function Location() {
       {/* ══════════════════════════════════════════════════
           1 ▸ INFO CARDS
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--cream, #f5f0eb)", padding: "80px 24px 64px" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "80px 24px 64px" }}>
         <div
           className="loc-info-grid"
           style={{
@@ -147,15 +147,15 @@ export default function Location() {
               key={card.title}
               className="loc-info-card"
               style={{
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.07)",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
                 borderRadius: "16px",
                 padding: "40px 28px 36px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 textAlign: "center",
-                boxShadow: "0 2px 16px rgba(0,0,0,0.035)",
+                boxShadow: "0 2px 16px rgba(0,0,0,0.3)",
                 opacity: 0,
               }}
             >
@@ -174,19 +174,19 @@ export default function Location() {
 
               <h3 className="font-playfair" style={{
                 fontSize: "1.125rem", fontWeight: 700,
-                color: "#1a1814", marginBottom: "10px", lineHeight: 1.2,
+                color: "var(--cream)", marginBottom: "10px", lineHeight: 1.2,
               }}>
                 {card.title}
               </h3>
               <p className="font-montserrat" style={{
                 fontSize: "0.9rem", fontWeight: 500,
-                color: "rgba(26,24,20,0.80)", marginBottom: "6px",
+                color: "var(--text-secondary)", marginBottom: "6px",
               }}>
                 {card.primary}
               </p>
               <p className="font-montserrat" style={{
                 fontSize: "0.8125rem", fontWeight: 300,
-                color: "rgba(26,24,20,0.45)", lineHeight: 1.6,
+                color: "var(--text-muted)", lineHeight: 1.6,
               }}>
                 {card.secondary}
               </p>
@@ -198,7 +198,7 @@ export default function Location() {
       {/* ══════════════════════════════════════════════════
           2 ▸ GOOGLE MAPS
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--cream, #f5f0eb)", padding: "0 24px 80px" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "0 24px 80px" }}>
         <div
           ref={mapRef}
           style={{
@@ -206,7 +206,7 @@ export default function Location() {
             margin: "0 auto",
             borderRadius: "20px",
             overflow: "hidden",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
             opacity: 0,
           }}
         >
@@ -226,14 +226,14 @@ export default function Location() {
       {/* ══════════════════════════════════════════════════
           3 ▸ DISTANCES
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--cream, #f5f0eb)", padding: "24px 24px 96px" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "24px 24px 96px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "52px" }}>
             <span
               className="dist-eyebrow eyebrow"
-              style={{ color: "rgba(50,45,40,0.45)", opacity: 0 }}
+              style={{ opacity: 0 }}
             >
               Aus der Region
             </span>
@@ -242,7 +242,7 @@ export default function Location() {
               className="font-playfair"
               style={{
                 fontSize: "clamp(2rem, 4vw, 3rem)",
-                fontWeight: 700, color: "#1a1814",
+                fontWeight: 700, color: "var(--cream)",
                 marginTop: "14px", marginBottom: "16px",
                 lineHeight: 1.1, opacity: 0,
               }}
@@ -253,7 +253,7 @@ export default function Location() {
               className="dist-sub font-montserrat"
               style={{
                 fontSize: "0.9375rem", fontWeight: 300,
-                color: "rgba(26,24,20,0.55)", opacity: 0,
+                color: "var(--text-secondary)", opacity: 0,
               }}
             >
               Wir sind für Mitglieder aus der gesamten Region erreichbar.
@@ -274,33 +274,33 @@ export default function Location() {
                 key={city.name}
                 className="loc-city-card"
                 style={{
-                  background: "#fff",
-                  border: "1px solid rgba(0,0,0,0.07)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
                   borderRadius: "12px",
                   padding: "20px 18px",
                   textAlign: "center",
-                  boxShadow: "0 1px 8px rgba(0,0,0,0.028)",
+                  boxShadow: "0 1px 8px rgba(0,0,0,0.3)",
                   opacity: 0,
                   transition: "transform 0.22s ease, box-shadow 0.22s ease",
                 }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(0,0,0,0.07)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(155,136,192,0.12)";
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 8px rgba(0,0,0,0.028)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 8px rgba(0,0,0,0.3)";
                 }}
               >
                 <p className="font-playfair" style={{
                   fontSize: "1rem", fontWeight: 700,
-                  color: "#1a1814", marginBottom: "5px",
+                  color: "var(--cream)", marginBottom: "5px",
                 }}>
                   {city.name}
                 </p>
                 <p className="font-montserrat" style={{
                   fontSize: "0.8125rem", fontWeight: 300,
-                  color: "rgba(26,24,20,0.42)",
+                  color: "var(--text-muted)",
                 }}>
                   {city.km}
                 </p>

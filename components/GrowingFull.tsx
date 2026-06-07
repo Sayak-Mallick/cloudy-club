@@ -161,24 +161,24 @@ export default function GrowingFull() {
       {/* ══════════════════════════════════════════════════
           1 ▸ STANDARDS  —  High-Tech trifft Natur
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--cream, #f5f0eb)", padding: "clamp(80px,10vw,130px) 24px" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "clamp(80px,10vw,130px) 24px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
-            <span className="gf-std-eyebrow eyebrow" style={{ color: "rgba(50,45,40,0.45)", opacity: 0 }}>
+            <span className="gf-std-eyebrow eyebrow" style={{ opacity: 0 }}>
               Unsere Standards
             </span>
             <h2
               ref={std1Ref}
               className="font-playfair"
-              style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)", fontWeight: 700, color: "#1a1814",
+              style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)", fontWeight: 700, color: "var(--cream)",
                 marginTop: "14px", marginBottom: "16px", lineHeight: 1.1, opacity: 0 }}
             >
               High-Tech trifft Natur
             </h2>
             <p className="gf-std-sub font-montserrat" style={{
-              fontSize: "1rem", fontWeight: 300, color: "rgba(26,24,20,0.58)",
+              fontSize: "1rem", fontWeight: 300, color: "var(--text-secondary)",
               maxWidth: "480px", margin: "0 auto", lineHeight: 1.8, opacity: 0,
             }}>
               Modernste Technologie und natürliche Methoden für Cannabis höchster Qualität.
@@ -191,18 +191,18 @@ export default function GrowingFull() {
           }}>
             {standards.map((s) => (
               <div key={s.title} className="gf-std-card" style={{
-                background: "#fff", border: "1px solid rgba(0,0,0,0.06)",
+                background: "var(--bg-card)", border: "1px solid var(--border)",
                 borderRadius: "16px", padding: "32px 26px 36px",
-                boxShadow: "0 2px 14px rgba(0,0,0,0.035)", opacity: 0,
+                boxShadow: "0 2px 14px rgba(0,0,0,0.3)", opacity: 0,
                 transition: "transform 0.25s ease, box-shadow 0.25s ease",
               }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 32px rgba(0,0,0,0.08)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 32px rgba(155,136,192,0.12)";
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 14px rgba(0,0,0,0.035)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 14px rgba(0,0,0,0.3)";
                 }}
               >
                 <div style={{
@@ -213,12 +213,12 @@ export default function GrowingFull() {
                   <s.icon size={18} strokeWidth={1.6} style={{ color: "var(--lilac-dark, #9B88C0)" }} />
                 </div>
                 <h3 className="font-playfair" style={{
-                  fontSize: "1.0625rem", fontWeight: 700, color: "#1a1814",
+                  fontSize: "1.0625rem", fontWeight: 700, color: "var(--cream)",
                   marginBottom: "10px", lineHeight: 1.25,
                 }}>{s.title}</h3>
                 <p className="font-montserrat" style={{
                   fontSize: "0.875rem", fontWeight: 300,
-                  color: "rgba(26,24,20,0.55)", lineHeight: 1.8,
+                  color: "var(--text-secondary)", lineHeight: 1.8,
                 }}>{s.text}</p>
               </div>
             ))}
@@ -302,7 +302,7 @@ export default function GrowingFull() {
       {/* ══════════════════════════════════════════════════
           3 ▸ SUSTAINABILITY  —  Nachhaltigkeit als Prinzip
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--cream, #f5f0eb)", padding: "clamp(80px,10vw,130px) 24px" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "clamp(80px,10vw,130px) 24px" }}>
         <div style={{
           maxWidth: "1100px", margin: "0 auto",
           display: "grid", gridTemplateColumns: "1fr 1fr",
@@ -323,14 +323,14 @@ export default function GrowingFull() {
 
             <h2 className="font-playfair" style={{
               fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", fontWeight: 700,
-              color: "#1a1814", lineHeight: 1.15, marginBottom: "24px",
+              color: "var(--cream)", lineHeight: 1.15, marginBottom: "24px",
             }}>
               Nachhaltigkeit als Prinzip
             </h2>
 
             <p className="font-montserrat" style={{
               fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.85,
-              color: "rgba(26,24,20,0.60)", marginBottom: "20px",
+              color: "var(--text-secondary)", marginBottom: "20px",
             }}>
               Umweltbewusstsein ist ein zentraler Bestandteil unserer Philosophie.
               Wir setzen auf energieeffiziente LED-Systeme, biologische
@@ -338,7 +338,7 @@ export default function GrowingFull() {
             </p>
             <p className="font-montserrat" style={{
               fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.85,
-              color: "rgba(26,24,20,0.60)",
+              color: "var(--text-secondary)",
             }}>
               Durch geschlossene Kreislaufsysteme und den Verzicht auf
               synthetische Mittel schützen wir nicht nur die Umwelt, sondern
@@ -349,7 +349,7 @@ export default function GrowingFull() {
           {/* Right: image */}
           <div className="gf-sust-img" style={{
             borderRadius: "20px", overflow: "hidden",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.12)", opacity: 0,
+            boxShadow: "0 20px 60px rgba(0,0,0,0.45)", opacity: 0,
             aspectRatio: "4/3",
           }}>
             <img

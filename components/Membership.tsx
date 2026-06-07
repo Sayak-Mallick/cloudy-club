@@ -11,19 +11,19 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Light-theme tokens ──────────────────────────────────── */
+/* ─── Dark-theme tokens ───────────────────────────────────── */
 const L = {
-  bg:        "#f5f0eb",
-  card:      "#ffffff",
-  cardB:     "rgba(0,0,0,0.07)",
-  shadow:    "0 2px 20px rgba(0,0,0,0.04)",
-  headline:  "#1a1814",
-  body:      "rgba(26,24,20,0.58)",
-  muted:     "rgba(26,24,20,0.30)",
-  eyebrow:   "rgba(50,45,40,0.50)",
-  divider:   "rgba(26,24,20,0.10)",
-  iconBg:    "rgba(192,175,211,0.20)",
-  icon:      "#9B88C0",
+  bg:        "var(--bg-surface)",
+  card:      "var(--bg-card)",
+  cardB:     "var(--border)",
+  shadow:    "0 2px 20px rgba(0,0,0,0.3)",
+  headline:  "var(--cream)",
+  body:      "var(--text-secondary)",
+  muted:     "var(--text-muted)",
+  eyebrow:   "rgba(192,175,211,0.55)",
+  divider:   "var(--border)",
+  iconBg:    "rgba(155,136,192,0.15)",
+  icon:      "var(--lilac)",
   lilac:     "#C0AFD3",
 };
 
@@ -443,7 +443,7 @@ export default function Membership() {
                 >
                   <span
                     className="font-playfair"
-                    style={{ fontSize: "1.0625rem", fontWeight: 600, lineHeight: 1.4, color: openFaq === i ? L.headline : "rgba(26,24,20,0.80)", transition: "color 0.2s ease" }}
+                    style={{ fontSize: "1.0625rem", fontWeight: 600, lineHeight: 1.4, color: openFaq === i ? L.headline : L.body, transition: "color 0.2s ease" }}
                   >
                     {item.q}
                   </span>

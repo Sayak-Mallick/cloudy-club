@@ -147,7 +147,7 @@ function AccordionItem({
     <div
       className="faq-full-item"
       style={{
-        borderBottom: isLast ? "none" : "1px solid rgba(0,0,0,0.07)",
+        borderBottom: isLast ? "none" : "1px solid var(--border)",
       }}
     >
       <button
@@ -171,7 +171,7 @@ function AccordionItem({
           style={{
             fontSize: "1rem",
             fontWeight: 600,
-            color: isOpen ? "rgba(26,24,20,0.95)" : "rgba(26,24,20,0.78)",
+            color: isOpen ? "var(--cream)" : "var(--text-secondary)",
             lineHeight: 1.4,
             transition: "color 0.2s ease",
           }}
@@ -183,7 +183,7 @@ function AccordionItem({
           style={{
             flexShrink: 0,
             display: "flex",
-            color: "rgba(26,24,20,0.35)",
+            color: "var(--text-muted)",
             transformOrigin: "center",
           }}
         >
@@ -199,7 +199,7 @@ function AccordionItem({
             fontSize: "0.9125rem",
             fontWeight: 300,
             lineHeight: 1.82,
-            color: "rgba(26,24,20,0.55)",
+            color: "var(--text-secondary)",
           }}
         >
           {a}
@@ -272,7 +272,7 @@ export default function FAQFull() {
   return (
     <section
       ref={sectionRef}
-      style={{ background: "var(--cream, #f5f0eb)", minHeight: "100vh" }}
+      style={{ background: "var(--bg)", minHeight: "100vh" }}
     >
       {/* ── Hero header ── */}
       <div
@@ -284,7 +284,7 @@ export default function FAQFull() {
         <span
           ref={eyebrowRef}
           className="eyebrow"
-          style={{ color: "rgba(50,45,40,0.45)", opacity: 0 }}
+          style={{ opacity: 0 }}
         >
           FAQ
         </span>
@@ -295,7 +295,7 @@ export default function FAQFull() {
           style={{
             fontSize: "clamp(2.75rem, 6vw, 4.5rem)",
             fontWeight: 700,
-            color: "#1a1814",
+            color: "var(--cream)",
             lineHeight: 1.05,
             marginTop: "14px",
             marginBottom: "36px",
@@ -315,15 +315,15 @@ export default function FAQFull() {
             gap: "10px",
             width: "100%",
             maxWidth: "500px",
-            background: "#fff",
-            border: "1px solid rgba(0,0,0,0.10)",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
             borderRadius: "10px",
             padding: "0 18px",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
             opacity: 0,
           }}
         >
-          <Search size={15} strokeWidth={1.8} style={{ color: "rgba(26,24,20,0.35)", flexShrink: 0 }} />
+          <Search size={15} strokeWidth={1.8} style={{ color: "var(--text-muted)", flexShrink: 0 }} />
           <input
             type="text"
             placeholder="Suche nach Fragen..."
@@ -338,7 +338,7 @@ export default function FAQFull() {
               outline: "none",
               fontSize: "0.9rem",
               fontWeight: 300,
-              color: "#1a1814",
+              color: "var(--cream)",
               caretColor: "var(--lilac)",
             }}
           />
@@ -359,7 +359,7 @@ export default function FAQFull() {
             className="font-montserrat"
             style={{
               textAlign: "center",
-              color: "rgba(26,24,20,0.42)",
+              color: "var(--text-muted)",
               fontSize: "0.9375rem",
               paddingTop: "40px",
             }}
@@ -379,7 +379,7 @@ export default function FAQFull() {
                 style={{
                   fontSize: "1.375rem",
                   fontWeight: 700,
-                  color: "#1a1814",
+                  color: "var(--cream)",
                   marginBottom: "4px",
                 }}
               >
@@ -390,11 +390,11 @@ export default function FAQFull() {
               <div
                 style={{
                   marginTop: "16px",
-                  background: "#fff",
-                  border: "1px solid rgba(0,0,0,0.07)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
                   borderRadius: "14px",
                   padding: "0 24px",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.032)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
                 }}
               >
                 {cat.items.map((item, idx) => (
@@ -419,7 +419,7 @@ export default function FAQFull() {
           outline-offset: 2px;
           border-radius: 4px;
         }
-        ::placeholder { color: rgba(26,24,20,0.35); }
+        ::placeholder { color: rgba(244,241,234,0.25); }
       `}</style>
     </section>
   );

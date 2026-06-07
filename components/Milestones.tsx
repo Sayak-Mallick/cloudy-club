@@ -105,7 +105,7 @@ export default function Milestones() {
       ref={sectionRef}
       id="milestones"
       style={{
-        background: "var(--cream, #f5f0eb)",
+        background: "var(--bg-surface)",
         padding: "clamp(80px, 10vw, 130px) 24px",
       }}
     >
@@ -114,7 +114,7 @@ export default function Milestones() {
         <span
           ref={eyebrowRef}
           className="eyebrow"
-          style={{ color: "rgba(50,45,40,0.45)", opacity: 0 }}
+          style={{ opacity: 0 }}
         >
           Unser Weg
         </span>
@@ -124,7 +124,7 @@ export default function Milestones() {
           style={{
             fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
             fontWeight: 700,
-            color: "#1a1814",
+            color: "var(--cream)",
             marginTop: "14px",
             lineHeight: 1.05,
             opacity: 0,
@@ -249,11 +249,11 @@ function MilestoneCard({
     <div
       className={`ms-card-${index}`}
       style={{
-        background: "#fff",
-        border: "1px solid rgba(0,0,0,0.07)",
+        background: "var(--bg-card)",
+        border: "1px solid var(--border)",
         borderRadius: "16px",
         padding: "28px 28px 30px",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.3)",
         maxWidth: "340px",
         width: "100%",
         opacity: 0,
@@ -283,7 +283,7 @@ function MilestoneCard({
         style={{
           fontSize: "1.1875rem",
           fontWeight: 700,
-          color: "#1a1814",
+          color: "var(--cream)",
           lineHeight: 1.25,
           marginBottom: "10px",
         }}
@@ -298,7 +298,7 @@ function MilestoneCard({
           fontSize: "0.875rem",
           fontWeight: 300,
           lineHeight: 1.75,
-          color: "rgba(26,24,20,0.55)",
+          color: "var(--text-secondary)",
         }}
       >
         {m.text}

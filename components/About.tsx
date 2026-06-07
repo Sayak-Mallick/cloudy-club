@@ -117,7 +117,7 @@ export default function About() {
         id="about"
         ref={sectionRef}
         className="section"
-        style={{ background: "var(--cream, #f5f0eb)" }}
+        style={{ background: "var(--bg-surface)" }}
       >
         <div
           className="section-inner about-grid"
@@ -216,7 +216,7 @@ export default function About() {
               <span
                 ref={eyebrowRef}
                 className="eyebrow"
-                style={{ color: "rgba(50,45,40,0.55)", opacity: 0 }}
+                style={{ opacity: 0 }}
               >
                 Über den Club
               </span>
@@ -225,7 +225,7 @@ export default function About() {
               <h2
                 ref={headlineRef}
                 className="font-playfair section-title"
-                style={{ color: "#1a1814" }}
+                style={{ color: "var(--cream)" }}
               >
                 <span className="about-line-mask">
                   <span ref={line1Ref} className="about-line-inner">
@@ -252,7 +252,7 @@ export default function About() {
                   fontSize: "0.9375rem",
                   fontWeight: 300,
                   lineHeight: 1.85,
-                  color: "rgba(30,26,22,0.68)",
+                  color: "var(--text-secondary)",
                   opacity: 0,
                 }}
               >
@@ -266,7 +266,7 @@ export default function About() {
                   fontSize: "0.9375rem",
                   fontWeight: 300,
                   lineHeight: 1.85,
-                  color: "rgba(30,26,22,0.68)",
+                  color: "var(--text-secondary)",
                   opacity: 0,
                 }}
               >
@@ -286,9 +286,9 @@ export default function About() {
                   gap: "8px",
                   fontSize: "0.9375rem",
                   fontWeight: 500,
-                  color: "#1a1814",
+                  color: "var(--cream)",
                   textDecoration: "none",
-                  borderBottom: "1.5px solid #1a1814",
+                  borderBottom: "1.5px solid rgba(244,241,234,0.35)",
                   paddingBottom: "3px",
                   opacity: 0,
                 }}

@@ -133,7 +133,7 @@ export default function NewsFull() {
     <section
       ref={sectionRef}
       style={{
-        background: "var(--cream, #f5f0eb)",
+        background: "var(--bg)",
         padding: "clamp(72px, 9vw, 120px) 24px clamp(80px, 10vw, 130px)",
       }}
     >
@@ -144,7 +144,7 @@ export default function NewsFull() {
           <span
             ref={eyebrowRef}
             className="eyebrow"
-            style={{ color: "rgba(50,45,40,0.45)", opacity: 0 }}
+            style={{ opacity: 0 }}
           >
             Blog &amp; News
           </span>
@@ -154,7 +154,7 @@ export default function NewsFull() {
             style={{
               fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
               fontWeight: 700,
-              color: "#1a1814",
+              color: "var(--cream)",
               marginTop: "14px",
               lineHeight: 1.08,
               opacity: 0,
@@ -171,22 +171,22 @@ export default function NewsFull() {
           className="nf-featured"
           style={{
             display: "block",
-            background: "#fff",
-            border: "1px solid rgba(0,0,0,0.07)",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
             borderRadius: "18px",
             padding: "40px 44px 44px",
-            boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
+            boxShadow: "0 2px 20px rgba(0,0,0,0.35)",
             textDecoration: "none",
             opacity: 0,
             marginBottom: "20px",
             transition: "box-shadow 0.25s ease, transform 0.25s ease",
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 10px 40px rgba(0,0,0,0.09)";
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 10px 40px rgba(155,136,192,0.12)";
             (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-3px)";
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 2px 20px rgba(0,0,0,0.04)";
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 2px 20px rgba(0,0,0,0.35)";
             (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
           }}
         >
@@ -195,7 +195,7 @@ export default function NewsFull() {
             <TagPill tag={featured.tag} />
             <span className="font-montserrat" style={{
               fontSize: "0.8125rem", fontWeight: 300,
-              color: "rgba(26,24,20,0.42)",
+              color: "var(--text-muted)",
             }}>
               {featured.date}
             </span>
@@ -204,7 +204,7 @@ export default function NewsFull() {
           {/* Title */}
           <h2 className="font-playfair" style={{
             fontSize: "clamp(1.5rem, 3vw, 2rem)",
-            fontWeight: 700, color: "#1a1814",
+            fontWeight: 700, color: "var(--cream)",
             lineHeight: 1.2, marginBottom: "14px",
           }}>
             {featured.title}
@@ -213,7 +213,7 @@ export default function NewsFull() {
           {/* Excerpt */}
           <p className="font-montserrat" style={{
             fontSize: "0.9375rem", fontWeight: 300,
-            lineHeight: 1.8, color: "rgba(26,24,20,0.58)",
+            lineHeight: 1.8, color: "var(--text-secondary)",
             maxWidth: "600px", marginBottom: "28px",
           }}>
             {featured.excerpt}
@@ -225,8 +225,8 @@ export default function NewsFull() {
             style={{
               display: "inline-flex", alignItems: "center", gap: "6px",
               fontSize: "0.875rem", fontWeight: 500,
-              color: "#1a1814",
-              borderBottom: "1.5px solid rgba(26,24,20,0.4)",
+              color: "var(--cream)",
+              borderBottom: "1.5px solid rgba(244,241,234,0.35)",
               paddingBottom: "2px",
             }}
           >
@@ -250,21 +250,21 @@ export default function NewsFull() {
               className="nf-card"
               style={{
                 display: "block",
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.07)",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
                 borderRadius: "16px",
                 padding: "28px 28px 32px",
-                boxShadow: "0 2px 14px rgba(0,0,0,0.035)",
+                boxShadow: "0 2px 14px rgba(0,0,0,0.3)",
                 textDecoration: "none",
                 opacity: 0,
                 transition: "box-shadow 0.25s ease, transform 0.25s ease",
               }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.08)";
+                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(155,136,192,0.12)";
                 (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-3px)";
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 2px 14px rgba(0,0,0,0.035)";
+                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 2px 14px rgba(0,0,0,0.3)";
                 (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
               }}
             >
@@ -273,7 +273,7 @@ export default function NewsFull() {
                 <TagPill tag={a.tag} />
                 <span className="font-montserrat" style={{
                   fontSize: "0.75rem", fontWeight: 300,
-                  color: "rgba(26,24,20,0.40)",
+                  color: "var(--text-muted)",
                 }}>
                   {a.date}
                 </span>
@@ -282,7 +282,7 @@ export default function NewsFull() {
               {/* Title */}
               <h3 className="font-playfair" style={{
                 fontSize: "1.0625rem", fontWeight: 700,
-                color: "#1a1814", lineHeight: 1.3,
+                color: "var(--cream)", lineHeight: 1.3,
                 marginBottom: "10px",
               }}>
                 {a.title}
@@ -291,7 +291,7 @@ export default function NewsFull() {
               {/* Excerpt */}
               <p className="font-montserrat" style={{
                 fontSize: "0.875rem", fontWeight: 300,
-                lineHeight: 1.75, color: "rgba(26,24,20,0.52)",
+                lineHeight: 1.75, color: "var(--text-secondary)",
                 display: "-webkit-box",
                 WebkitLineClamp: 3,
                 WebkitBoxOrient: "vertical" as const,
