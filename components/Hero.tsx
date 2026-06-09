@@ -407,6 +407,59 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      
+
+      {/* ── Stats bar ── */}
+      <div
+        ref={statsRef}
+        style={{
+          position: "relative",
+          zIndex: 2,
+          width: "100%",
+          borderTop: "1px solid rgba(192,175,211,0.12)",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+        }}
+      >
+        {STATS.map((stat, i) => (
+          <div
+            key={i}
+            className="stats-stat"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "clamp(20px, 3.5vw, 36px) 16px",
+              borderRight: i < STATS.length - 1 ? "1px solid rgba(192,175,211,0.12)" : "none",
+              gap: "6px",
+            }}
+          >
+            <span
+              className="font-playfair"
+              style={{
+                fontSize: "clamp(2rem, 4.5vw, 3rem)",
+                fontWeight: 700,
+                color: "var(--cream)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1,
+              }}
+            >
+              {stat.display}
+            </span>
+            <span
+              className="font-montserrat eyebrow"
+              style={{
+                color: "var(--text-secondary)",
+                letterSpacing: "0.24em",
+                fontSize: "clamp(9px, 1vw, 11px)",
+              }}
+            >
+              {stat.label.toUpperCase()}
+            </span>
+          </div>
+        ))}
+      </div>
 
       <style>{`
         @media (max-width: 900px) {

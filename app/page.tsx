@@ -21,6 +21,7 @@ export default function Home() {
       <Hero />
       <WirSind />
       <WhyCloudy />
+      <Ticker />
       <Growing />
       <WhyCloudyBento />
       <MembershipHome />

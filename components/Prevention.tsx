@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   AlertTriangle, BookOpen, Share2, Heart,
-  Shield, Info, Users, ArrowUpRight, ArrowRight,
+  Shield, Info, Users, ArrowRight,
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -183,12 +183,13 @@ export default function Prevention() {
       </section>
 
       {/* ══════════════════════════════════════════════════
-          3 · HILFE + CTA  (merged)
+          3 · HILFE + CTA  (merged — no divider)
       ══════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingTop: "clamp(36px,5vw,52px)", background: "var(--bg-surface)" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <section style={{ background: "var(--bg-surface)", paddingTop: "clamp(64px,9vw,120px)" }}>
 
-          {/* Header */}
+        {/* ── Resources ── */}
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(20px,4vw,40px)" }}>
+
           <div className="prev-closing-hdr" style={{ textAlign: "center", marginBottom: "clamp(32px,5vw,48px)" }}>
             <span className="eyebrow">Hilfe &amp; Beratung</span>
             <h2 className="font-playfair" style={{
@@ -206,7 +207,6 @@ export default function Prevention() {
             </p>
           </div>
 
-          {/* Resource cards */}
           <div className="prev-res-grid">
             {resources.map((r, i) => (
               <a
@@ -217,17 +217,8 @@ export default function Prevention() {
                 className="prev-res-card"
                 style={{ opacity: 0 }}
               >
-                {/* Top row: icon + arrow */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-                  <div className="prev-res-badge" style={{
-                    width: 46, height: 46, borderRadius: "11px",
-                    background: "rgba(155,136,192,0.14)",
-                    border: "1px solid rgba(155,136,192,0.32)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    transition: "background 0.25s ease, border-color 0.25s ease",
-                  }}>
-                    <ArrowUpRight size={19} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
-                  </div>
+                {/* Top row: tag */}
+                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "24px" }}>
                   <span className="prev-res-tag font-montserrat" style={{
                     fontSize: "0.625rem", fontWeight: 700,
                     letterSpacing: "0.22em", textTransform: "uppercase",
@@ -238,9 +229,9 @@ export default function Prevention() {
                   </span>
                 </div>
 
-                {/* Text */}
+                {/* Title + description */}
                 <h3 className="prev-res-title font-playfair" style={{
-                  fontSize: "1.125rem", fontWeight: 700,
+                  fontSize: "1.1875rem", fontWeight: 700,
                   color: "var(--cream)", lineHeight: 1.2,
                   marginBottom: "10px",
                   transition: "color 0.25s ease",
@@ -250,39 +241,59 @@ export default function Prevention() {
                 <p className="font-montserrat" style={{
                   fontSize: "0.8125rem", fontWeight: 300,
                   lineHeight: 1.75, color: "var(--text-secondary)",
+                  flexGrow: 1,
                 }}>
                   {r.desc}
                 </p>
+
+                {/* Action row */}
+                <div className="prev-res-action" style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  marginTop: "24px",
+                  paddingTop: "18px",
+                  borderTop: "1px solid var(--border)",
+                  transition: "border-color 0.25s ease",
+                }}>
+                  <span className="prev-res-action-label font-montserrat" style={{
+                    fontSize: "0.6875rem", fontWeight: 700,
+                    letterSpacing: "0.18em", textTransform: "uppercase",
+                    color: "var(--lilac)",
+                    transition: "letter-spacing 0.25s ease",
+                  }}>
+                    Jetzt besuchen
+                  </span>
+                  <ArrowRight size={12} strokeWidth={2.5} style={{ color: "var(--lilac)", flexShrink: 0 }} />
+                </div>
               </a>
             ))}
           </div>
+        </div>
 
-          {/* Divider */}
-          <div style={{
-            width: "100%",
-            height: "1px",
-            background: "var(--border)",
-            margin: "clamp(48px,7vw,80px) 0",
-          }} />
-
-          {/* CTA */}
-          <div className="prev-cta" style={{ textAlign: "center", maxWidth: "640px", margin: "0 auto", position: "relative" }}>
+        {/* ── Full-bleed dark CTA ── */}
+        <div style={{ marginTop: "clamp(60px,8vw,96px)", background: "var(--bg)" }}>
+          <div className="prev-cta" style={{
+            maxWidth: "720px",
+            margin: "0 auto",
+            padding: "clamp(72px,10vw,120px) clamp(20px,4vw,40px)",
+            textAlign: "center",
+            position: "relative",
+          }}>
             {/* Glow */}
             <div aria-hidden="true" style={{
               position: "absolute",
               top: "50%", left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "560px", height: "320px",
-              background: "radial-gradient(ellipse, rgba(155,136,192,0.14) 0%, transparent 68%)",
+              width: "640px", height: "360px",
+              background: "radial-gradient(ellipse, rgba(155,136,192,0.18) 0%, transparent 65%)",
               pointerEvents: "none",
             }} />
 
             <h2 className="font-playfair" style={{
-              fontSize: "clamp(2.25rem,5.5vw,3.75rem)",
+              fontSize: "clamp(2.5rem,6vw,4.25rem)",
               fontWeight: 700,
               color: "var(--cream)",
-              lineHeight: 1.1,
-              marginBottom: "22px",
+              lineHeight: 1.08,
+              marginBottom: "24px",
               position: "relative",
             }}>
               Verantwortungsvoller Konsum
@@ -292,7 +303,7 @@ export default function Prevention() {
             <p className="font-montserrat" style={{
               fontSize: "0.9375rem", fontWeight: 300,
               lineHeight: 1.85, color: "var(--text-secondary)",
-              maxWidth: "460px", margin: "0 auto 40px",
+              maxWidth: "460px", margin: "0 auto 48px",
               position: "relative",
             }}>
               Werde Teil einer Gemeinschaft, die Aufklärung und Sicherheit an erste Stelle setzt.
@@ -302,7 +313,7 @@ export default function Prevention() {
               className="prev-cta-btn font-montserrat"
               style={{ position: "relative" }}
             >
-              Mitglied werden <ArrowRight size={16} />
+              Mitglied werden
             </Link>
           </div>
         </div>
@@ -370,16 +381,27 @@ export default function Prevention() {
           color: var(--lilac) !important;
         }
 
+        /* ── Resource card action row ── */
+        .prev-res-card:hover .prev-res-action {
+          border-color: rgba(155,136,192,0.42) !important;
+        }
+        .prev-res-card:hover .prev-res-arrow {
+          transform: translateX(4px) !important;
+        }
+        .prev-res-card:hover .prev-res-action-label {
+          letter-spacing: 0.22em !important;
+        }
+
         /* ── CTA button ── */
         .prev-cta-btn {
           display: inline-flex;
           align-items: center;
-          gap: 12px;
-          height: 58px;
-          padding: 0 48px;
+          gap: 14px;
+          height: 72px;
+          padding: 0 64px;
           background: var(--lilac);
           color: var(--bg);
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 700;
           letter-spacing: 0.22em;
           text-transform: uppercase;
@@ -390,8 +412,8 @@ export default function Prevention() {
         }
         .prev-cta-btn:hover {
           background: var(--lilac-dark);
-          transform: translateY(-2px);
-          box-shadow: 0 10px 36px rgba(155,136,192,0.28);
+          transform: translateY(-3px);
+          box-shadow: 0 16px 48px rgba(155,136,192,0.32);
         }
         .prev-cta-btn:active { transform: none; box-shadow: none; }
 

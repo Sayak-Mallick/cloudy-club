@@ -260,23 +260,25 @@ export default function Growing() {
 
       <style>{`
         .gw-featured {
-          transition: border-color 0.28s ease, background 0.28s ease, transform 0.28s ease;
+          transition: border-color 0.3s ease, background 0.3s ease,
+                      transform 0.3s cubic-bezier(0.22,0.68,0,1.2), box-shadow 0.3s ease;
         }
         .gw-featured:hover {
           border-color: rgba(155,136,192,0.36) !important;
           border-top-color: var(--lilac) !important;
           background: rgba(155,136,192,0.11) !important;
-          transform: translateY(-3px);
+          transform: translateY(-4px);
+          box-shadow: 0 12px 40px rgba(155,136,192,0.13);
         }
         .gw-card {
-          transition: transform 0.25s ease, border-color 0.25s ease,
-                      background 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.3s cubic-bezier(0.22,0.68,0,1.2), border-color 0.3s ease,
+                      background 0.3s ease, box-shadow 0.3s ease;
         }
         .gw-card:hover {
           transform: translateY(-4px);
           border-color: rgba(155,136,192,0.30) !important;
-          background: rgba(155,136,192,0.07) !important;
-          box-shadow: 0 8px 32px rgba(155,136,192,0.09);
+          background: rgba(155,136,192,0.08) !important;
+          box-shadow: 0 10px 36px rgba(155,136,192,0.12);
         }
 
         @media (max-width: 780px) {
