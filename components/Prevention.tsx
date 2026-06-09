@@ -78,53 +78,49 @@ export default function Prevention() {
       {/* ══════════════════════════════════════════════════
           1 · WARNING BANNER
       ══════════════════════════════════════════════════ */}
-      <section style={{ ...sp, paddingBottom: "clamp(36px,5vw,52px)" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <div
-            className="prev-hinweis"
-            style={{
-              display: "flex",
-              gap: "clamp(16px,3vw,28px)",
-              alignItems: "flex-start",
-              background: "rgba(155,136,192,0.07)",
-              border: "1px solid rgba(155,136,192,0.20)",
-              borderLeft: "3px solid var(--lilac)",
-              borderRadius: "10px",
-              padding: "clamp(20px,3vw,32px)",
-              opacity: 0,
-            }}
-          >
-            <div style={{
-              flexShrink: 0,
-              width: 48, height: 48,
-              borderRadius: "12px",
-              background: "rgba(155,136,192,0.18)",
-              border: "1px solid rgba(155,136,192,0.40)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "2px",
-            }}>
-              <AlertTriangle size={20} strokeWidth={1.6} style={{ color: "var(--lilac)" }} />
-            </div>
-            <div>
-              <h3 className="font-playfair" style={{
-                fontSize: "1.0625rem", fontWeight: 700,
-                color: "var(--cream)", marginBottom: "10px",
-              }}>
-                Wichtiger Hinweis
-              </h3>
-              <p className="font-montserrat" style={{
-                fontSize: "0.875rem", fontWeight: 300,
-                lineHeight: 1.85, color: "var(--text-secondary)", maxWidth: "680px",
-              }}>
-                Cannabis ist nicht harmlos. Der Konsum kann gesundheitliche Risiken bergen,
-                insbesondere für junge Erwachsene. Wir empfehlen ausdrücklich einen
-                verantwortungsvollen und informierten Umgang. Bei Fragen oder Bedenken stehen
-                wir dir jederzeit zur Seite.
-              </p>
-            </div>
+      <section style={{
+        padding: "clamp(52px,8vw,88px) clamp(20px,4vw,40px)",
+        borderTop: "1px solid var(--border)",
+        borderBottom: "1px solid var(--border)",
+      }}>
+        <div
+          className="prev-hinweis"
+          style={{
+            maxWidth: "580px",
+            margin: "0 auto",
+            textAlign: "center",
+            opacity: 0,
+          }}
+        >
+          {/* Icon */}
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 50, height: 50,
+            borderRadius: "12px",
+            background: "rgba(155,136,192,0.10)",
+            border: "1px solid rgba(155,136,192,0.22)",
+            marginBottom: "22px",
+          }}>
+            <AlertTriangle size={19} strokeWidth={1.5} style={{ color: "var(--lilac)" }} />
           </div>
+
+          {/* Label */}
+          <span className="eyebrow" style={{ display: "block", marginBottom: "18px" }}>
+            Wichtiger Hinweis
+          </span>
+
+          {/* Body */}
+          <p className="font-montserrat" style={{
+            fontSize: "0.9rem", fontWeight: 300,
+            lineHeight: 1.95, color: "var(--text-secondary)",
+          }}>
+            Cannabis ist nicht harmlos. Der Konsum kann gesundheitliche Risiken bergen,
+            insbesondere für junge Erwachsene. Wir empfehlen ausdrücklich einen
+            verantwortungsvollen und informierten Umgang. Bei Fragen oder Bedenken stehen
+            wir dir jederzeit zur Seite.
+          </p>
         </div>
       </section>
 
