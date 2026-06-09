@@ -183,138 +183,135 @@ export default function Prevention() {
       </section>
 
       {/* ══════════════════════════════════════════════════
-          3 · HILFE + CTA  (merged — no divider)
+          3 · HILFE + CTA  (2-column)
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--bg-surface)", paddingTop: "clamp(64px,9vw,120px)" }}>
+      <section style={{ background: "var(--bg-surface)", padding: "clamp(64px,9vw,120px) clamp(20px,4vw,40px)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <div className="prev-bottom-grid">
 
-        {/* ── Resources ── */}
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(20px,4vw,40px)" }}>
-
-          <div className="prev-closing-hdr" style={{ textAlign: "center", marginBottom: "clamp(32px,5vw,48px)" }}>
-            <span className="eyebrow">Hilfe &amp; Beratung</span>
-            <h2 className="font-playfair" style={{
-              fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 700,
-              color: "var(--cream)", lineHeight: 1.1, margin: "14px 0 16px",
-            }}>
-              Du bist{" "}
-              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>nicht allein</em>
-            </h2>
-            <p className="font-montserrat" style={{
-              fontSize: "0.9375rem", fontWeight: 300,
-              lineHeight: 1.85, color: "var(--text-secondary)",
-            }}>
-              Zweifel an deinem Konsum? Diese Ressourcen können helfen.
-            </p>
-          </div>
-
-          <div className="prev-res-grid">
-            {resources.map((r, i) => (
-              <a
-                key={i}
-                href={r.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="prev-res-card"
-                style={{ opacity: 0 }}
-              >
-                {/* Top row: tag */}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "24px" }}>
-                  <span className="prev-res-tag font-montserrat" style={{
-                    fontSize: "0.625rem", fontWeight: 700,
-                    letterSpacing: "0.22em", textTransform: "uppercase",
-                    color: "var(--text-muted)",
-                    transition: "color 0.25s ease",
-                  }}>
-                    Extern
-                  </span>
-                </div>
-
-                {/* Title + description */}
-                <h3 className="prev-res-title font-playfair" style={{
-                  fontSize: "1.1875rem", fontWeight: 700,
-                  color: "var(--cream)", lineHeight: 1.2,
-                  marginBottom: "10px",
-                  transition: "color 0.25s ease",
+            {/* ── Left: resources ── */}
+            <div>
+              <div className="prev-closing-hdr" style={{ marginBottom: "clamp(28px,4vw,40px)" }}>
+                <span className="eyebrow">Hilfe &amp; Beratung</span>
+                <h2 className="font-playfair" style={{
+                  fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 700,
+                  color: "var(--cream)", lineHeight: 1.1, margin: "14px 0 16px",
                 }}>
-                  {r.title}
-                </h3>
+                  Du bist{" "}
+                  <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>nicht allein</em>
+                </h2>
                 <p className="font-montserrat" style={{
-                  fontSize: "0.8125rem", fontWeight: 300,
-                  lineHeight: 1.75, color: "var(--text-secondary)",
-                  flexGrow: 1,
+                  fontSize: "0.9375rem", fontWeight: 300,
+                  lineHeight: 1.85, color: "var(--text-secondary)",
                 }}>
-                  {r.desc}
+                  Zweifel an deinem Konsum? Diese Ressourcen können helfen.
                 </p>
+              </div>
 
-                {/* Action row */}
-                <div className="prev-res-action" style={{
-                  display: "flex", alignItems: "center", gap: "6px",
-                  marginTop: "24px",
-                  paddingTop: "18px",
-                  borderTop: "1px solid var(--border)",
-                  transition: "border-color 0.25s ease",
-                }}>
-                  <span className="prev-res-action-label font-montserrat" style={{
-                    fontSize: "0.6875rem", fontWeight: 700,
-                    letterSpacing: "0.18em", textTransform: "uppercase",
-                    color: "var(--lilac)",
-                    transition: "letter-spacing 0.25s ease",
-                  }}>
-                    Jetzt besuchen
-                  </span>
-                  <ArrowRight size={12} strokeWidth={2.5} style={{ color: "var(--lilac)", flexShrink: 0 }} />
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+              <div className="prev-res-grid">
+                {resources.map((r, i) => (
+                  <a
+                    key={i}
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="prev-res-card"
+                    style={{ opacity: 0 }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "24px" }}>
+                      <span className="prev-res-tag font-montserrat" style={{
+                        fontSize: "0.625rem", fontWeight: 700,
+                        letterSpacing: "0.22em", textTransform: "uppercase",
+                        color: "var(--text-muted)",
+                        transition: "color 0.25s ease",
+                      }}>
+                        Extern
+                      </span>
+                    </div>
+                    <h3 className="prev-res-title font-playfair" style={{
+                      fontSize: "1.1875rem", fontWeight: 700,
+                      color: "var(--cream)", lineHeight: 1.2,
+                      marginBottom: "10px",
+                      transition: "color 0.25s ease",
+                    }}>
+                      {r.title}
+                    </h3>
+                    <p className="font-montserrat" style={{
+                      fontSize: "0.8125rem", fontWeight: 300,
+                      lineHeight: 1.75, color: "var(--text-secondary)",
+                      flexGrow: 1,
+                    }}>
+                      {r.desc}
+                    </p>
+                    <div className="prev-res-action" style={{
+                      display: "flex", alignItems: "center", gap: "6px",
+                      marginTop: "24px", paddingTop: "18px",
+                      borderTop: "1px solid var(--border)",
+                      transition: "border-color 0.25s ease",
+                    }}>
+                      <span className="prev-res-action-label font-montserrat" style={{
+                        fontSize: "0.6875rem", fontWeight: 700,
+                        letterSpacing: "0.18em", textTransform: "uppercase",
+                        color: "var(--lilac)",
+                        transition: "letter-spacing 0.25s ease",
+                      }}>
+                        Jetzt besuchen
+                      </span>
+                      <ArrowRight size={12} strokeWidth={2.5} style={{ color: "var(--lilac)", flexShrink: 0 }} />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
 
-        {/* ── Full-bleed dark CTA ── */}
-        <div style={{ marginTop: "clamp(60px,8vw,96px)", background: "var(--bg)" }}>
-          <div className="prev-cta" style={{
-            maxWidth: "720px",
-            margin: "0 auto",
-            padding: "clamp(72px,10vw,120px) clamp(20px,4vw,40px)",
-            textAlign: "center",
-            position: "relative",
-          }}>
-            {/* Glow */}
-            <div aria-hidden="true" style={{
-              position: "absolute",
-              top: "50%", left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "640px", height: "360px",
-              background: "radial-gradient(ellipse, rgba(155,136,192,0.18) 0%, transparent 65%)",
-              pointerEvents: "none",
-            }} />
-
-            <h2 className="font-playfair" style={{
-              fontSize: "clamp(2.5rem,6vw,4.25rem)",
-              fontWeight: 700,
-              color: "var(--cream)",
-              lineHeight: 1.08,
-              marginBottom: "24px",
+            {/* ── Right: CTA card ── */}
+            <div className="prev-cta" style={{
               position: "relative",
+              padding: "clamp(48px,6vw,72px) clamp(32px,4vw,56px)",
+              background: "var(--bg)",
+              border: "1px solid var(--border)",
+              borderRadius: "16px",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}>
-              Verantwortungsvoller Konsum
-              <br />
-              <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>beginnt hier</em>
-            </h2>
-            <p className="font-montserrat" style={{
-              fontSize: "0.9375rem", fontWeight: 300,
-              lineHeight: 1.85, color: "var(--text-secondary)",
-              maxWidth: "460px", margin: "0 auto 48px",
-              position: "relative",
-            }}>
-              Werde Teil einer Gemeinschaft, die Aufklärung und Sicherheit an erste Stelle setzt.
-            </p>
-            <Link
-              href="/membership"
-              className="prev-cta-btn font-montserrat"
-              style={{ position: "relative" }}
-            >
-              Mitglied werden
-            </Link>
+              <div aria-hidden="true" style={{
+                position: "absolute",
+                top: "50%", left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "480px", height: "320px",
+                background: "radial-gradient(ellipse, rgba(155,136,192,0.18) 0%, transparent 65%)",
+                pointerEvents: "none",
+              }} />
+              <h2 className="font-playfair" style={{
+                fontSize: "clamp(2rem,3.5vw,3.25rem)",
+                fontWeight: 700, color: "var(--cream)",
+                lineHeight: 1.08, marginBottom: "20px",
+                position: "relative",
+              }}>
+                Verantwortungsvoller Konsum
+                <br />
+                <em style={{ color: "var(--lilac)", fontStyle: "italic" }}>beginnt hier</em>
+              </h2>
+              <p className="font-montserrat" style={{
+                fontSize: "0.9375rem", fontWeight: 300,
+                lineHeight: 1.85, color: "var(--text-secondary)",
+                maxWidth: "340px", margin: "0 auto 40px",
+                position: "relative",
+              }}>
+                Werde Teil einer Gemeinschaft, die Aufklärung und Sicherheit an erste Stelle setzt.
+              </p>
+              <Link
+                href="/membership"
+                className="prev-cta-btn font-montserrat"
+                style={{ position: "relative" }}
+              >
+                Mitglied werden
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
@@ -345,13 +342,19 @@ export default function Prevention() {
           border-color: rgba(155,136,192,0.52) !important;
         }
 
+        /* ── Bottom 2-col layout ── */
+        .prev-bottom-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(32px, 5vw, 64px);
+          align-items: center;
+        }
+
         /* ── Resource cards ── */
         .prev-res-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
           gap: 16px;
-          max-width: 780px;
-          margin: 0 auto;
         }
         .prev-res-card {
           display: flex;
@@ -420,10 +423,10 @@ export default function Prevention() {
         /* ── Responsive ── */
         @media (max-width: 900px) {
           .prev-pillars-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .prev-bottom-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 560px) {
           .prev-pillars-grid { grid-template-columns: 1fr !important; }
-          .prev-res-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
