@@ -218,46 +218,46 @@ export default function Prevention() {
                     className="prev-res-card"
                     style={{ opacity: 0 }}
                   >
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "24px" }}>
-                      <span className="prev-res-tag font-montserrat" style={{
-                        fontSize: "0.625rem", fontWeight: 700,
-                        letterSpacing: "0.22em", textTransform: "uppercase",
-                        color: "var(--text-muted)",
-                        transition: "color 0.25s ease",
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "5px" }}>
+                        <span className="prev-res-tag font-montserrat" style={{
+                          fontSize: "0.5625rem", fontWeight: 700,
+                          letterSpacing: "0.18em", textTransform: "uppercase",
+                          color: "var(--text-muted)", flexShrink: 0,
+                          transition: "color 0.25s ease",
+                        }}>
+                          Extern
+                        </span>
+                        <h3 className="prev-res-title font-playfair" style={{
+                          fontSize: "0.9375rem", fontWeight: 700,
+                          color: "var(--cream)", lineHeight: 1.2,
+                          transition: "color 0.25s ease",
+                        }}>
+                          {r.title}
+                        </h3>
+                      </div>
+                      <p className="font-montserrat" style={{
+                        fontSize: "0.75rem", fontWeight: 300,
+                        lineHeight: 1.65, color: "var(--text-secondary)",
                       }}>
-                        Extern
-                      </span>
+                        {r.desc}
+                      </p>
                     </div>
-                    <h3 className="prev-res-title font-playfair" style={{
-                      fontSize: "1.1875rem", fontWeight: 700,
-                      color: "var(--cream)", lineHeight: 1.2,
-                      marginBottom: "10px",
-                      transition: "color 0.25s ease",
-                    }}>
-                      {r.title}
-                    </h3>
-                    <p className="font-montserrat" style={{
-                      fontSize: "0.8125rem", fontWeight: 300,
-                      lineHeight: 1.75, color: "var(--text-secondary)",
-                      flexGrow: 1,
-                    }}>
-                      {r.desc}
-                    </p>
                     <div className="prev-res-action" style={{
-                      display: "flex", alignItems: "center", gap: "6px",
-                      marginTop: "24px", paddingTop: "18px",
-                      borderTop: "1px solid var(--border)",
+                      display: "flex", alignItems: "center", gap: "5px",
+                      flexShrink: 0, paddingLeft: "18px",
+                      borderLeft: "1px solid var(--border)",
                       transition: "border-color 0.25s ease",
                     }}>
                       <span className="prev-res-action-label font-montserrat" style={{
-                        fontSize: "0.6875rem", fontWeight: 700,
-                        letterSpacing: "0.18em", textTransform: "uppercase",
+                        fontSize: "0.5625rem", fontWeight: 700,
+                        letterSpacing: "0.16em", textTransform: "uppercase",
                         color: "var(--lilac)",
                         transition: "letter-spacing 0.25s ease",
                       }}>
                         Jetzt besuchen
                       </span>
-                      <ArrowRight size={12} strokeWidth={2.5} style={{ color: "var(--lilac)", flexShrink: 0 }} />
+                      <ArrowRight size={10} strokeWidth={2.5} style={{ color: "var(--lilac)", flexShrink: 0 }} />
                     </div>
                   </a>
                 ))}
@@ -358,24 +358,22 @@ export default function Prevention() {
         }
         .prev-res-card {
           display: flex;
-          flex-direction: column;
-          padding: 28px 28px 32px;
+          flex-direction: row;
+          align-items: center;
+          gap: 16px;
+          padding: 16px 20px;
           background: var(--bg-elevated);
           border: 1px solid var(--border);
-          border-radius: 14px;
+          border-radius: 10px;
           text-decoration: none;
           transition: transform 0.26s ease, border-color 0.26s ease,
                       background 0.26s ease, box-shadow 0.26s ease;
         }
         .prev-res-card:hover {
-          transform: translateY(-5px);
+          transform: translateY(-3px);
           border-color: var(--border-hover);
           background: var(--bg-card);
-          box-shadow: 0 10px 36px rgba(0,0,0,0.28);
-        }
-        .prev-res-card:hover .prev-res-badge {
-          background: rgba(155,136,192,0.26) !important;
-          border-color: rgba(155,136,192,0.54) !important;
+          box-shadow: 0 8px 28px rgba(0,0,0,0.24);
         }
         .prev-res-card:hover .prev-res-title {
           color: var(--lilac) !important;
@@ -383,16 +381,11 @@ export default function Prevention() {
         .prev-res-card:hover .prev-res-tag {
           color: var(--lilac) !important;
         }
-
-        /* ── Resource card action row ── */
         .prev-res-card:hover .prev-res-action {
           border-color: rgba(155,136,192,0.42) !important;
         }
-        .prev-res-card:hover .prev-res-arrow {
-          transform: translateX(4px) !important;
-        }
         .prev-res-card:hover .prev-res-action-label {
-          letter-spacing: 0.22em !important;
+          letter-spacing: 0.20em !important;
         }
 
         /* ── CTA button ── */
