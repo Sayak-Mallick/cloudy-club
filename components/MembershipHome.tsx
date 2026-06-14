@@ -9,9 +9,9 @@ import { Check, ArrowRight } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 /* ─── Tokens ──────────────────────────────────────────────── */
-const gold    = "#EFC13D";
-const goldDim = "rgba(239,193,61,0.18)";
-const goldBdr = "rgba(239,193,61,0.55)";
+const gold    = "#C0AFD3";
+const goldDim = "rgba(192,175,211,0.18)";
+const goldBdr = "rgba(192,175,211,0.55)";
 const bg      = "#0f0e0c";
 const cardBg  = "#181714";
 const cardBdr = "rgba(255,255,255,0.06)";
@@ -196,7 +196,7 @@ export default function MembershipHome() {
             position: "relative",
             opacity: 0,
             /* subtle gold glow */
-            boxShadow: `0 0 60px rgba(239,193,61,0.07)`,
+            boxShadow: `0 0 60px rgba(192,175,211,0.07)`,
           }}
         >
 
@@ -260,7 +260,7 @@ export default function MembershipHome() {
                     width: 30, height: 30,
                     borderRadius: "50%",
                     background: goldDim,
-                    border: `1px solid rgba(239,193,61,0.30)`,
+                    border: `1px solid rgba(192,175,211,0.30)`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -332,7 +332,7 @@ export default function MembershipHome() {
         .mh-cta-btn:hover {
           opacity: 0.90;
           transform: translateY(-2px);
-          box-shadow: 0 10px 32px rgba(239,193,61,0.28);
+          box-shadow: 0 10px 32px rgba(192,175,211,0.28);
         }
 
         /* Responsive */
